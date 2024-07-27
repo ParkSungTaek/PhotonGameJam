@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "NElfKU4JUpZhmsyzMGEqpZ9Vwk0+I4Y13YAkU0tWejph47nfLzrTnp/JYESi8Wki49+ECYf8V30NjvDrA4WxvQ==",
+  "success": true,
+  "projectFilePath": "D:\\Project\\DataGenerator\\DataGenerator\\DataGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\exceldatareader\\3.7.0\\exceldatareader.3.7.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\exceldatareader.dataset\\3.7.0\\exceldatareader.dataset.3.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
