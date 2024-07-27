@@ -49,10 +49,8 @@ namespace Client
 
         public enum Scenes
         {
-            Title,
-            Loby,
-            Game,
-
+            Lobby,
+            Loading,
             MaxCount
         }
         public enum EntityType

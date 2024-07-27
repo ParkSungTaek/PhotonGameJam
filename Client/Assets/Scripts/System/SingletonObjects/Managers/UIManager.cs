@@ -74,7 +74,7 @@ namespace Client
             if(string.IsNullOrEmpty(name))
                 name = typeof(T).Name;
 
-            GameObject go = ObjectManager.Instance.Instantiate($"UI/Scene/{name}");
+            GameObject go = ObjectManager.Instance.Instantiate($"UI/Page/{name}");
             T sceneUI = Util.GetOrAddComponent<T>(go);
 
             go.transform.SetParent(Root.transform);
