@@ -14,5 +14,11 @@ namespace Client
             base.Init();
             UIManager.Instance.SetCanvas(gameObject, false);
         }
+
+        public override void Back()
+        {
+            base.Back();
+            UIManager.Instance.PopSceneUI();
+        }
     }
 }

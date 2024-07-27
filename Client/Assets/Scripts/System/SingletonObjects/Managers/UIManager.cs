@@ -14,6 +14,7 @@ namespace Client
         /// </summary>
         [Header("Pop Up")]
         Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+        Stack<UI_Scene> _pageStack = new Stack<UI_Scene>();
         /// <summary>
         /// popup ui 정렬 순서를 위한 변수
         /// </summary>
@@ -65,11 +66,17 @@ namespace Client
                 canvas.sortingOrder = order;
         }
 
-        /// <summary>
-        /// Scene UI 띄우기
-        /// </summary>
-        /// <typeparam name="T">UI_Scene을 상속받은 각 Scene의 UI</typeparam>
-        /// <param name="name">Scene UI 이름, null이면 T 이름</param>
+        // 최상단 페이지를 삭제합니다.
+        public void PopSceneUI()
+        {
+            if (_pageStack.Count <= 1) return;
+
+            UI_Scene page = _pageStack.Pop();
+            page.gameObject.SetActive(false);
+            Object.Destroy(page);
+            _pageStack.Peek().gameObject.SetActive(true);
+        }
+
         public T ShowSceneUI<T>(string name = null) where T : UI_Scene
         {
             if(string.IsNullOrEmpty(name))
@@ -97,6 +104,7 @@ namespace Client
                 pageUI = Util.GetOrAddComponent<T>(page);
                 pageUI.GetComponent<Canvas>().sortingOrder = _order++;
             }
+            _pageStack.Push(pageUI);
             page.transform.SetParent(Root.transform);
             page.SetActive(true);
             return pageUI;

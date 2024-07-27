@@ -30,6 +30,10 @@ namespace Client
         {
             Init();
         }
+        public virtual void Back()
+        {
+            _objects.Clear();
+        }
         /// <summary>
         /// 산하의 T type object들 _objects dictionary에 저장
         /// </summary>
@@ -83,14 +87,17 @@ namespace Client
             switch (type)
             {
                 case SystemEnum.UIEvent.Click:
+                    if (evt.OnClickHandler != null) return;
                     evt.OnClickHandler -= action;
                     evt.OnClickHandler += action;
                     break;
                 case SystemEnum.UIEvent.Drag:
+                    if (evt.OnDragHandler != null) return;
                     evt.OnDragHandler -= action;
                     evt.OnDragHandler += action;
                     break;
                 case SystemEnum.UIEvent.DragEnd:
+                    if (evt.OnDragEndHandler != null) return;
                     evt.OnDragEndHandler -= action;
                     evt.OnDragEndHandler += action;
                     break;

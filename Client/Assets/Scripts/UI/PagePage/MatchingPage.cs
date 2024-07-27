@@ -6,19 +6,19 @@ using System;
 
 namespace Client
 {
-    public class TitlePage : UI_Scene
+    public class MatchingPage : UI_Scene
     {
         enum GameObjects
         {
         }
         enum Buttons
         {
-            StartBtn,
+            BackBtn,
         }
         enum Texts
         {
         }
-        private Action<PointerEventData> ClickStartBtn = null; // 게임 시작 버튼 Action
+        private Action<PointerEventData> ClickBackBtn = null; // 게임 시작 버튼 Action
 
         public override void Init()
         {
@@ -30,13 +30,13 @@ namespace Client
         #region Buttons
         private void ButtonBind()
         {
-            ClickStartBtn = OnClickStartBtn;
-            BindEvent(GetButton((int)Buttons.StartBtn).gameObject, ClickStartBtn);
+            ClickBackBtn = OnClickBackBtn;
+            BindEvent(GetButton((int)Buttons.BackBtn).gameObject, ClickBackBtn);
         }
         // 게임 시작 버튼을 눌렀을 때 호출됩니다.
-        private void OnClickStartBtn(PointerEventData even)
+        private void OnClickBackBtn(PointerEventData even)
         {
-            UIManager.Instance.ShowSceneUI<LobbyPage>();
+            Back();
         }
 
         #endregion Buttons
