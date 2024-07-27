@@ -1,3 +1,5 @@
+// 2024/07/28 [이서연]
+// 메인 로비 UI 페이지
 
 using UnityEngine;
 using UnityEngine.UI;

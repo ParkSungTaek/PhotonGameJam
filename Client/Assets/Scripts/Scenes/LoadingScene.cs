@@ -1,7 +1,8 @@
+// 2024/07/28 [이서연]
+// 로딩 Scene
+
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 namespace Client
 {

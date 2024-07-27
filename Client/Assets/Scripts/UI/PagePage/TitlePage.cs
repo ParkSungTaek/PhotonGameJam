@@ -1,8 +1,8 @@
+// 2024/07/28 [이서연]
+// 첫 타이틀 UI 페이지
 
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System;
 
 namespace Client
 {

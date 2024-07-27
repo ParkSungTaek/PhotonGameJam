@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+// 2024/07/28 [이서연]
+// 옵션 UI 팝업 페이지
 
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Client
 {

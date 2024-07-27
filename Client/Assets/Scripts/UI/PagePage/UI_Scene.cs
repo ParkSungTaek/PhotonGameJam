@@ -4,9 +4,6 @@ using UnityEngine;
 
 namespace Client
 {
-    /// <summary>
-    /// ∞‘¿” SceneUI
-    /// </summary>
     public abstract class UI_Scene : UI_Base
     {
         public override void Init()
