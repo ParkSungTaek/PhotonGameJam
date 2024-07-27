@@ -118,7 +118,7 @@ namespace Client
             //이전에 띄운 기록 없음 -> 생성
             if (_popupInstances.TryGetValue(typeof(T), out popup) == false)
             {
-                popup = ObjectManager.Instance.Instantiate($"UI/Popup/{name}");
+                popup = ObjectManager.Instance.Instantiate($"UI/PopupPage/{name}");
                 _popupInstances.Add(typeof(T), popup);
 
                 popupUI = Util.GetOrAddComponent<T>(popup);
