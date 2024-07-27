@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
+using static Client.SystemEnum;
 
 
 namespace Client
@@ -13,15 +17,20 @@ namespace Client
         /// 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
         Dictionary<string, Dictionary<int, SheetData>> _cache = new Dictionary<string, Dictionary<int, SheetData>>();
 
+        private DataManager()
+        {
+            LoadData();
+        }
+
         public T GetData<T>(int id) where T : SheetData
         {
-            string key = typeof(T).ToString();
-            if (_cache.ContainsKey(key))
+            string key = typeof(T).Name;
+            if (!_cache.ContainsKey(key))
             {
                 Debug.LogError($"{key} 데이터 테이블은 존재하지 않습니다.");
                 return null;
             }
-            if (_cache[key].ContainsKey(id))
+            if (!_cache[key].ContainsKey(id))
             {
                 Debug.LogError($"{key} 데이터에 ID {id}는 존재하지 않습니다.");
                 return null;
@@ -39,7 +48,7 @@ namespace Client
 
         public void SetData<T>(int id, T data) where T : SheetData
         {
-            string key = typeof(T).ToString();
+            string key = typeof(T).Name;
             if (_cache.ContainsKey(key))
             {
                 Debug.LogWarning($"{key} 데이터 테이블은 이미 존재합니다.");
@@ -59,6 +68,32 @@ namespace Client
             }
         }
 
+        public void LoadData()
+        {
+            Type baseType = typeof(SheetData);
 
+            IEnumerable<Type> derivedTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(baseType));
+
+            foreach (var type in derivedTypes)
+            {
+                SheetData instance = (SheetData)Activator.CreateInstance(type);
+
+
+                if (_cache.ContainsKey(type.Name))
+                {
+                    Debug.LogWarning($"{type.Name} 데이터 테이블은 이미 존재합니다.");
+                }
+                else
+                {
+                    _cache.Add(type.Name, instance.LoadData());
+                }
+            }
+
+            var t = GetData<TestData>(1);
+            Debug.Log(t.name);
+
+            var t2 = GetData<TestData2>(1);
+            Debug.Log(t2.speed);
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace Client
     public abstract class SheetData
     {
         protected int ID = 0;
+
+        public abstract Dictionary<int, SheetData> LoadData();
     }
 }
