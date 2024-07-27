@@ -6,20 +6,19 @@ using System;
 
 namespace Client
 {
-    public class TitlePage : UI_Scene
+    public class LobbyPage : UI_Scene
     {
         enum GameObjects
         {
         }
         enum Buttons
         {
-            StartBtn,
+            GameStartBtn,
         }
         enum Texts
         {
         }
-        private Action<PointerEventData> ClickStartBtn = null; // 게임 시작 버튼 Action
-
+        private Action<PointerEventData> ClickMatchingBtn = null; // 랜덤 매칭 버튼 Action
         public override void Init()
         {
             base.Init();
@@ -30,11 +29,12 @@ namespace Client
         #region Buttons
         private void ButtonBind()
         {
-            ClickStartBtn = OnClickStartBtn;
-            BindEvent(GetButton((int)Buttons.StartBtn).gameObject, ClickStartBtn);
+            ClickMatchingBtn = OnClickMatchingBtn;
+            BindEvent(GetButton((int)Buttons.GameStartBtn).gameObject, ClickMatchingBtn);
         }
-        // 게임 시작 버튼을 눌렀을 때 호출됩니다.
-        private void OnClickStartBtn(PointerEventData even)
+
+        // 랜덤 매칭 버튼을 눌렀을 때 호출됩니다.
+        private void OnClickMatchingBtn(PointerEventData even)
         {
             SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
         }

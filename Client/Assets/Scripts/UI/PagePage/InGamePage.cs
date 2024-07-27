@@ -6,20 +6,19 @@ using System;
 
 namespace Client
 {
-    public class TitlePage : UI_Scene
+    public class InGamePage : UI_Scene
     {
         enum GameObjects
         {
         }
         enum Buttons
         {
-            StartBtn,
+            OptionBtn
         }
         enum Texts
         {
         }
-        private Action<PointerEventData> ClickStartBtn = null; // 게임 시작 버튼 Action
-
+        private Action<PointerEventData> ClickOptionBtn = null; // 옵션 버튼 Action
         public override void Init()
         {
             base.Init();
@@ -30,13 +29,14 @@ namespace Client
         #region Buttons
         private void ButtonBind()
         {
-            ClickStartBtn = OnClickStartBtn;
-            BindEvent(GetButton((int)Buttons.StartBtn).gameObject, ClickStartBtn);
+            ClickOptionBtn = OnClickOptionBtn;
+            BindEvent(GetButton((int)Buttons.OptionBtn).gameObject, ClickOptionBtn);
         }
-        // 게임 시작 버튼을 눌렀을 때 호출됩니다.
-        private void OnClickStartBtn(PointerEventData even)
+
+        // 옵션 버튼을 눌렀을 때 호출됩니다.
+        private void OnClickOptionBtn(PointerEventData even)
         {
-            SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
+            UIManager.Instance.ShowPopupUI<OptionPopup>();
         }
 
         #endregion Buttons

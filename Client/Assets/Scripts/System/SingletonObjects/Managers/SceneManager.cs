@@ -21,6 +21,7 @@ namespace Client
             if(showLoading)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene((int)SystemEnum.Scenes.Loading);
+                return;
             }
             UnityEngine.SceneManagement.SceneManager.LoadScene((int)destScene);
         }

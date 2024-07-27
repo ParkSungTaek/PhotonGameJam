@@ -51,6 +51,7 @@ namespace Client
         {
             Lobby,
             Loading,
+            InGame,
             MaxCount
         }
         public enum EntityType

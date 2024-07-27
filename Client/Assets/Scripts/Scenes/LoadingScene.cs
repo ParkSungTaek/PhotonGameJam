@@ -15,6 +15,7 @@ namespace Client
         private void Start()
         {
             loadingUI = UIManager.Instance.ShowSceneUI<LoadingPage>();
+            UIManager.Instance.Clear();
             StartCoroutine(LoadScene(SceneManager.Instance.DestScene));
         }
 

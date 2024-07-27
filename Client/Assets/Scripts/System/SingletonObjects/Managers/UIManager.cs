@@ -23,6 +23,7 @@ namespace Client
         /// popup 재사용을 위한 캐싱
         /// </summary>
         Dictionary<System.Type, GameObject> _popupInstances = new Dictionary<System.Type, GameObject>();
+        Dictionary<System.Type, GameObject> _pageInstances = new Dictionary<System.Type, GameObject>();
 
         #region 생성자
         UIManager() { }
@@ -74,12 +75,31 @@ namespace Client
             if(string.IsNullOrEmpty(name))
                 name = typeof(T).Name;
 
-            GameObject go = ObjectManager.Instance.Instantiate($"UI/Page/{name}");
-            T sceneUI = Util.GetOrAddComponent<T>(go);
+            GameObject page;
+            T pageUI;
 
-            go.transform.SetParent(Root.transform);
-            
-            return sceneUI;
+            // 다른 페이지들 모두 비활성화
+            foreach( var p in _pageInstances)
+            {
+                p.Value.SetActive(false);
+            }
+
+            //이전에 띄운 기록 없음 -> 생성
+            if (_pageInstances.TryGetValue(typeof(T), out page) == false)
+            {
+                page = ObjectManager.Instance.Instantiate($"UI/Page/{name}");
+                _pageInstances.Add(typeof(T), page);
+                pageUI = Util.GetOrAddComponent<T>(page);
+            }
+            //이전에 띄운 기록 있음 -> 재활성화
+            else
+            {
+                pageUI = Util.GetOrAddComponent<T>(page);
+                pageUI.GetComponent<Canvas>().sortingOrder = _order++;
+            }
+            page.transform.SetParent(Root.transform);
+            page.SetActive(true);
+            return pageUI;
         }
 
         /// <summary>
@@ -181,6 +201,7 @@ namespace Client
         {
             CloseAllPopUpUI();
             _popupInstances.Clear();
+            _pageInstances.Clear();
         }
     }
 }
