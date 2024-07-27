@@ -13,9 +13,15 @@ namespace Client
     public class EntityManager : Singleton<EntityManager>
     {
         // 존재하는 Entity (Entity Type 명을 Key1 Entity ID를 Key2로 사용)
-        Dictionary<string, Dictionary<long, EntityBase>> _cache = new Dictionary<string, Dictionary<long, EntityBase>>();
+        private Dictionary<string, Dictionary<long, EntityBase>> _cache = new Dictionary<string, Dictionary<long, EntityBase>>();
         // 고유 ID 생성 
-        long _nextID = 0;
+        private long _nextID = 0;
+
+
+        // 외부 엑세스
+        public EntityPlayer MyPlayer { get; set; } // 내 Player
+        public int MyPlayerID { get; set; } = -1; //내 ID 
+
         #region 생성자
         EntityManager() { }
         #endregion

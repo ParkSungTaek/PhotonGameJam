@@ -11,7 +11,9 @@ namespace Client
     /// </summary>
     public class SystemConst 
     {
-        
+        public const int NoData = -1;
+        public const float Per = 10000f;    //¸¸ºÐ·ü
+
     }
 
     /// <summary>
