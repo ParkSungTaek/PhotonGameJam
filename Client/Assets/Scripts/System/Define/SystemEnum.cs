@@ -62,6 +62,29 @@ namespace Client
             MaxCount
         }
 
+        /// <summary>
+        /// 버프 대분류
+        /// </summary>
+        public enum BuffType
+        {
+            None,
+            Buff,       // 긍정적 버프
+            Debuff,     // 부정정 버프
+            State,      // 이동속도 감소, 스턴 등
 
+            MaxCount
+
+        }
+
+        /// <summary>
+        /// 버프 소분류
+        /// </summary>
+        public enum Buffs
+        {
+            None,
+
+
+            MaxCount
+        }
     }
 }

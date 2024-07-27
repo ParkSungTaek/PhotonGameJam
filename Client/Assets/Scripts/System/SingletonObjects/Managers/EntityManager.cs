@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace Client
         public bool SetEntity<T>(T data) where T : EntityBase
         {
             string key = typeof(T).ToString();
-            if (!_cache.ContainsKey(typeof(T).ToString()))
+            if (!_cache.ContainsKey(key))
             {
                 _cache.Add(key, new Dictionary<long, EntityBase>());
             }
@@ -58,6 +59,61 @@ namespace Client
             }
             _cache[key].Add(data.GetID(),data);
             return true;
+        }
+
+        public bool SetEntity(Type type, EntityBase data)
+        {
+            string key = type.ToString();
+            if (!_cache.ContainsKey(key))
+            {
+                _cache.Add(key, new Dictionary<long, EntityBase>());
+            }
+            if (_cache[key].ContainsKey(data.GetID()))
+            {
+                Debug.LogWarning($"{key} 타입의 ID: {data.GetID()}가 이미 존재함");
+                return false;
+            }
+            _cache[key].Add(data.GetID(), data);
+            return true;
+        }
+
+        public bool RemoveEntity(Type type, EntityBase data)
+        {
+            string key = type.ToString();
+            if (!_cache.ContainsKey(key))
+            {
+                Debug.LogWarning($"삭제 실패: {key} 타입이 EntityManager에 의해 관리되지 않음");
+                return false;
+            }
+            if (_cache[key].ContainsKey(data.GetID()))
+            {
+                _cache[key].Remove(data.GetID());
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning($"삭제 실패: {key} 타입의 ID: {data.GetID()}가 이미 존재하지않음");
+                return false;
+            }
+        }
+        public bool RemoveEntity<T>(T data) where T : EntityBase
+        {
+            string key = typeof(T).ToString();
+            if (!_cache.ContainsKey(key))
+            {
+                Debug.LogWarning($"삭제 실패: {key} 타입이 EntityManager에 의해 관리되지 않음");
+                return false;
+            }
+            if (_cache[key].ContainsKey(data.GetID()))
+            {
+                _cache[key].Remove(data.GetID());
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning($"삭제 실패: {key} 타입의 ID: {data.GetID()}가 이미 존재하지않음");
+                return false;
+            }
         }
     }
 }
