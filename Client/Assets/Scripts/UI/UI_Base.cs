@@ -15,8 +15,8 @@ namespace Client
         /// </summary>
         protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
-        float setWidth = 3200; // 사용자 설정 너비 (타겟 해상도 해당 해상도에서 비율로 조정)
-        float setHeight = 1440; // 사용자 설정 높이 (타겟 해상도 해당 해상도에서 비율로 조정)
+        float setWidth = 1920; // 사용자 설정 너비 (타겟 해상도 해당 해상도에서 비율로 조정)
+        float setHeight = 1080; // 사용자 설정 높이 (타겟 해상도 해당 해상도에서 비율로 조정)
         private CanvasScaler canvasScaler;
         /// <summary>
         /// UI 최초 초기화
@@ -30,10 +30,7 @@ namespace Client
         {
             Init();
         }
-        public virtual void Back()
-        {
-            _objects.Clear();
-        }
+        public virtual void Back() { }
         /// <summary>
         /// 산하의 T type object들 _objects dictionary에 저장
         /// </summary>

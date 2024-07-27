@@ -123,6 +123,11 @@ namespace Client
             AudioSystem.Instance.GetAudioPlayer(type).SetVolume(volume);
         }
 
+        public float GetVolume(SystemEnum.Sounds type)
+        {
+            return AudioSystem.Instance.GetAudioPlayer(type).GetVolume();
+        }
+
         public void Clear()
         {
             foreach (var audioClips in _audioClips)

@@ -8,39 +8,17 @@ namespace Client
 {
     public class InGamePage : UI_Scene
     {
-        enum GameObjects
-        {
-        }
-        enum Buttons
-        {
-            OptionBtn
-        }
-        enum Texts
-        {
-        }
-        private Action<PointerEventData> ClickOptionBtn = null; // 옵션 버튼 Action
+        [SerializeField] private Button optionBtn = null; // 옵션 버튼
         public override void Init()
         {
             base.Init();
-            Bind<Button>(typeof(Buttons));
-            ButtonBind();
-        }
-
-        #region Buttons
-        private void ButtonBind()
-        {
-            ClickOptionBtn = OnClickOptionBtn;
-            BindEvent(GetButton((int)Buttons.OptionBtn).gameObject, ClickOptionBtn);
+            optionBtn.onClick.AddListener(OnClickOptionBtn);
         }
 
         // 옵션 버튼을 눌렀을 때 호출됩니다.
-        private void OnClickOptionBtn(PointerEventData even)
+        private void OnClickOptionBtn()
         {
-            UIManager.Instance.ShowPopupUI<OptionPopup>();
+            UIManager.Instance.ShowPopupUI<OptionPopupPage>();
         }
-
-        #endregion Buttons
-
-
     }
 }

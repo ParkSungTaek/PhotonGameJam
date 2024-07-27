@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace Client
@@ -10,14 +11,24 @@ namespace Client
     /// </summary>
     public abstract class UI_Popup : UI_Base
     {
-        /// <summary> 정렬 설정 </summary>
+        [SerializeField] private Button dim = null;
+        [SerializeField] private Button closeBtn = null;
         public override void Init()
         {
             base.Init();
             UIManager.Instance.SetCanvas(gameObject, true);
+
+            dim.onClick.AddListener(Back);
+            closeBtn.onClick.AddListener(Back);
         }
 
         /// <summary> pop up 다시 열 때마다 실행</summary>
         public virtual void ReOpenPopupUI() { }
+
+        public override void Back()
+        {
+            base.Back();
+            UIManager.Instance.PopPopupUI();
+        }
     }
 }

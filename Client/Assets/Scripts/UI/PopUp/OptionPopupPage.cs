@@ -8,83 +8,26 @@ using UnityEngine.EventSystems;
 
 namespace Client
 {
-    public class OptionPopup : UI_Popup
+    public class OptionPopupPage : UI_Popup
     {
-        enum Buttons
-        {
-            ExitBtn,
-        }
-        enum Sliders
-        {
-            BGMSlider,
-            SFXSlider,
-
-        }
-        enum Texts
-        {
-
-        }
+        [SerializeField] private Slider bgmBar = null; // 배경음악 Slider
+        [SerializeField] private Slider sfxBar = null; // 효과음 Slider
         
-        // Start is called before the first frame update
         void Start()
         {
             Init();
         }
 
-
         public override void Init()
         {
             base.Init();
-            Bind<Button>(typeof(Buttons));
-            Bind<Slider>(typeof(Sliders));
-            BindEventBtn();
 
-            //Get<Slider>((int)Sliders.BGMSlider).value = AudioManager.Instance.BGMVolume;
-            //Get<Slider>((int)Sliders.SFXSlider).value = AudioManager.Instance.SFXVolume;
+            bgmBar.value = AudioManager.Instance.GetVolume(SystemEnum.Sounds.BGM);
+            sfxBar.value = AudioManager.Instance.GetVolume(SystemEnum.Sounds.SFX);
 
-            Get<Slider>((int)Sliders.BGMSlider).onValueChanged.AddListener(delegate { VolumeChange(SystemEnum.Sounds.BGM); });
-            Get<Slider>((int)Sliders.SFXSlider).onValueChanged.AddListener(delegate { VolumeChange(SystemEnum.Sounds.SFX); });
-
+            bgmBar.onValueChanged.AddListener(volume => { AudioManager.Instance.SetVolume(SystemEnum.Sounds.BGM, volume); });
+            sfxBar.onValueChanged.AddListener(volume => { AudioManager.Instance.SetVolume(SystemEnum.Sounds.SFX, volume); });
         }
-
-        #region Btn 
-        void BindEventBtn()
-        {
-            BindEvent(GetButton((int)Buttons.ExitBtn).gameObject, Btn_Exit);
-
-        }
-
-        void Btn_Exit(PointerEventData evt)
-        {
-            UIManager.Instance.ClosePopupUI();
-        }
-        #endregion Btn 
-
-        #region Slider
-        void VolumeChange(SystemEnum.Sounds Sound)
-        {
-            float volume;
-            if (Sound == SystemEnum.Sounds.BGM)
-            {
-                volume = Get<Slider>((int)Sliders.BGMSlider).value;
-                //AudioManager.Instance.BGMVolume = volume;
-
-            }
-            else
-            {
-                volume = Get<Slider>((int)Sliders.SFXSlider).value;
-                //AudioManager.Instance.SFXVolume = volume;
-
-            }
-
-            AudioManager.Instance.SetVolume(Sound, volume);
-
-        }
-
-        
-
-        #endregion Slider
-
 
     }
 }

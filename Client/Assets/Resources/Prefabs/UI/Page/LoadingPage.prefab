@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839c141e0ea3de84ea47079b4e09e933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  percentText: {fileID: 2534028596868832274}
+  loadingBar: {fileID: 6549226365725018608}
 --- !u!1 &4870755457922253304
 GameObject:
   m_ObjectHideFlags: 0

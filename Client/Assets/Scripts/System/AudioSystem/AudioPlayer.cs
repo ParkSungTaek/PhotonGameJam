@@ -85,5 +85,10 @@ namespace Client
             _audioSource.volume = volume;
         }
 
+        public float GetVolume()
+        {
+            return _audioSource.volume;
+        }
+
     }
 }

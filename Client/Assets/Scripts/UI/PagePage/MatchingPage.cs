@@ -8,39 +8,18 @@ namespace Client
 {
     public class MatchingPage : UI_Scene
     {
-        enum GameObjects
-        {
-        }
-        enum Buttons
-        {
-            BackBtn,
-        }
-        enum Texts
-        {
-        }
-        private Action<PointerEventData> ClickBackBtn = null; // 게임 시작 버튼 Action
+        [SerializeField] private Button backBtn = null; // 매칭 취소 버튼
 
         public override void Init()
         {
             base.Init();
-            Bind<Button>(typeof(Buttons));
-            ButtonBind();
+            backBtn.onClick.AddListener(OnClickBackBtn);
         }
 
-        #region Buttons
-        private void ButtonBind()
-        {
-            ClickBackBtn = OnClickBackBtn;
-            BindEvent(GetButton((int)Buttons.BackBtn).gameObject, ClickBackBtn);
-        }
-        // 게임 시작 버튼을 눌렀을 때 호출됩니다.
-        private void OnClickBackBtn(PointerEventData even)
+        // 매칭 취소 버튼을 눌렀을 때 호출됩니다.
+        private void OnClickBackBtn()
         {
             Back();
         }
-
-        #endregion Buttons
-
-
     }
 }

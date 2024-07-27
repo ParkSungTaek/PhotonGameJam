@@ -5,10 +5,5 @@ using UnityEngine;
 
 namespace Client
 {
-    public class PlayerData : SheetData
-    {
 
-
-
-    }
 }

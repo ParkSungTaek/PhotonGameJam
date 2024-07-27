@@ -73,8 +73,16 @@ namespace Client
 
             UI_Scene page = _pageStack.Pop();
             page.gameObject.SetActive(false);
-            Object.Destroy(page);
             _pageStack.Peek().gameObject.SetActive(true);
+        }
+
+        // 최상단 페이지를 삭제합니다.
+        public void PopPopupUI()
+        {
+            if (_popupStack.Count <= 0) return;
+
+            UI_Popup popup = _popupStack.Pop();
+            popup.gameObject.SetActive(false);
         }
 
         public T ShowSceneUI<T>(string name = null) where T : UI_Scene
@@ -149,25 +157,12 @@ namespace Client
         }
 
         /// <summary>
-        /// 가장 위의 pop up UI 닫기
-        /// </summary>
-        public void ClosePopupUI()
-        {
-            if (_popupStack.Count <= 0) return;
-
-            UI_Popup popup = _popupStack.Pop();
-            popup.gameObject.SetActive(false);
-
-            _order--;
-        }
-
-        /// <summary>
         /// 모든 pop up UI 닫기
         /// </summary>
         public void CloseAllPopUpUI()
         {
             while (_popupStack.Count > 0)
-                ClosePopupUI();
+                PopPopupUI();
         }
 
         /// <summary>
