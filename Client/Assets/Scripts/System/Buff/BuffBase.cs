@@ -27,6 +27,13 @@ namespace Client
         //버프 이름
         public virtual SystemEnum.Buffs Buff => SystemEnum.Buffs.None;
 
+        // EntityInfo 시전자
+        EntityInfo BuffUser = null;
+
+        // EntityInfo 대상자
+        EntityInfo BuffTarget = null;
+
+
         // 버프데이터 Set
         public abstract void SetData(BuffData buffData); 
         // 버프 기능 실행

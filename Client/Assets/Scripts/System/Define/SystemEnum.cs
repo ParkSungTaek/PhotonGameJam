@@ -25,8 +25,10 @@ namespace Client
         {
             MaxCount
         }
-        public enum State
+        public enum Condition
         {
+            None,
+            Stun,
             MaxCount
         }
 
@@ -56,8 +58,8 @@ namespace Client
         }
         public enum EntityType
         {
-            None, 
-
+            None,
+            Player,
 
 
             MaxCount
@@ -84,6 +86,64 @@ namespace Client
         {
             None,
 
+
+            MaxCount
+        }
+
+        /// <summary>
+        /// 유 불리 보정용 데이터
+        /// </summary>
+        public enum PlayerCharType
+        {
+            None,
+            Normal,
+
+            MaxCount
+        }
+
+        /// <summary>
+        /// 플레이어 데이터테이블 인덱스와 대응용 enumm
+        /// </summary>
+        public enum PlayerDataIndex
+        {
+            Normal = 0,
+
+            MaxCount
+        }
+
+
+        /// <summary>
+        /// 유 불리 보정용 데이터
+        /// </summary>
+        public enum WeaponType
+        {
+            None,
+            Normal,
+            Magic,
+            Explosion,
+
+            MaxCount
+        }
+
+
+        // N : Now 현재/ M : Max 최대
+        public enum EntityStat
+        {
+            None,
+
+            HP,      // 기본 HP
+            NHP,     // 현재 HP
+            NMHP,    // 현재 최대 HP
+            MovSpd,  // 기본 Speed
+            NMovSpd, // 현재 Speed
+            Att,     // 기본 공격력
+            NAtt,    // 현재 공격력
+            Def,     // 기본 방어력
+            NDef,    // 현재 방어력
+            AtkSpd,  // 기본 공격속도
+            NAtkSpd, // 현재 공격속도
+            JumpP,   // 기본 점프 힘
+            NJumpP,  // 현재 점프 힘
 
             MaxCount
         }
