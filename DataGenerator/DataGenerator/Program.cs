@@ -3,11 +3,8 @@ using System;
 using System.Data;
 using System.IO;
 using System.Text;
-using System.Xml;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-// <패킷 제네레이터 6#> 22.03.04 - 클라 / 서버 패킷 레지스터 분리
-namespace PacketGenerator
+namespace DataGenerator
 {
     class Program
     {
@@ -66,21 +63,32 @@ namespace PacketGenerator
                         dataName = dataNameRow.ToString();
                         dataType = dataTypeRow.ToString();
 
-                        dataRegister += string.Format(PacketFormat.dataRegisterFormat, dataType, dataName, dataDesc) + Environment.NewLine;
-                        dataParse += string.Format(PacketFormat.dataParseFomat, columnIndex.ToString(), dataName, ToMemberType2(dataType)) + Environment.NewLine;
+                        var toMemberType = ToMemberType(dataType);
+                        if (toMemberType != string.Empty ) 
+                        {
+                            // 기본 자료형
+                            dataRegister += string.Format(DataFormat.dataRegisterFormat, dataType, dataName, dataDesc) + Environment.NewLine;
+                            dataParse += string.Format(DataFormat.dataParseFomat, columnIndex.ToString(), dataName, toMemberType) + Environment.NewLine;
+                        } 
+                        else
+                        {
+                            // Enum 전용
+                            dataRegister += string.Format(DataFormat.dataEnumRegisterFormat, dataType, dataName, dataDesc) + Environment.NewLine;
+                            dataParse += string.Format(DataFormat.dataEnumParseFomat, columnIndex.ToString(), dataName, dataType) + Environment.NewLine;
+                        }
                     }
                 }
             }
 
 
-            dataRegister = dataRegister.Replace("\n", "\n\t");
-            dataParse = dataParse.Replace("\n", "\n\t\t\t\t\t");
-            var dataManagerText = string.Format(PacketFormat.dataFormat, excelName, dataRegister, dataParse);
+            dataRegister = dataRegister.Replace("\n", "\n\t\t");
+            dataParse = dataParse.Replace("\n", "\n\t\t\t\t\t\t");
+            var dataManagerText = string.Format(DataFormat.dataFormat, excelName, dataRegister, dataParse);
 
             File.WriteAllText($"../../Client/Assets/Scripts/DataSheets/{excelName}.cs", dataManagerText);
         }
 
-        public static string ToMemberType2(string memberType)
+        public static string ToMemberType(string memberType)
         {
             switch (memberType)
             {

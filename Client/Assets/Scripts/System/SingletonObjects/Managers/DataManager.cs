@@ -93,7 +93,7 @@ namespace Client
             Debug.Log(t.name);
 
             var t2 = GetData<TestData2>(1);
-            Debug.Log(t2.speed);
+            Debug.Log(t2.buff.ToString());
         }
     }
 }

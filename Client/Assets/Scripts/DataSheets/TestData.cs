@@ -7,58 +7,61 @@ using UnityEngine;
 using ExcelDataReader;
 using System.Data;
 
-public class TestData : SheetData
+namespace Client
 {
-
-	public int index; // 인덱스
-	
-	public int attack; // 공격력
-	
-	public string name; // 이름
-	
-
-    public override Dictionary<int, SheetData> LoadData()
+    public class TestData : SheetData
     {
-        var dataList = new Dictionary<int, SheetData>();
 
-        string filePath = $"Assets/Data/XLSXS/{this.GetType().Name}.xlsx";
-        using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+		public int index; // 인덱스
+		
+		public int attack; // 공격력
+		
+		public string name; // 이름
+		
+
+        public override Dictionary<int, SheetData> LoadData()
         {
-            using (var reader = ExcelReaderFactory.CreateReader(stream))
+            var dataList = new Dictionary<int, SheetData>();
+
+            string filePath = $"Assets/Data/XLSXS/{this.GetType().Name}.xlsx";
+            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                var result = reader.AsDataSet();
-                DataTable table = result.Tables[0];
-
-                for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    DataRow row = table.Rows[rowIndex];
-                    TestData data = new TestData();
+                    var result = reader.AsDataSet();
+                    DataTable table = result.Tables[0];
+
+                    for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
+                    {
+                        DataRow row = table.Rows[rowIndex];
+                        TestData data = new TestData();
 
 
-					if (row[0] != DBNull.Value)
-					{
-					    data.index = Convert.ToInt32(row[0]);
-					}
-					
-					
-					if (row[1] != DBNull.Value)
-					{
-					    data.attack = Convert.ToInt32(row[1]);
-					}
-					
-					
-					if (row[2] != DBNull.Value)
-					{
-					    data.name = Convert.ToString(row[2]);
-					}
-					
-					
+						if (row[0] != DBNull.Value)
+						{
+						    data.index = Convert.ToInt32(row[0]);
+						}
+						
+						
+						if (row[1] != DBNull.Value)
+						{
+						    data.attack = Convert.ToInt32(row[1]);
+						}
+						
+						
+						if (row[2] != DBNull.Value)
+						{
+						    data.name = Convert.ToString(row[2]);
+						}
+						
+						
 
-                    dataList[data.index] = data;
+                        dataList[data.index] = data;
+                    }
                 }
             }
-        }
 
-        return dataList;
+            return dataList;
+        }
     }
 }
