@@ -5,22 +5,25 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    public class EntityPlayer : EntityBase
+    public class CharPlayer : EntityBase
     {
-        private List<BuffBase> _buffBases = new List<BuffBase>(); // 본인이 가지고있는 버프
-        private PlayerInfo _playerInfo = null;                    // Player 데이터
-        private int _weaponDataID = SystemConst.NoData;
-        private Rigidbody2D rigidbody2D = null;
+        private List<BuffBase> _buffBases    = new List<BuffBase>(); // 본인이 가지고있는 버프
+        private PlayerInfo     _playerInfo   = null;                    // Player 데이터
+        private int            _weaponDataID = SystemConst.NoData;
+        private Rigidbody2D    _rigidbody2D  = null;
+        private WeaponBase     _weapon       = null;
+
+        protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.CharPlayer;
 
         [SerializeField]
-        PlayerDataIndex playerDataIndex;
+        PlayerCharName playerDataIndex;
 
         private void Awake()
         {
             //Test 용
             #region 테스트코드
             {
-                Debug.Log("EntityPlayer 스크립트의 테스트 코드가 지워지지않았습니다");
+                Debug.Log("EntityPlayer 스크립트의 테스트 코드가 지워지지 않았습니다");
                 EntityManager.Instance.MyPlayer = this;
             }
             #endregion
@@ -29,7 +32,7 @@ namespace Client
         // Start is called before the first frame update
         void Start()
         {
-            rigidbody2D = GetComponent<Rigidbody2D>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
             _playerInfo = new PlayerInfo((int)playerDataIndex, _weaponDataID, _buffBases);
             if (_playerInfo == null)
             { 
@@ -74,7 +77,12 @@ namespace Client
             
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rigidbody2D.AddForce(Vector3.up * _playerInfo.GetStat(EntityStat.NJumpP), ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector3.up * _playerInfo.GetStat(EntityStat.NJumpP), ForceMode2D.Impulse);
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                _weapon?.Shot();    
             }
 
 
@@ -84,5 +92,7 @@ namespace Client
             Debug.Log($"Speed {_playerInfo.GetStat(EntityStat.NMovSpd)*Time.deltaTime}");
             transform.position = Vector3.Lerp(transform.position, targetPosition, _playerInfo.GetStat(EntityStat.NMovSpd) * Time.deltaTime);
         }
+
+
     }
 }

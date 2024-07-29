@@ -11,7 +11,12 @@ namespace Client
     /// </summary>
     public class SystemConst 
     {
-        public const int NoData = -1;
+        public const int NoData          = -1;
+        public const int DefaultLayer    = 0;
+        public const int FloorLayer      = 6;
+        public const int PlayerLayer     = 7;
+        public const int ProjectileLayer = 8;
+
         public const float Per = 10000f;    //¸¸ºÐ·ü
 
     }

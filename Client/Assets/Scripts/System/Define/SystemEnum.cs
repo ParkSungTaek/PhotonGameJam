@@ -59,8 +59,9 @@ namespace Client
         public enum EntityType
         {
             None,
-            Player,
-
+            CharPlayer,
+            Weapon,
+            Projectile,
 
             MaxCount
         }
@@ -93,10 +94,13 @@ namespace Client
         /// <summary>
         /// 유 불리 보정용 데이터
         /// </summary>
-        public enum PlayerCharType
+        public enum ValidityType
         {
             None,
             Normal,
+            Fire,
+            Water,
+            Grass,
 
             MaxCount
         }
@@ -104,10 +108,25 @@ namespace Client
         /// <summary>
         /// 플레이어 데이터테이블 인덱스와 대응용 enumm
         /// </summary>
-        public enum PlayerDataIndex
+        public enum PlayerCharName
         {
-            Normal = 0,
+            None   = 0,
+            Normal = 1,
 
+            MaxCount
+        }
+
+        public enum WeaponName
+        {
+            None,
+            Pistol,
+            MaxCount
+        }
+
+        public enum ProjectileName
+        {
+            None,
+            Bullet,
             MaxCount
         }
 

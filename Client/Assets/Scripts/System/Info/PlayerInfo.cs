@@ -7,9 +7,9 @@ namespace Client
 {
     public class PlayerInfo : EntityInfo
     {
-        private PlayerData _playerData = null; // Player 데이터
-        private WeaponData _weaponData = null; // Player 데이터
-
+        private PlayerData _playerData    = null; // Player 데이터
+        private WeaponData _weaponData    = null; // Player 데이터
+        private List<BuffBase> _buffBases = null; // 보유중인 버프
         public string CharName { get; set; } = "DefaultName";
         #region BuffData
 
@@ -24,26 +24,24 @@ namespace Client
         {
             
         }
-        public PlayerInfo(int _playerDataID = SystemConst.NoData, int _weaponDataID = SystemConst.NoData, List<BuffBase> _buffBases = null)
+        public PlayerInfo(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null)
         {
-            SetData(_playerDataID, _weaponDataID, _buffBases);
+            SetData(playerDataID, weaponDataID, buffBases);
         }
         // 현재 캐릭터 정보, 무기 정보, 버프 리스트(전부 활성화) 정보 Set
-        public void SetData(int _playerDataID = SystemConst.NoData, int _weaponDataID = SystemConst.NoData, List<BuffBase> _buffBases = null)
+        public void SetData(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null)
         {
-            if (_playerDataID != SystemConst.NoData)
+            if (playerDataID != SystemConst.NoData)
             {
-                _playerData = DataManager.Instance.GetData<PlayerData>(_playerDataID);
+                _playerData = DataManager.Instance.GetData<PlayerData>(playerDataID);
                 if (_playerData == null)
                 {
-                    Debug.LogWarning($"PlayerInfo {_playerDataID} 에 해당하는 PlayerData 정보 찾지 못함");
+                    Debug.LogWarning($"PlayerInfo {playerDataID} 에 해당하는 PlayerData 정보 찾지 못함");
                     //return;
                     // 지금은 데이터 테이블이 없다 나중에 반드시!! 제거 바람
 
                     _playerData = new PlayerData();
                 }
-                EntityStatDic[EntityStat.Att] = _playerData.Att;
-                EntityStatDic[EntityStat.NAtt] = _playerData.Att;
 
                 EntityStatDic[EntityStat.JumpP] = _playerData.JumpPower;
                 EntityStatDic[EntityStat.NJumpP] = _playerData.JumpPower;
@@ -55,12 +53,12 @@ namespace Client
                 EntityStatDic[EntityStat.NMovSpd] = _playerData.Speed;
 
             }
-            if (_weaponDataID != SystemConst.NoData)
+            if (weaponDataID != SystemConst.NoData)
             {
-                _weaponData = DataManager.Instance.GetData<WeaponData>(_weaponDataID);
+                _weaponData = DataManager.Instance.GetData<WeaponData>(weaponDataID);
                 if (_weaponData == null)
                 {
-                    Debug.LogWarning($"PlayerInfo {_weaponDataID} 에 해당하는 WeaponData 정보 찾지 못함");
+                    Debug.LogWarning($"PlayerInfo {weaponDataID} 에 해당하는 WeaponData 정보 찾지 못함");
                     //무기는 안끼고 있을수도?
                     // 지금은 데이터 테이블이 없다 나중에 반드시!! 제거 바람
 
@@ -72,9 +70,10 @@ namespace Client
                     EntityStatDic[EntityStat.NAtkSpd] = _weaponData.AtkSpd;
                 }
             }
-            if (_buffBases != null)
+            if (buffBases != null)
             {
-                foreach (var buff in _buffBases)
+                _buffBases = buffBases;
+                foreach (var buff in buffBases)
                 {
                     buff.Execute();
                 }
@@ -84,10 +83,24 @@ namespace Client
         // 단일 버프 활성화
         public void ExecuteBuff(BuffBase buff)
         {
+            _buffBases.Add(buff);
             if (buff != null)
             {
                 buff.Execute();
             }
+        }
+        // 단일 버프 비활성화
+        public void DeleteBuff(BuffBase buff)
+        {
+            if (_buffBases.Contains(buff))
+            {
+                if (buff != null)
+                {
+                    buff.Dispel();
+                }
+                _buffBases.Remove(buff);
+            }
+            
         }
 
         #region 데이터 Get 영역 반드시 만분률에 주의해주세요!!!!!
