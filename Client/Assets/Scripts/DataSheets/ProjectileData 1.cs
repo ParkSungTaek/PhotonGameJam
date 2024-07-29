@@ -9,16 +9,16 @@ using System.Data;
 
 namespace Client
 {
-    public class WeaponData : SheetData
+    public class ProjectileData 1 : SheetData
     {
 
 		public int index; // 인덱스
 		
-		public SystemEnum.WeaponName _WeaponName; // 공격력
+		public SystemEnum.ProjectileName _ProjectileName; // 투사체 명
 		
-		public int _atkSpd; // 공격속도
+		public int _projectileSpd; // 투사체 속도
 		
-		public int _Att; // 공격력
+		public int _lifeTime; // 생존시간 (10000 = 1초)
 		
 
         public override Dictionary<int, SheetData> LoadData()
@@ -36,7 +36,7 @@ namespace Client
                     for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
                     {
                         DataRow row = table.Rows[rowIndex];
-                        WeaponData data = new WeaponData();
+                        ProjectileData 1 data = new ProjectileData 1();
 
 
 						if (row[0] != DBNull.Value)
@@ -47,19 +47,19 @@ namespace Client
 						
 						if (row[1] != DBNull.Value)
 						{
-						    data._WeaponName = (SystemEnum.WeaponName)Enum.Parse(typeof(SystemEnum.WeaponName), row[1].ToString());
+						    data._ProjectileName = (SystemEnum.ProjectileName)Enum.Parse(typeof(SystemEnum.ProjectileName), row[1].ToString());
 						}
 						
 						
 						if (row[2] != DBNull.Value)
 						{
-						    data._atkSpd = Convert.ToInt32(row[2]);
+						    data._projectileSpd = Convert.ToInt32(row[2]);
 						}
 						
 						
 						if (row[3] != DBNull.Value)
 						{
-						    data._Att = Convert.ToInt32(row[3]);
+						    data._lifeTime = Convert.ToInt32(row[3]);
 						}
 						
 						

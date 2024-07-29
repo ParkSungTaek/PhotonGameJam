@@ -9,16 +9,18 @@ using System.Data;
 
 namespace Client
 {
-    public class WeaponData : SheetData
+    public class EntityPlayerData : SheetData
     {
 
 		public int index; // 인덱스
 		
-		public SystemEnum.WeaponName _WeaponName; // 공격력
+		public SystemEnum.PlayerCharName _PlayerCharName; // 플레이어 캐릭터명
 		
-		public int _atkSpd; // 공격속도
+		public int _movSpd; // 이름
 		
-		public int _Att; // 공격력
+		public int _jumpPower; // 플레이어 점프 힘
+		
+		public int _hp; // HP
 		
 
         public override Dictionary<int, SheetData> LoadData()
@@ -36,7 +38,7 @@ namespace Client
                     for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
                     {
                         DataRow row = table.Rows[rowIndex];
-                        WeaponData data = new WeaponData();
+                        EntityPlayerData data = new EntityPlayerData();
 
 
 						if (row[0] != DBNull.Value)
@@ -47,19 +49,25 @@ namespace Client
 						
 						if (row[1] != DBNull.Value)
 						{
-						    data._WeaponName = (SystemEnum.WeaponName)Enum.Parse(typeof(SystemEnum.WeaponName), row[1].ToString());
+						    data._PlayerCharName = (SystemEnum.PlayerCharName)Enum.Parse(typeof(SystemEnum.PlayerCharName), row[1].ToString());
 						}
 						
 						
 						if (row[2] != DBNull.Value)
 						{
-						    data._atkSpd = Convert.ToInt32(row[2]);
+						    data._movSpd = Convert.ToInt32(row[2]);
 						}
 						
 						
 						if (row[3] != DBNull.Value)
 						{
-						    data._Att = Convert.ToInt32(row[3]);
+						    data._jumpPower = Convert.ToInt32(row[3]);
+						}
+						
+						
+						if (row[4] != DBNull.Value)
+						{
+						    data._hp = Convert.ToInt32(row[4]);
 						}
 						
 						
