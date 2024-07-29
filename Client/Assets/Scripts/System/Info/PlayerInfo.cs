@@ -68,6 +68,9 @@ namespace Client
                 {
                     EntityStatDic[EntityStat.AtkSpd] = _weaponData._atkSpd;
                     EntityStatDic[EntityStat.NAtkSpd] = _weaponData._atkSpd;
+
+                    EntityStatDic[EntityStat.Att] = _weaponData._Att;
+                    EntityStatDic[EntityStat.NAtt] = _weaponData._Att;
                 }
             }
             if (buffBases != null)
@@ -80,6 +83,23 @@ namespace Client
             }
         }
 
+        public void SetDataWeaponData(WeaponData weaponData)
+        {
+            _weaponData = weaponData;
+            if (_weaponData == null)
+            {
+                Debug.LogWarning($"SetDataWeaponData 정보 찾지 못함");
+
+            }
+            else
+            {
+                EntityStatDic[EntityStat.AtkSpd] = _weaponData._atkSpd;
+                EntityStatDic[EntityStat.NAtkSpd] = _weaponData._atkSpd;
+
+                EntityStatDic[EntityStat.Att] = _weaponData._Att;
+                EntityStatDic[EntityStat.NAtt] = _weaponData._Att;
+            }
+        }
         // 단일 버프 활성화
         public void ExecuteBuff(BuffBase buff)
         {
@@ -113,6 +133,7 @@ namespace Client
             if (!EntityStatDic.ContainsKey(entityStat))
             {
                 Debug.LogWarning($"{CharName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                return 0;
             }
             return EntityStatDic[entityStat] / SystemConst.Per;
                    

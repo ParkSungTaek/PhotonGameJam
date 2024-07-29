@@ -8,6 +8,9 @@ namespace Client
 {
     public class CharPlayer : EntityBase
     {
+        [SerializeField]
+        PlayerCharName playerDataIndex;
+
         private List<BuffBase> _buffBases    = new List<BuffBase>(); // 본인이 가지고있는 버프
         private PlayerInfo     _playerInfo   = null;                    // Player 데이터
         private int            _weaponDataID = SystemConst.NoData;
@@ -18,8 +21,8 @@ namespace Client
 
         protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.CharPlayer;
 
-        [SerializeField]
-        PlayerCharName playerDataIndex;
+        public PlayerInfo PlayerInfo => _playerInfo;
+
 
         private void Awake()
         {
@@ -108,6 +111,16 @@ namespace Client
             transform.position = Vector3.Lerp(transform.position, targetPosition, _playerInfo.GetStat(EntityStat.NMovSpd) * Time.deltaTime);
         }
 
+        public void SetWeaponBase(WeaponBase weapon)
+        {
+            if (weapon != null)
+            {
+                _weapon = weapon;
+                _weapon.SetCharPlayer(this);
+                _weapon.transform.parent = transform; 
+                _playerInfo.SetDataWeaponData(_weapon.GetWeaponData());
+            }
 
+        }
     }
 }

@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace Client
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public class Bullet : ProjectileBase
     {
-        
+        public override SystemEnum.ProjectileName Projectile => SystemEnum.ProjectileName.Bullet;
+
+        protected override void HitPlayer(CharPlayer player)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }

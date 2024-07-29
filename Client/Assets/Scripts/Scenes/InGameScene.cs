@@ -21,7 +21,11 @@ namespace Client
                 }
             }
 
+            Debug.LogWarning("InGameScene 시작 스크립트 Start 에 테스트코드 살아있음");
+            CharPlayer charPlayer = FindAnyObjectByType<CharPlayer>();
 
+            Pistol weapon = ObjectManager.Instance.Instantiate<Pistol>("Weapon/Pistol");
+            charPlayer.SetWeaponBase(weapon);
             UIManager.Instance.ShowSceneUI<InGamePage>();
         }
     }

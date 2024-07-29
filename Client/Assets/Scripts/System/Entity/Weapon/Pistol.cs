@@ -16,7 +16,7 @@ namespace Client
 
         public override void Shot()
         {
-            throw new System.NotImplementedException();
+            base.Shot();
         }
 
     }

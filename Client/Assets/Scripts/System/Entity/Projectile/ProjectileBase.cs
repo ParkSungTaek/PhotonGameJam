@@ -11,12 +11,29 @@ namespace Client
 
         public virtual SystemEnum.ProjectileName Projectile => SystemEnum.ProjectileName.Bullet;
 
+        protected ProjectileData _projectileData = null;
+
+        protected Rigidbody2D _rigidbody2D = null;
+
         protected virtual bool IsDestroyWhenHit => true;
+
+        public float Damage { get; set; } = 0;
+
+        private void Awake()
+        {
+            _projectileData = DataManager.Instance.GetData<ProjectileData>((int)Projectile);
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+        }
         public virtual void Shot(Vector3 direction)
-        { 
-            
+        {
+            Vector3 v3 = direction * (_projectileData._projectileSpd / (SystemConst.Per));
+            _rigidbody2D.AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode2D.Impulse);
         }
 
+        public virtual void SetDamage(float damage)
+        {
+            Damage = damage;
+        }
 
         protected abstract void HitPlayer(CharPlayer player);
         protected virtual void HitFloor() { }
