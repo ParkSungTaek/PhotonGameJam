@@ -66,8 +66,8 @@ namespace Client
                 }
                 else
                 {
-                    EntityStatDic[EntityStat.AtkSpd] = _weaponData.AtkSpd;
-                    EntityStatDic[EntityStat.NAtkSpd] = _weaponData.AtkSpd;
+                    EntityStatDic[EntityStat.AtkSpd] = _weaponData._atkSpd;
+                    EntityStatDic[EntityStat.NAtkSpd] = _weaponData._atkSpd;
                 }
             }
             if (buffBases != null)

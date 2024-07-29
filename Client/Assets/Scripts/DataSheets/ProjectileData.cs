@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Client
 {
-    public class ProjectileData1 : SheetData
+    public class ProjectileData : SheetData
     {
 
 		public int index; // 인덱스
@@ -36,7 +36,7 @@ namespace Client
                     for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
                     {
                         DataRow row = table.Rows[rowIndex];
-                        ProjectileData1 data = new ProjectileData1();
+                        ProjectileData data = new ProjectileData();
 
 
 						if (row[0] != DBNull.Value)
