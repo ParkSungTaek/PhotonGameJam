@@ -18,8 +18,10 @@ namespace Client
             base.Init();
             UIManager.Instance.SetCanvas(gameObject, true);
 
-            dim.onClick.AddListener(Back);
-            closeBtn.onClick.AddListener(Back);
+            if(dim != null)
+                dim.onClick.AddListener(Back);
+            if (closeBtn != null)
+                closeBtn.onClick.AddListener(Back);
         }
 
         /// <summary> pop up 다시 열 때마다 실행</summary>
