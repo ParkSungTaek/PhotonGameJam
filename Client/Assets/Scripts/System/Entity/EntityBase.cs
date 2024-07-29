@@ -1,3 +1,4 @@
+using Fusion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Client
     /// 객체의 기초 Base 클래스 
     /// Awake 쓸 때 반드시 base.Awake상속할 것
     /// </summary>
-    public abstract class EntityBase : MonoBehaviour
+    public abstract class EntityBase : NetworkBehaviour
     {
         protected long _ID;
         protected virtual SystemEnum.EntityType _EntityType => SystemEnum.EntityType.None;

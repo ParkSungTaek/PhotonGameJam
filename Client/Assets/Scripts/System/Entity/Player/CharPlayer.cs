@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Client
         private Rigidbody2D    _rigidbody2D  = null;
         private WeaponBase     _weapon       = null;
 
+        private NetworkCharacterController _networkNetwork;
+
         protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.CharPlayer;
 
         [SerializeField]
@@ -27,12 +30,14 @@ namespace Client
                 EntityManager.Instance.MyPlayer = this;
             }
             #endregion
+
+            _networkNetwork = GetComponent<NetworkCharacterController>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            _rigidbody2D = GetComponent<Rigidbody2D>();
+            //_rigidbody2D = GetComponent<Rigidbody2D>();
             Debug.Log($"{playerDataIndex} »ý¼º");
             _playerInfo = new PlayerInfo((int)playerDataIndex, _weaponDataID, _buffBases);
             if (_playerInfo == null)
@@ -46,10 +51,10 @@ namespace Client
             }
             Debug.Log("Start");
 
-            if (EntityManager.Instance.MyPlayer == this)
-            {
-                GameManager.Instance.AddOnUpdate(Move);
-            }
+            //if (EntityManager.Instance.MyPlayer == this)
+            //{
+            //    GameManager.Instance.AddOnUpdate(Move);
+            //}
         }
         void SetDate(int weaponDataID = SystemConst.NoData, List<BuffBase> buffList = null)
         {
@@ -62,6 +67,15 @@ namespace Client
                 _buffBases.AddRange(buffList);
             }
 
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            if (GetInput(out NetworkInputData data))
+            {
+                data.direction.Normalize();
+                _networkNetwork.Move(_playerInfo.GetStat(EntityStat.NMovSpd) * data.direction * Runner.DeltaTime);
+            }
         }
 
         void Move()
@@ -79,7 +93,7 @@ namespace Client
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("jumpP" + _playerInfo.GetStat(EntityStat.NJumpP));
-                _rigidbody2D.AddForce(Vector3.up * _playerInfo.GetStat(EntityStat.NJumpP), ForceMode2D.Impulse);
+                //_rigidbody2D.AddForce(Vector3.up * _playerInfo.GetStat(EntityStat.NJumpP), ForceMode2D.Impulse);
             }
 
             if (Input.GetKeyDown(KeyCode.A))
