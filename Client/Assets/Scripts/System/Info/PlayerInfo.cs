@@ -7,7 +7,7 @@ namespace Client
 {
     public class PlayerInfo : EntityInfo
     {
-        private PlayerData _playerData    = null; // Player 데이터
+        private EntityPlayerData _playerData    = null; // Player 데이터
         private WeaponData _weaponData    = null; // Player 데이터
         private List<BuffBase> _buffBases = null; // 보유중인 버프
         public string CharName { get; set; } = "DefaultName";
@@ -33,24 +33,24 @@ namespace Client
         {
             if (playerDataID != SystemConst.NoData)
             {
-                _playerData = DataManager.Instance.GetData<PlayerData>(playerDataID);
+                _playerData = DataManager.Instance.GetData<EntityPlayerData>(playerDataID);
                 if (_playerData == null)
                 {
                     Debug.LogWarning($"PlayerInfo {playerDataID} 에 해당하는 PlayerData 정보 찾지 못함");
                     //return;
                     // 지금은 데이터 테이블이 없다 나중에 반드시!! 제거 바람
 
-                    _playerData = new PlayerData();
+                    _playerData = new EntityPlayerData();
                 }
 
-                EntityStatDic[EntityStat.JumpP] = _playerData.JumpPower;
-                EntityStatDic[EntityStat.NJumpP] = _playerData.JumpPower;
+                EntityStatDic[EntityStat.JumpP] = _playerData._jumpPower;
+                EntityStatDic[EntityStat.NJumpP] = _playerData._jumpPower;
 
-                EntityStatDic[EntityStat.HP] = _playerData.HP;
-                EntityStatDic[EntityStat.NHP] = _playerData.HP;
+                EntityStatDic[EntityStat.HP] = _playerData._hp;
+                EntityStatDic[EntityStat.NHP] = _playerData._hp;
 
-                EntityStatDic[EntityStat.MovSpd] = _playerData.Speed;
-                EntityStatDic[EntityStat.NMovSpd] = _playerData.Speed;
+                EntityStatDic[EntityStat.MovSpd] = _playerData._movSpd;
+                EntityStatDic[EntityStat.NMovSpd] = _playerData._movSpd;
 
             }
             if (weaponDataID != SystemConst.NoData)

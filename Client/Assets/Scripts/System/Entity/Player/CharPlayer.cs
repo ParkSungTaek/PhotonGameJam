@@ -33,6 +33,7 @@ namespace Client
         void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            Debug.Log($"{playerDataIndex} »ý¼º");
             _playerInfo = new PlayerInfo((int)playerDataIndex, _weaponDataID, _buffBases);
             if (_playerInfo == null)
             { 
@@ -77,6 +78,7 @@ namespace Client
             
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                Debug.Log("jumpP" + _playerInfo.GetStat(EntityStat.NJumpP));
                 _rigidbody2D.AddForce(Vector3.up * _playerInfo.GetStat(EntityStat.NJumpP), ForceMode2D.Impulse);
             }
 
@@ -89,7 +91,6 @@ namespace Client
             //Vector3 deltaDirection = GameManager.Instance.JoystickDirection;
             Vector3 targetPosition = transform.position + deltaDirection;
 
-            Debug.Log($"Speed {_playerInfo.GetStat(EntityStat.NMovSpd)*Time.deltaTime}");
             transform.position = Vector3.Lerp(transform.position, targetPosition, _playerInfo.GetStat(EntityStat.NMovSpd) * Time.deltaTime);
         }
 
