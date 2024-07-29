@@ -13,16 +13,17 @@ namespace Client
         [SerializeField] private Button     inGameBtn       = null; // 인게임 바로가기 버튼 (개발자용)
         [SerializeField] private Button     matchingBtn     = null; // 랜덤 매칭 버튼
         [SerializeField] private Button     selectPlayerBtn = null; // 마법사 설정 버튼
+        [SerializeField] private Button     a = null; // 마법사 설정 버튼
+        [SerializeField] private Button     b = null; // 마법사 설정 버튼
         [SerializeField] private TopPageBar topBar          = null; // 상단바
         public override void Init()
         {
             base.Init();
+            topBar.Init(this);
             matchingBtn.onClick.AddListener(OnClickMatchingBtn);
             selectPlayerBtn.onClick.AddListener(OnClickSelectPlayerBtn);
             inGameBtn.onClick.AddListener(OnClickInGameBtn);
-            topBar.Init(this);
         }
-
 
         // 랜덤 매칭 버튼을 눌렀을 때 호출됩니다.
         private void OnClickMatchingBtn()
