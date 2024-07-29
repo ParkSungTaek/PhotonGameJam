@@ -88,14 +88,14 @@ namespace Client
             //안드로이드에서의 저장 위치를 다르게 해주어야 한다
             //안드로이드의 경우에는 데이터조작을 막기위해 2진데이터로 변환을 해야한다
 
-            string _savePath;
+            string _savePath = "";
             string _appender = "/userData/";
             string _nameString = _name + ".json";
 
 #if UNITY_EDITOR
             _savePath = Application.dataPath;
 #elif UNITY_ANDROID
-        _savePath = Application.persistentDataPath;
+            _savePath = Application.persistentDataPath;
 #endif
 
 
@@ -142,7 +142,7 @@ namespace Client
                 }
             }
             Handler _gameData;
-            string _loadPath;
+            string _loadPath= "";
             string _directory = "/userData";
             string _appender = "/";
             string _dotJson = ".json";

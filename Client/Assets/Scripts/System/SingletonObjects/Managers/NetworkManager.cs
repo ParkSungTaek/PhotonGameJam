@@ -5,70 +5,133 @@ using System;
 using UnityEngine.Events;
 using System.Text;
 using UnityEngine.Networking;
+using Fusion;
+using Fusion.Sockets;
 
 
 
 namespace Client
 {
-    /// <summary>
-    /// (레거시)Google Sheet를 읽어오기 위한 Manager
-    /// </summary>
-    public class NetworkManager
+    public class NetworkManager : Singleton<NetworkManager>, INetworkRunnerCallbacks
     {
-        public GoogleSheet data { get; private set; }
-        // Start is called before the first frame update
+        public GameMode mode {  get; set; }
 
-        public void Init()
+        private NetworkManager()
         {
-            data = Resources.Load<GoogleSheet>("ScriptableObjects/GoogleSheet");
-            Debug.Log(data.associatedDataWorksheet);
         }
 
-        /// <summary>
-        /// 구글 스프레드 시트 를 받아와 가공하는 함수
-        /// </summary>
-        /// <param name="GoogleSheetsID"> 구글 스프레드 시트의 ID </param>
-        /// <param name="ManufactureData"> 스프레드 시트 가공 함수 input은 한 줄 을 받아야함, Cell은 탭('\t')으로 구분</param>
-        /// <param name="WorkSheetsID"> 시트의 WorkSheet 구분 default 는 0 첫 장</param>
-        /// <param name="startCell"> 시작 셀 default A1</param>
-        /// <param name="endCell"> 끝 셀 default E </param>
-        /// <returns></returns>
-        public IEnumerator GoogleSheetsDataParsing(string GoogleSheetsID, Action<string> ManufactureData, string WorkSheetsID = "0", string endCell = "Z", string startCell = "A2")
+        public void OnConnectedToServer(NetworkRunner runner)
         {
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("https://docs.google.com/spreadsheets/d/");
-            sb.Append(GoogleSheetsID);
-            sb.Append("/export?format=tsv");
-            sb.Append("&gid=" + data.associatedDataWorksheet);
-            sb.Append("&range=" + startCell + ":" + endCell);
-
-            Debug.Log(sb.ToString());
-
-
-            using (UnityWebRequest webData = UnityWebRequest.Get(sb.ToString()))
-            {
-
-                yield return webData.SendWebRequest();
-
-                if (webData.isNetworkError || webData.isHttpError)
-                {
-                    Debug.Log("네트워크 문제 발견 인터넷환경 또는 URL 확인 바람");
-                }
-                else
-                {
-                    string[] dataLines = webData.downloadHandler.text.Split('\n');
-                    Action[] ManufactureDatas = new Action[dataLines.Length];
-                    for (int i = 0; i < dataLines.Length; i++)
-                    {
-                        ManufactureData(dataLines[i]);
-                    }
-                }
-
-            }
-
         }
 
+        public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
+        {
+        }
 
+        public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
+        {
+        }
+
+        public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+        {
+        }
+
+        public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
+        {
+        }
+
+        public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+        {
+        }
+
+        public void OnInput(NetworkRunner runner, NetworkInput input)
+        {
+            //var data = new NetworkInputData();
+
+            //if (Input.GetKey(KeyCode.W))
+            //    data.direction += Vector3.forward;
+
+            //if (Input.GetKey(KeyCode.S))
+            //    data.direction += Vector3.back;
+
+            //if (Input.GetKey(KeyCode.A))
+            //    data.direction += Vector3.left;
+
+            //if (Input.GetKey(KeyCode.D))
+            //    data.direction += Vector3.right;
+
+            //data.buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
+            //_mouseButton0 = false;
+            //data.buttons.Set(NetworkInputData.MOUSEBUTTON1, _mouseButton1);
+            //_mouseButton1 = false;
+
+            //input.Set(data);
+        }
+
+        public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
+        {
+        }
+
+        public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+        {
+        }
+
+        public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+        {
+        }
+
+        [SerializeField] private NetworkPrefabRef _playerPrefab;
+        public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+
+        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+        {
+            Debug.Log("Player Join");
+            //if (runner.IsServer)
+            //{
+            //    // Create a unique position for the player
+            //    Vector3 spawnPosition = new Vector3(92.8f, 0.5f, -2.0f);
+            //    NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+            //    // Keep track of the player avatars for easy access
+            //    _spawnedCharacters.Add(player, networkPlayerObject);
+            //}
+        }
+
+        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+        {
+            Debug.Log("Player Left");
+            //if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
+            //{
+            //    runner.Despawn(networkObject);
+            //    _spawnedCharacters.Remove(player);
+            //}
+        }
+
+        public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
+        {
+        }
+
+        public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
+        {
+        }
+
+        public void OnSceneLoadDone(NetworkRunner runner)
+        {
+        }
+
+        public void OnSceneLoadStart(NetworkRunner runner)
+        {
+        }
+
+        public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+        {
+        }
+
+        public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
+        {
+        }
+
+        public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
+        {
+        }
     }
 }
