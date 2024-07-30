@@ -18,11 +18,9 @@ namespace Client
         [SerializeField] private PlayerFace    playerUI   = null; // 플레이어
         [SerializeField] private DecoTabSlot[] tabBtns    = null; // 꾸미기 슬롯 탭 프리펩
 
-        private int faceNum = 0; // 현재 선택된 얼굴 번호
-        private int bodyNum = 0; // 현재 선택된 몸 번호
-
-        private List<DecoSlot>                       items    = new(); // 현재 꾸미기 아이템 슬롯 List
-        private Dictionary<DecoType, List<DecoData>> itemData = new(); // 꾸미기 아이템 정보
+        private List<DecoSlot>                       items      = new(); // 현재 꾸미기 아이템 슬롯 List
+        private Dictionary<DecoType, DecoData>       selectData = new(); // 선택된 꾸미기 아이템 정보
+        private Dictionary<DecoType, List<DecoData>> itemData   = new(); // 꾸미기 아이템 정보
 
         public override void Init()
         {
@@ -35,7 +33,13 @@ namespace Client
                 tab.SetData(OnClickTabBtn);
             }
             LoadDecoItemDatas();
+            SetPlayerDeco();
+        }
 
+        // 처음 페이지에 들어왔을 때, 플레이어의 세팅으로 맞춥니다. ( 없다면 default )
+        private void SetPlayerDeco()
+        {
+            //selectData = EntityManager.Instance.MyPlayer.PlayerInfo.DecoInfo;
             OnClickTabBtn(DecoType.Body);
         }
 
@@ -47,26 +51,35 @@ namespace Client
                 tab.OnTabSelected(type);
             }
             RefreshItemList(type);
+            OnClickItemBtn(type, selectData[type]);
         }
 
         // 특정 아이템이 눌렸을 때 호출됩니다.
-        private void OnClickItemBtn(DecoType type, int selectIndex)
+        private void OnClickItemBtn(DecoType type, DecoData data)
         {
-            foreach (DecoSlot slot in items)
-            {
-                slot.OnTabSelected(type, selectIndex);
-            }
             switch (type)
             {
                 case DecoType.Face:
-                    faceNum = selectIndex;
-                    playerUI.SetPlayerDeco(DecoType.Face, faceNum);
+                    if(data == null)
+                    {
+                        data = itemData[DecoType.Face][0];
+                    }
+                    playerUI.SetPlayerDeco(DecoType.Face, data);
+                    selectData[DecoType.Face] = data;
                     break;
 
                 case DecoType.Body:
-                    bodyNum = selectIndex;
-                    playerUI.SetPlayerDeco(DecoType.Body, bodyNum);
+                    if (data == null)
+                    {
+                        data = itemData[DecoType.Body][0];
+                    }
+                    playerUI.SetPlayerDeco(DecoType.Body, data);
+                    selectData[DecoType.Body] = data;
                     break;
+            }
+            foreach (DecoSlot slot in items)
+            {
+                slot.OnTabSelected(type, selectData[type]);
             }
         }
 
@@ -90,15 +103,22 @@ namespace Client
         // 갈아 입기 버튼을 눌렀을 때 호출됩니다.
         private void OnClickSaveBtn()
         {
+            foreach (var decoInfo in EntityManager.Instance.MyPlayer.PlayerInfo.DecoInfo)
+            {
+                EntityManager.Instance.MyPlayer.PlayerInfo.SetDecoData(decoInfo.Key, selectData[decoInfo.Key]);
+            }
+            
         }
 
         // 꾸미기 아이템 정보를 불러옵니다.
         public void LoadDecoItemDatas()
         {
             itemData.Clear();
+            selectData.Clear();
             for (int i = 0; i < (int)DecoType.MaxCount; ++i)
             {
                 itemData.Add((DecoType)i, new List<DecoData>());
+                selectData.Add((DecoType)i, null);
             }
 
             List<DecoData> itemDataList = DataManager.Instance.GetAllData<DecoData>();

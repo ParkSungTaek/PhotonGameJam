@@ -17,7 +17,7 @@ namespace Client
         [SerializeField] private GameObject selectGroup = null; // 이름
 
         private DecoData    decoData     = null; // 꾸미기 아이템 Data
-        private Action<DecoType, int> selectAction = null; // 선택되었을 때 Action
+        private Action<DecoType, DecoData> selectAction = null; // 선택되었을 때 Action
 
         public override void Init()
         {
@@ -26,7 +26,7 @@ namespace Client
         }
 
         // 꾸미기 아이템 데이터를 세팅합니다.
-        public void SetData(Action<DecoType, int> action, DecoData data)
+        public void SetData(Action<DecoType, DecoData> action, DecoData data)
         {
             selectAction = action;
             decoData = data;
@@ -43,13 +43,13 @@ namespace Client
         private void OnClickBtn()
         {
             if (selectAction == null) return;
-            selectAction(decoData._type, decoData.index);
+            selectAction(decoData._type, decoData);
         }
 
         // 어떤 아이템이 눌렸을 때에 호출됩니다.
-        public void OnTabSelected(DecoType type, int selectIndex)
+        public void OnTabSelected(DecoType type, DecoData data)
         {
-            selectGroup.SetActive(decoData.index == selectIndex && decoData._type == type);
+            selectGroup.SetActive(decoData == data && decoData._type == type);
         }
     }
 }

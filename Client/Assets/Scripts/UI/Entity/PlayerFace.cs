@@ -15,7 +15,7 @@ namespace Client
 
         private Dictionary<DecoType, DecoData> items = new(); // 꾸미기 아이템 정보
 
-        public override void Init()
+        public void Awake()
         {
             base.Init();
             items.Clear();
@@ -28,20 +28,26 @@ namespace Client
         // 캐릭터 외형을 갱신합니다.
         private void RefreshDeco()
         {
-            DecoData faceData = items[DecoType.Face];
-            Texture2D faceTexture = Resources.Load<Texture2D>($"Sprites/Characters/{faceData._type}/{faceData._resource}");
-            if (faceTexture != null)
+            if(items.ContainsKey(DecoType.Face))
             {
-                Sprite faceSprite = Sprite.Create(faceTexture, new Rect(0, 0, faceTexture.width, faceTexture.height), new Vector2(0.5f, 0.5f));
-                face.sprite = faceSprite;
+                DecoData faceData = items[DecoType.Face];
+                Texture2D faceTexture = Resources.Load<Texture2D>($"Sprites/Characters/{faceData._type}/{faceData._resource}");
+                if (faceTexture != null)
+                {
+                    Sprite faceSprite = Sprite.Create(faceTexture, new Rect(0, 0, faceTexture.width, faceTexture.height), new Vector2(0.5f, 0.5f));
+                    face.sprite = faceSprite;
+                }
             }
 
-            DecoData bodyData = items[DecoType.Body];
-            Texture2D bodyTexture = Resources.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
-            if (bodyTexture != null)
+            if (items.ContainsKey(DecoType.Body))
             {
-                Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
-                body.sprite = bodySprite;
+                DecoData bodyData = items[DecoType.Body];
+                Texture2D bodyTexture = Resources.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    body.sprite = bodySprite;
+                }
             }
             
         }
@@ -54,9 +60,9 @@ namespace Client
         }
 
         // 캐릭터 외형을 하나씩 세팅합니다.
-        public void SetPlayerDeco(DecoType type, int index)
+        public void SetPlayerDeco(DecoType type, DecoData index)
         {
-            items[type] = DataManager.Instance.GetData<DecoData>(index);
+            items[type] = index;
             RefreshDeco();
         }
     }

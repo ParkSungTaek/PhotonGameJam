@@ -12,6 +12,7 @@ namespace Client
         private List<BuffBase> _buffBases = null; // 보유중인 버프
         private Dictionary<DecoType, DecoData> _decoInfo = null; // 꾸미기 정보
         public string CharName { get; set; } = "DefaultName";
+        public Dictionary<DecoType, DecoData> DecoInfo => _decoInfo;
         #region BuffData
 
         // 버프라는건 만분률 버프 더해서 하는 버프 그걸 마지막에 Get해서 계산 한번에 순회해서 계산 
@@ -82,6 +83,14 @@ namespace Client
                     buff.Execute();
                 }
             }
+            _decoInfo.Clear();
+            if (decoInfo == null)
+            {
+                for (int i = 0; i < (int)DecoType.MaxCount; ++i)
+                {
+                    _decoInfo.Add((DecoType)i, new DecoData());
+                }
+            }
             _decoInfo = decoInfo;
         }
 
@@ -104,15 +113,13 @@ namespace Client
         }
 
         // 꾸미기 데이터를 세팅합니다.
-        public void SetDecoData(DecoType type, int decoId)
+        public void SetDecoData(DecoType type, DecoData decoData)
         {
-            DecoData _decoData = DataManager.Instance.GetData<DecoData>(decoId);
-            if (_decoData == null)
+            if (_decoInfo.ContainsKey(type) == false)
             {
-                Debug.LogWarning($"SetDecoData 정보 찾지 못함");
-
+                _decoInfo.Add(type, new DecoData());
             }
-            _decoInfo[type] = _decoData;
+            _decoInfo[type] = decoData;
         }
 
         // 단일 버프 활성화
