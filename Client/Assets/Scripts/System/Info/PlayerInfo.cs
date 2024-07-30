@@ -10,7 +10,7 @@ namespace Client
         private EntityPlayerData _playerData    = null; // Player 데이터
         private WeaponData _weaponData    = null; // Player 데이터
         private List<BuffBase> _buffBases = null; // 보유중인 버프
-        private Dictionary<DecoType, DecoData> _decoInfo = null; // 꾸미기 정보
+        private Dictionary<DecoType, DecoData> _decoInfo = new(); // 꾸미기 정보
         public string CharName { get; set; } = "DefaultName";
         public Dictionary<DecoType, DecoData> DecoInfo => _decoInfo;
         #region BuffData
