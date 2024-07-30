@@ -94,6 +94,9 @@ namespace Client
 
             var t2 = GetData<TestData2>(1);
             Debug.Log(t2.buff.ToString());
+
+            var t4 = GetData<DecoData>(1);
+            Debug.Log(t4._name.ToString());
         }
     }
 }
