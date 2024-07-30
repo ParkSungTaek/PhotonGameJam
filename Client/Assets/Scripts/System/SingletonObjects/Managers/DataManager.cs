@@ -46,6 +46,24 @@ namespace Client
             return returnData;
         }
 
+        public List<T> GetAllData<T>() where T : SheetData
+        {
+            string key = typeof(T).Name;
+            if (!_cache.ContainsKey(key))
+            {
+                Debug.LogError($"{key} 데이터 테이블은 존재하지 않습니다.");
+                return null;
+            }
+
+            List<T> returnList = new();
+            foreach( var cacheData in _cache[key].Values)
+            {
+                T data = cacheData as T;
+                returnList.Add(data);
+            }
+            return returnList;
+        }
+
         public void SetData<T>(int id, T data) where T : SheetData
         {
             string key = typeof(T).Name;
@@ -94,9 +112,6 @@ namespace Client
 
             var t2 = GetData<TestData2>(1);
             Debug.Log(t2.buff.ToString());
-
-            var t4 = GetData<DecoData>(1);
-            Debug.Log(t4._name.ToString());
         }
     }
 }

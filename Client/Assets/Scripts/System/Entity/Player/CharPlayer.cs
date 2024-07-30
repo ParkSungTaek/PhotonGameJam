@@ -2,14 +2,14 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Client.SystemEnum;
 
 namespace Client
 {
     public class CharPlayer : EntityBase
     {
-        [SerializeField]
-        PlayerCharName playerDataIndex;
+        [SerializeField] PlayerCharName playerDataIndex;
 
         private List<BuffBase> _buffBases    = new List<BuffBase>(); // 본인이 가지고있는 버프
         private PlayerInfo     _playerInfo   = null;                    // Player 데이터

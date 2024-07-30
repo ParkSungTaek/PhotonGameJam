@@ -62,6 +62,8 @@ namespace Client
 						    data._lifeTime = Convert.ToInt32(row[3]);
 						}
 						
+						
+
                         dataList[data.index] = data;
                     }
                 }

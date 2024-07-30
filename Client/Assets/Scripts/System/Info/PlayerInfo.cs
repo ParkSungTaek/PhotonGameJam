@@ -10,6 +10,7 @@ namespace Client
         private EntityPlayerData _playerData    = null; // Player 데이터
         private WeaponData _weaponData    = null; // Player 데이터
         private List<BuffBase> _buffBases = null; // 보유중인 버프
+        private Dictionary<DecoType, DecoData> _decoInfo = null; // 꾸미기 정보
         public string CharName { get; set; } = "DefaultName";
         #region BuffData
 
@@ -24,12 +25,12 @@ namespace Client
         {
             
         }
-        public PlayerInfo(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null)
+        public PlayerInfo(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null, Dictionary<DecoType, DecoData>decoInfo = null)
         {
-            SetData(playerDataID, weaponDataID, buffBases);
+            SetData(playerDataID, weaponDataID, buffBases, decoInfo);
         }
         // 현재 캐릭터 정보, 무기 정보, 버프 리스트(전부 활성화) 정보 Set
-        public void SetData(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null)
+        public void SetData(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null, Dictionary<DecoType, DecoData> decoInfo = null)
         {
             if (playerDataID != SystemConst.NoData)
             {
@@ -81,6 +82,7 @@ namespace Client
                     buff.Execute();
                 }
             }
+            _decoInfo = decoInfo;
         }
 
         public void SetDataWeaponData(WeaponData weaponData)
@@ -100,6 +102,19 @@ namespace Client
                 EntityStatDic[EntityStat.NAtt] = _weaponData._Att;
             }
         }
+
+        // 꾸미기 데이터를 세팅합니다.
+        public void SetDecoData(DecoType type, int decoId)
+        {
+            DecoData _decoData = DataManager.Instance.GetData<DecoData>(decoId);
+            if (_decoData == null)
+            {
+                Debug.LogWarning($"SetDecoData 정보 찾지 못함");
+
+            }
+            _decoInfo[type] = _decoData;
+        }
+
         // 단일 버프 활성화
         public void ExecuteBuff(BuffBase buff)
         {

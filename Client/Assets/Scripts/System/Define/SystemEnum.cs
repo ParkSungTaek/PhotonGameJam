@@ -170,7 +170,6 @@ namespace Client
         /// 꾸미기 아이템 타입(부위)
         public enum DecoType
         {
-            None,
             Face,
             Body,
 
