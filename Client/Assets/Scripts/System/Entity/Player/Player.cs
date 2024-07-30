@@ -2,12 +2,13 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using static Client.SystemEnum;
 
 namespace Client
 {
-    public class Player : EntityBase
+    public class Player : EntityBase, IPlayerLeft
     {
         [SerializeField] PlayerFace     playerFaceUI;
         [SerializeField] PlayerCharName playerDataIndex;
@@ -91,8 +92,13 @@ namespace Client
         {
             if (GetInput(out NetworkInputData data))
             {
-                data.direction.Normalize();
-                _networkNetwork.Move(_playerInfo.GetStat(EntityStat.NMovSpd) * data.direction * Runner.DeltaTime);
+                data.movementInput.Normalize();
+                _networkNetwork.Move(_playerInfo.GetStat(EntityStat.NMovSpd) * data.movementInput * Runner.DeltaTime);
+
+                if( data.isJumpPressed )
+                {
+                    _networkNetwork.Jump();
+                }
             }
         }
 
@@ -135,6 +141,23 @@ namespace Client
                 _weapon.transform.parent = transform; 
                 _playerInfo.SetDataWeaponData(_weapon.GetWeaponData());
             }
+
+        }
+
+        public override void Spawned()
+        {
+            if (Object.HasInputAuthority)
+            {
+                EntityManager.Instance.MyPlayer = this;
+                Debug.Log("Spawned local player");
+            }
+            else Debug.Log("Spawned remote player");
+        }
+
+        public void PlayerLeft(PlayerRef player)
+        {
+            if (player == Object.InputAuthority)
+                Runner.Despawn(Object);
 
         }
     }

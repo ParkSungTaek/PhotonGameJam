@@ -40,19 +40,5 @@ namespace Client
         {
             StartGame(mode);
         }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        private bool _mouseButton0;
-        private bool _mouseButton1;
-        private void Update()
-        {
-            _mouseButton0 = _mouseButton0 || Input.GetMouseButton(0);
-            _mouseButton1 = _mouseButton1 || Input.GetMouseButton(1);
-        }
     }
 }

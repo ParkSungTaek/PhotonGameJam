@@ -10,9 +10,10 @@ namespace Client
     {
         public GameMode mode { get; set; }
 
-        [SerializeField] private NetworkPrefabRef _playerPrefab;
-        public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+        [SerializeField] private Player _playerPrefab;
+        public Dictionary<PlayerRef, Player> _spawnedCharacters = new Dictionary<PlayerRef, Player>();
 
+        CharacterInputHandler characterInputHandler;
         public void OnConnectedToServer(NetworkRunner runner)
         {
         }
@@ -39,29 +40,15 @@ namespace Client
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            var data = new NetworkInputData();
-
-            //if (Input.GetKey(KeyCode.W))
-            //    data.direction += Vector3.forward;
-
-            //if (Input.GetKey(KeyCode.S))
-            //    data.direction += Vector3.back;
-
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (characterInputHandler == null && EntityManager.Instance.MyPlayer != null)
             {
-                data.direction += Vector3.right;
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                data.direction += Vector3.left;
+                characterInputHandler = EntityManager.Instance.MyPlayer.GetComponent<CharacterInputHandler>();
             }
 
-            //data.buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
-            //_mouseButton0 = false;
-            //data.buttons.Set(NetworkInputData.MOUSEBUTTON1, _mouseButton1);
-            //_mouseButton1 = false;
-
-            input.Set(data);
+            if (characterInputHandler != null)
+            {
+                input.Set(characterInputHandler.GetNetworkInput());
+            }
         }
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -83,19 +70,9 @@ namespace Client
             {
                 // Create a unique position for the player
                 Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
-                NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+                Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
                 // Keep track of the player avatars for easy access
                 _spawnedCharacters.Add(player, networkPlayerObject);
-            }
-        }
-
-        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-        {
-            Debug.Log("Player Left");
-            if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
-            {
-                runner.Despawn(networkObject);
-                _spawnedCharacters.Remove(player);
             }
         }
 
@@ -124,6 +101,10 @@ namespace Client
         }
 
         public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
+        {
+        }
+
+        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
         }
     }
