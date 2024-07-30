@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerFaceUI: {fileID: 1651250197597426130}
   playerDataIndex: 1
+  playerBullet: {fileID: 1661845365241214184, guid: c3925332fbe717b418a8eed7ae0b5ca3, type: 3}
 --- !u!114 &4658846751594927363
 MonoBehaviour:
   m_ObjectHideFlags: 0
