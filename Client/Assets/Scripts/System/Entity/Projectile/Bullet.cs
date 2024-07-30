@@ -9,7 +9,7 @@ namespace Client
     {
         public override SystemEnum.ProjectileName Projectile => SystemEnum.ProjectileName.Bullet;
 
-        protected override void HitPlayer(CharPlayer player)
+        protected override void HitPlayer(Player player)
         {
             throw new System.NotImplementedException();
         }

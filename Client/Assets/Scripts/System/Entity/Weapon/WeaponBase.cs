@@ -12,7 +12,7 @@ namespace Client
         [SerializeField]
         protected ProjectileName ProjectileName;
         protected override EntityType _EntityType => SystemEnum.EntityType.Weapon;
-        protected CharPlayer _charPlayer = null;
+        protected Player _charPlayer = null;
         private WeaponData _weaponData = null;
 
         protected string ProjectilePath => $"Projectile/{ProjectileName.ToString()}";
@@ -86,7 +86,7 @@ namespace Client
             return _weaponData;
         }
 
-        public void SetCharPlayer(CharPlayer charPlayer)
+        public void SetCharPlayer(Player charPlayer)
         {
             _charPlayer = charPlayer;
             SetDirection();

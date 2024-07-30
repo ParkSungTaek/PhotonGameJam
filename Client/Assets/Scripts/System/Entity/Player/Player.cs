@@ -7,7 +7,7 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    public class CharPlayer : EntityBase
+    public class Player : EntityBase
     {
         [SerializeField] PlayerFace     playerFaceUI;
         [SerializeField] PlayerCharName playerDataIndex;
@@ -20,7 +20,7 @@ namespace Client
 
         private NetworkCharacterController _networkNetwork;
 
-        protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.CharPlayer;
+        protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.Player;
 
         public PlayerInfo PlayerInfo => _playerInfo;
 

@@ -19,7 +19,7 @@ namespace Client
 
 
         // 외부 엑세스
-        public CharPlayer MyPlayer { get; set; } // 내 Player
+        public Player MyPlayer { get; set; } // 내 Player
         public int MyPlayerID { get; set; } = -1; //내 ID 
 
         #region 생성자

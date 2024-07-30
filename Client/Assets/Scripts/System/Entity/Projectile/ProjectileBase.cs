@@ -35,7 +35,7 @@ namespace Client
             Damage = damage;
         }
 
-        protected abstract void HitPlayer(CharPlayer player);
+        protected abstract void HitPlayer(Player player);
         protected virtual void HitFloor() { }
         protected virtual void HitDefault() { }
         protected virtual void HitProjectile() { }
@@ -58,10 +58,10 @@ namespace Client
 
                 case SystemConst.PlayerLayer:
                     {
-                        CharPlayer player = collision.gameObject.GetComponent<CharPlayer>();
+                        Player player = collision.gameObject.GetComponent<Player>();
                         if(player == null)
                         {
-                            Debug.LogError($"{collision.gameObject.name} 이 Layer Player 이나 CharPlayer 타입이 없음 확인바람 (ProjectileBase)");
+                            Debug.LogError($"{collision.gameObject.name} 이 Layer Player 이나 Player 타입이 없음 확인바람 (ProjectileBase)");
                         }
                         else
                         {

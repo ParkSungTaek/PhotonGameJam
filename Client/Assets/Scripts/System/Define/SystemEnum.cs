@@ -59,7 +59,7 @@ namespace Client
         public enum EntityType
         {
             None,
-            CharPlayer,
+            Player,
             Weapon,
             Projectile,
 
