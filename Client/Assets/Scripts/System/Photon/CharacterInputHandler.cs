@@ -36,6 +36,7 @@ namespace Client
             networkInputData.movementInput = _moveInputVector;
             networkInputData.isJumpPressed = isJumpButtonPressed;
 
+            _moveInputVector = Vector3.zero;
             isJumpButtonPressed = false;
             return networkInputData;
         }
