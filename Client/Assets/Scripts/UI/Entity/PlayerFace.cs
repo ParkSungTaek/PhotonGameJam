@@ -29,27 +29,34 @@ namespace Client
         private void RefreshDeco()
         {
             DecoData faceData = items[DecoType.Face];
-            Texture2D faceTexture = Resources.Load<Texture2D>($"Assets/Resources/Prefabs/{faceData._type}/{faceData._name}.png");
-            Sprite faceSprite = Sprite.Create(faceTexture, new Rect(0, 0, faceTexture.width, faceTexture.height), new Vector2(0.5f, 0.5f));
-            face.sprite = faceSprite;
+            Texture2D faceTexture = Resources.Load<Texture2D>($"Sprites/Characters/{faceData._type}/{faceData._resource}");
+            if (faceTexture != null)
+            {
+                Sprite faceSprite = Sprite.Create(faceTexture, new Rect(0, 0, faceTexture.width, faceTexture.height), new Vector2(0.5f, 0.5f));
+                face.sprite = faceSprite;
+            }
 
-            DecoData bodyData = items[DecoType.Face];
-            Texture2D bodyTexture = Resources.Load<Texture2D>($"Assets/Resources/Prefabs/{bodyData._type}/{bodyData._name}.png");
-            Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
-            body.sprite = bodySprite;
+            DecoData bodyData = items[DecoType.Body];
+            Texture2D bodyTexture = Resources.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+            if (bodyTexture != null)
+            {
+                Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                body.sprite = bodySprite;
+            }
+            
         }
 
         // 캐릭터 외형을 한번에 세팅합니다.
-        private void SetPlayerDeco(Dictionary<DecoType, DecoData> decos)
+        public void SetPlayerDeco(Dictionary<DecoType, DecoData> decos)
         {
             items = decos;
             RefreshDeco();
         }
 
         // 캐릭터 외형을 하나씩 세팅합니다.
-        private void SetPlayerDeco(DecoType type, DecoData data)
+        public void SetPlayerDeco(DecoType type, int index)
         {
-            items[type] = data;
+            items[type] = DataManager.Instance.GetData<DecoData>(index);
             RefreshDeco();
         }
     }

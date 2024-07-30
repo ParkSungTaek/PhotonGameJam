@@ -20,7 +20,9 @@ namespace Client
 
         private int faceNum = 0; // 현재 선택된 얼굴 번호
         private int bodyNum = 0; // 현재 선택된 몸 번호
-        private Dictionary<DecoType, List<DecoData>> items = new(); // 꾸미기 아이템 정보
+
+        private List<DecoSlot>                       items    = new(); // 현재 꾸미기 아이템 슬롯 List
+        private Dictionary<DecoType, List<DecoData>> itemData = new(); // 꾸미기 아이템 정보
 
         public override void Init()
         {
@@ -48,13 +50,41 @@ namespace Client
         }
 
         // 특정 아이템이 눌렸을 때 호출됩니다.
-        private void OnClickItemBtn(DecoData item)
+        private void OnClickItemBtn(DecoType type, int selectIndex)
         {
+            foreach (DecoSlot slot in items)
+            {
+                slot.OnTabSelected(type, selectIndex);
+            }
+            switch (type)
+            {
+                case DecoType.Face:
+                    faceNum = selectIndex;
+                    playerUI.SetPlayerDeco(DecoType.Face, faceNum);
+                    break;
+
+                case DecoType.Body:
+                    bodyNum = selectIndex;
+                    playerUI.SetPlayerDeco(DecoType.Body, bodyNum);
+                    break;
+            }
         }
 
         // 아이템 스크롤을 해당 타입으로 갱신합니다.
         private void RefreshItemList(DecoType type)
         {
+            items.Clear();
+            Transform content = scroll.content;
+            foreach (Transform child in content)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach (DecoData data in itemData[type])
+            {
+                DecoSlot newSlot = Instantiate(decoPrepeb, content);
+                newSlot.SetData(OnClickItemBtn, data);
+                items.Add(newSlot);
+            }
         }
 
         // 갈아 입기 버튼을 눌렀을 때 호출됩니다.
@@ -65,10 +95,10 @@ namespace Client
         // 꾸미기 아이템 정보를 불러옵니다.
         public void LoadDecoItemDatas()
         {
-            items.Clear();
+            itemData.Clear();
             for (int i = 0; i < (int)DecoType.MaxCount; ++i)
             {
-                items.Add((DecoType)i, new List<DecoData>());
+                itemData.Add((DecoType)i, new List<DecoData>());
             }
 
             List<DecoData> itemDataList = DataManager.Instance.GetAllData<DecoData>();
@@ -76,7 +106,7 @@ namespace Client
 
             foreach (DecoData data in itemDataList)
             {
-                items[data._type].Add(data);
+                itemData[data._type].Add(data);
             }
         }
     }

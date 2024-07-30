@@ -25,7 +25,7 @@ namespace Client
             mainBtn.onClick.AddListener(OnClickBtn);
         }
 
-        // 스킬 데이터를 세팅합니다.
+        // 꾸미기탭 데이터를 세팅합니다.
         public void SetData(Action<DecoType> action)
         {
             selectAction = action;
