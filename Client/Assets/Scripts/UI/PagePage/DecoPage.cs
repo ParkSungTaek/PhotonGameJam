@@ -39,7 +39,6 @@ namespace Client
         // 처음 페이지에 들어왔을 때, 플레이어의 세팅으로 맞춥니다. ( 없다면 default )
         private void SetPlayerDeco()
         {
-            //selectData = EntityManager.Instance.MyPlayer.PlayerInfo.DecoInfo;
             OnClickTabBtn(DecoType.Body);
         }
 

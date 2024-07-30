@@ -9,6 +9,7 @@ namespace Client
 {
     public class CharPlayer : EntityBase
     {
+        [SerializeField] PlayerFace     playerFaceUI;
         [SerializeField] PlayerCharName playerDataIndex;
 
         private List<BuffBase> _buffBases    = new List<BuffBase>(); // 본인이 가지고있는 버프
@@ -72,6 +73,20 @@ namespace Client
 
         }
 
+        // 꾸미기 데이터를 세팅합니다.
+        public void SetDecoData(DecoType type, DecoData decoData)
+        {
+            if (_playerInfo.DecoInfo.ContainsKey(type) == false)
+            {
+                _playerInfo.DecoInfo.Add(type, new DecoData());
+            }
+            _playerInfo.DecoInfo[type] = decoData;
+
+            foreach (var decoInfo in _playerInfo.DecoInfo)
+            {
+                playerFaceUI.SetPlayerDeco(decoInfo.Key, decoInfo.Value);
+            }
+        }
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out NetworkInputData data))
