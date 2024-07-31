@@ -12,7 +12,7 @@ namespace Client
     {
         [SerializeField] PlayerFace     playerFaceUI;
         [SerializeField] PlayerCharName playerDataIndex;
-        //[SerializeField] private Bullet playerBullet;
+        [SerializeField] private Bullet playerBullet;
 
         [Networked] private TickTimer _attackCoolTime { get; set; } // 공격 쿨타임
 
@@ -100,42 +100,33 @@ namespace Client
                     _networkNetwork.Jump();
                 }
 
-                if (_weapon != null)
+                if (HasStateAuthority && _attackCoolTime.ExpiredOrNotRunning(Runner))
                 {
-                    //if (HasStateAuthority && _attackCoolTime.ExpiredOrNotRunning(Runner))
-                    //{
-                    //    //  마우스 왼쪽키
-                    //    if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0))
-                    //    {
-                    //        _attackCoolTime = TickTimer.CreateFromSeconds(Runner, 0.1f);
-                    //        Runner.Spawn(_weapon.WeaponProjectile,
-                    //          transform.position + data.movementInput,
-                    //          Quaternion.LookRotation(data.movementInput),
-                    //          Object.InputAuthority,
-                    //          (runner, o) =>
-                    //          {
-                    //              Vector3 mouseScreenPosition = Input.mousePosition;
-                    //
-                    //          // 마우스의 z 위치를 플레이어 오브젝트의 z 위치와 맞춥니다.
-                    //          // 이는 카메라의 뷰포트에서 동일한 깊이(플레이어의 깊이)를 사용하도록 하기 위함입니다.
-                    //          mouseScreenPosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
-                    //
-                    //          // 스크린 좌표계를 월드 좌표계로 변환합니다.
-                    //          Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-                    //
-                    //          // 플레이어 오브젝트와 마우스 위치 간의 차이를 계산합니다.
-                    //          Vector3 rawDirection = mouseWorldPosition - transform.position;
-                    //
-                    //              o.GetComponent<Bullet>().Shot(rawDirection.normalized);
-                    //          });
-                    //    }
-                    //}
-
-                    if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0) && HasStateAuthority)
+                    //  마우스 왼쪽키
+                    if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0))
                     {
-                        _weapon.Shot(data, Runner, _playerInfo.GetStat(EntityStat.NAtkSpd));
-                    }
+                        _attackCoolTime = TickTimer.CreateFromSeconds(Runner, 0.1f);
+                        Runner.Spawn(playerBullet,
+                            transform.position + data.movementInput,
+                            Quaternion.LookRotation(data.movementInput),
+                            Object.InputAuthority,
+                            (runner, o) =>
+                            {
+                                Vector3 mouseScreenPosition = Input.mousePosition;
 
+                                // 마우스의 z 위치를 플레이어 오브젝트의 z 위치와 맞춥니다.
+                                // 이는 카메라의 뷰포트에서 동일한 깊이(플레이어의 깊이)를 사용하도록 하기 위함입니다.
+                                mouseScreenPosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
+
+                                // 스크린 좌표계를 월드 좌표계로 변환합니다.
+                                Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+
+                                // 플레이어 오브젝트와 마우스 위치 간의 차이를 계산합니다.
+                                Vector3 rawDirection = mouseWorldPosition - transform.position;
+
+                                o.GetComponent<Bullet>().Shot(rawDirection.normalized);
+                            });
+                    }
                 }
 
             }
@@ -178,7 +169,6 @@ namespace Client
 
         public void OnDamage(float damage)
         {
-            _playerInfo
         }
     }
 }
