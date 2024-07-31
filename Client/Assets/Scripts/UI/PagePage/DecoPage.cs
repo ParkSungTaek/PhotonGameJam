@@ -39,6 +39,16 @@ namespace Client
         // 처음 페이지에 들어왔을 때, 플레이어의 세팅으로 맞춥니다. ( 없다면 default )
         private void SetPlayerDeco()
         {
+            Dictionary<DecoType, DecoData> myDecoData = MyInfoManager.Instance.GetDecoData();
+            foreach ( var decoData in itemData )
+            {
+                if( myDecoData.ContainsKey(decoData.Key))
+                {
+                    selectData[decoData.Key] = myDecoData[decoData.Key];
+                    continue;
+                }
+                selectData[decoData.Key] = itemData[decoData.Key][0];
+            }
             OnClickTabBtn(DecoType.Body);
         }
 
@@ -102,11 +112,10 @@ namespace Client
         // 갈아 입기 버튼을 눌렀을 때 호출됩니다.
         private void OnClickSaveBtn()
         {
-            foreach (var decoInfo in EntityManager.Instance.MyPlayer.PlayerInfo.DecoInfo)
+            foreach (var decoInfo in selectData)
             {
-                EntityManager.Instance.MyPlayer.PlayerInfo.SetDecoData(decoInfo.Key, selectData[decoInfo.Key]);
+                MyInfoManager.Instance.SetDecoData(decoInfo.Key, selectData[decoInfo.Key]);
             }
-            
         }
 
         // 꾸미기 아이템 정보를 불러옵니다.

@@ -10,9 +10,7 @@ namespace Client
         private EntityPlayerData _playerData    = null; // Player 데이터
         private WeaponData _weaponData    = null; // Player 데이터
         private List<BuffBase> _buffBases = null; // 보유중인 버프
-        private Dictionary<DecoType, DecoData> _decoInfo = new(); // 꾸미기 정보
         public string CharName { get; set; } = "DefaultName";
-        public Dictionary<DecoType, DecoData> DecoInfo => _decoInfo;
         #region BuffData
 
         // 버프라는건 만분률 버프 더해서 하는 버프 그걸 마지막에 Get해서 계산 한번에 순회해서 계산 
@@ -83,15 +81,6 @@ namespace Client
                     buff.Execute();
                 }
             }
-            _decoInfo.Clear();
-            if (decoInfo == null)
-            {
-                for (int i = 0; i < (int)DecoType.MaxCount; ++i)
-                {
-                    _decoInfo.Add((DecoType)i, new DecoData());
-                }
-            }
-            _decoInfo = decoInfo;
         }
 
         public void SetDataWeaponData(WeaponData weaponData)
@@ -110,16 +99,6 @@ namespace Client
                 EntityStatDic[EntityStat.Att] = _weaponData._Att;
                 EntityStatDic[EntityStat.NAtt] = _weaponData._Att;
             }
-        }
-
-        // 꾸미기 데이터를 세팅합니다.
-        public void SetDecoData(DecoType type, DecoData decoData)
-        {
-            if (_decoInfo.ContainsKey(type) == false)
-            {
-                _decoInfo.Add(type, new DecoData());
-            }
-            _decoInfo[type] = decoData;
         }
 
         // 단일 버프 활성화

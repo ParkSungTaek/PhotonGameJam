@@ -3,6 +3,7 @@ using Fusion;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -70,7 +71,14 @@ namespace Client
             {
                 // Create a unique position for the player
                 Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
-                Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+                Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player, (runner, o) =>
+                {
+                    Dictionary<DecoType, DecoData> decoData = MyInfoManager.Instance.GetDecoData();
+                    foreach( var data in decoData )
+                    {
+                        o.GetComponent<Player>().SetDecoData(data.Key, data.Value);
+                    }
+                });
                 // Keep track of the player avatars for easy access
                 _spawnedCharacters.Add(player, networkPlayerObject);
             }

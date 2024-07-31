@@ -12,7 +12,7 @@ namespace Client
     {
         [SerializeField] PlayerFace     playerFaceUI;
         [SerializeField] PlayerCharName playerDataIndex;
-        [SerializeField] private Bullet playerBullet;
+        //[SerializeField] private Bullet playerBullet;
 
         [Networked] private TickTimer _attackCoolTime { get; set; } // 공격 쿨타임
 
@@ -21,10 +21,10 @@ namespace Client
         private int            _weaponDataID = SystemConst.NoData;
         private Rigidbody2D    _rigidbody2D  = null;
         private WeaponBase     _weapon       = null;
-
+        
         private NetworkCharacterController _networkNetwork;
 
-        protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.Player;
+    protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.Player;
 
         public PlayerInfo PlayerInfo => _playerInfo;
 
@@ -80,16 +80,7 @@ namespace Client
         // 꾸미기 데이터를 세팅합니다.
         public void SetDecoData(DecoType type, DecoData decoData)
         {
-            if (_playerInfo.DecoInfo.ContainsKey(type) == false)
-            {
-                _playerInfo.DecoInfo.Add(type, new DecoData());
-            }
-            _playerInfo.DecoInfo[type] = decoData;
-
-            foreach (var decoInfo in _playerInfo.DecoInfo)
-            {
-                playerFaceUI.SetPlayerDeco(decoInfo.Key, decoInfo.Value);
-            }
+            playerFaceUI.SetPlayerDeco(type, decoData);
         }
         public override void FixedUpdateNetwork()
         {
@@ -101,6 +92,7 @@ namespace Client
                 }
 
                 data.movementInput.Normalize();
+                //_weapon.transform.localRotation = data.movementInput.Normalize();
                 _networkNetwork.Move(_playerInfo.GetStat(EntityStat.NMovSpd) * data.movementInput * Runner.DeltaTime);
 
                 if (data.isJumpPressed)
@@ -108,64 +100,45 @@ namespace Client
                     _networkNetwork.Jump();
                 }
 
-                if (HasStateAuthority && _attackCoolTime.ExpiredOrNotRunning(Runner))
+                if (_weapon != null)
                 {
-                    if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0))
+                    //if (HasStateAuthority && _attackCoolTime.ExpiredOrNotRunning(Runner))
+                    //{
+                    //    //  마우스 왼쪽키
+                    //    if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0))
+                    //    {
+                    //        _attackCoolTime = TickTimer.CreateFromSeconds(Runner, 0.1f);
+                    //        Runner.Spawn(_weapon.WeaponProjectile,
+                    //          transform.position + data.movementInput,
+                    //          Quaternion.LookRotation(data.movementInput),
+                    //          Object.InputAuthority,
+                    //          (runner, o) =>
+                    //          {
+                    //              Vector3 mouseScreenPosition = Input.mousePosition;
+                    //
+                    //          // 마우스의 z 위치를 플레이어 오브젝트의 z 위치와 맞춥니다.
+                    //          // 이는 카메라의 뷰포트에서 동일한 깊이(플레이어의 깊이)를 사용하도록 하기 위함입니다.
+                    //          mouseScreenPosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
+                    //
+                    //          // 스크린 좌표계를 월드 좌표계로 변환합니다.
+                    //          Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+                    //
+                    //          // 플레이어 오브젝트와 마우스 위치 간의 차이를 계산합니다.
+                    //          Vector3 rawDirection = mouseWorldPosition - transform.position;
+                    //
+                    //              o.GetComponent<Bullet>().Shot(rawDirection.normalized);
+                    //          });
+                    //    }
+                    //}
+
+                    if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0) && HasStateAuthority)
                     {
-                        _attackCoolTime = TickTimer.CreateFromSeconds(Runner, 0.1f);
-                        Runner.Spawn(playerBullet,
-                          transform.position + data.movementInput,
-                          Quaternion.LookRotation(data.movementInput),
-                          Object.InputAuthority,
-                          (runner, o) =>
-                          {
-                              Vector3 mouseScreenPosition = Input.mousePosition;
-
-                              // 마우스의 z 위치를 플레이어 오브젝트의 z 위치와 맞춥니다.
-                              // 이는 카메라의 뷰포트에서 동일한 깊이(플레이어의 깊이)를 사용하도록 하기 위함입니다.
-                              mouseScreenPosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
-
-                              // 스크린 좌표계를 월드 좌표계로 변환합니다.
-                              Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-
-                              // 플레이어 오브젝트와 마우스 위치 간의 차이를 계산합니다.
-                              Vector3 rawDirection = mouseWorldPosition - transform.position;
-
-                              o.GetComponent<Bullet>().Shot(rawDirection.normalized);
-                          });
+                        _weapon.Shot(data, Runner, _playerInfo.GetStat(EntityStat.NAtkSpd));
                     }
+
                 }
-            }
-        }
 
-        void Move()
-        {
-            Vector3 deltaDirection = Vector3.zero;
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                deltaDirection += Vector3.right;
             }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                deltaDirection += Vector3.left;
-            }
-            
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log("jumpP" + _playerInfo.GetStat(EntityStat.NJumpP));
-                //_rigidbody2D.AddForce(Vector3.up * _playerInfo.GetStat(EntityStat.NJumpP), ForceMode2D.Impulse);
-            }
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                _weapon?.Shot();    
-            }
-
-
-            //Vector3 deltaDirection = GameManager.Instance.JoystickDirection;
-            Vector3 targetPosition = transform.position + deltaDirection;
-
-            transform.position = Vector3.Lerp(transform.position, targetPosition, _playerInfo.GetStat(EntityStat.NMovSpd) * Time.deltaTime);
         }
 
         public void SetWeaponBase(WeaponBase weapon)
@@ -188,6 +161,12 @@ namespace Client
                 Debug.Log("Spawned local player");
             }
             else Debug.Log("Spawned remote player");
+
+            Dictionary<DecoType, DecoData> decoData = MyInfoManager.Instance.GetDecoData();
+            foreach (var data in decoData)
+            {
+                SetDecoData(data.Key, data.Value);
+            }
         }
 
         public void PlayerLeft(PlayerRef player)
@@ -195,6 +174,11 @@ namespace Client
             if (player == Object.InputAuthority)
                 Runner.Despawn(Object);
 
+        }
+
+        public void OnDamage(float damage)
+        {
+            _playerInfo
         }
     }
 }
