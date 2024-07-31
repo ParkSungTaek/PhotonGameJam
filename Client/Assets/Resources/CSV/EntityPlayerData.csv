@@ -1,0 +1,5 @@
+﻿인덱스,플레이어 캐릭터명,이름,플레이어 점프 힘,HP
+index,_PlayerCharName,_movSpd,_jumpPower,_hp
+int,PlayerCharName,int,int,int
+0,None,0,0,0
+1,Normal,30000,50000,1000000

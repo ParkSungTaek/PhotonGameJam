@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DataGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85bd0387d1f94775a981d60968082a125f96ab34")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bba65b7d787d87286ae5d09e9d56b0f2a9626041")]
 [assembly: System.Reflection.AssemblyProductAttribute("DataGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DataGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

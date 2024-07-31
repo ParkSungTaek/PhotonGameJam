@@ -1,4 +1,5 @@
 ﻿using ExcelDataReader;
+using Spire.Xls;
 using System;
 using System.Data;
 using System.IO;
@@ -19,6 +20,18 @@ namespace DataGenerator
             {
                 Console.WriteLine("Generate file: " + Path.GetFileName(file));
                 ParseExcel(file);
+
+                // Workbook 클래스의 인스턴스 생성
+                Workbook workbook = new Workbook();
+
+                // Excel 파일 로드
+                workbook.LoadFromFile(file);
+
+                // 첫 번째 워크시트 가져오기
+                Worksheet sheet = workbook.Worksheets[0];
+
+                // 워크시트를 CSV로 저장
+                sheet.SaveToFile($"../../Client/Assets/Resources/CSV/{Path.GetFileNameWithoutExtension(Path.GetFileName(file))}.csv", ",", Encoding.UTF8);
             }
         }
 
@@ -82,7 +95,7 @@ namespace DataGenerator
 
 
             dataRegister = dataRegister.Replace("\n", "\n\t\t");
-            dataParse = dataParse.Replace("\n", "\n\t\t\t\t\t\t");
+            dataParse = dataParse.Replace("\n", "\n\t\t\t\t");
             var dataManagerText = string.Format(DataFormat.dataFormat, excelName, dataRegister, dataParse);
 
             File.WriteAllText($"../../Client/Assets/Scripts/DataSheets/{excelName}.cs", dataManagerText);

@@ -52,6 +52,10 @@
             "ExcelDataReader.DataSet": {
               "target": "Package",
               "version": "[3.7.0, )"
+            },
+            "Spire.XLS": {
+              "target": "Package",
+              "version": "[14.7.2, )"
             }
           },
           "imports": [

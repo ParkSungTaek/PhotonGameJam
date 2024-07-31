@@ -29,60 +29,27 @@ namespace Client
         {
             var dataList = new Dictionary<int, SheetData>();
 
-            string filePath = $"Assets/Data/XLSXS/{this.GetType().Name}.xlsx";
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            TextAsset csvFile = Resources.Load<TextAsset>($"CSV/{this.GetType().Name}");
+            string csvContent = csvFile.text;
+            string[] lines = csvContent.Split('\n');
+            for (int i = 3; i < lines.Length; i++)
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    var result = reader.AsDataSet();
-                    DataTable table = result.Tables[0];
+                if (string.IsNullOrWhiteSpace(lines[i]))
+                    continue;
 
-                    for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
-                    {
-                        DataRow row = table.Rows[rowIndex];
-                        TestData2 data = new TestData2();
+                string[] values = lines[i].Split(',');
+                
+                TestData2 data = new TestData2();
 
+                data.index = Convert.ToInt32(values[0]);
+				data.name = Convert.ToString(values[1]);
+				data.attack = Convert.ToInt32(values[2]);
+				data.defence = Convert.ToInt32(values[3]);
+				data.speed = Convert.ToInt32(values[4]);
+				data.buff = (SystemEnum.BuffType)Enum.Parse(typeof(SystemEnum.BuffType), values[5]);
+				
 
-						if (row[0] != DBNull.Value)
-						{
-						    data.index = Convert.ToInt32(row[0]);
-						}
-						
-						
-						if (row[1] != DBNull.Value)
-						{
-						    data.name = Convert.ToString(row[1]);
-						}
-						
-						
-						if (row[2] != DBNull.Value)
-						{
-						    data.attack = Convert.ToInt32(row[2]);
-						}
-						
-						
-						if (row[3] != DBNull.Value)
-						{
-						    data.defence = Convert.ToInt32(row[3]);
-						}
-						
-						
-						if (row[4] != DBNull.Value)
-						{
-						    data.speed = Convert.ToInt32(row[4]);
-						}
-						
-						
-						if (row[5] != DBNull.Value)
-						{
-						    data.buff = (SystemEnum.BuffType)Enum.Parse(typeof(SystemEnum.BuffType), row[5].ToString());
-						}
-						
-						
-
-                        dataList[data.index] = data;
-                    }
-                }
+                dataList[data.index] = data;
             }
 
             return dataList;

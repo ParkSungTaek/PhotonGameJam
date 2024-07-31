@@ -1,0 +1,5 @@
+﻿인덱스,투사체 명,투사체 속도,생존시간 (10000 = 1초)
+index,_ProjectileName,_projectileSpd,_lifeTime
+int,ProjectileName,int,int
+0,None,0,0
+1,Bullet,150000,10000

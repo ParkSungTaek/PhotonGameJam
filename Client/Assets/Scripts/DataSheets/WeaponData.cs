@@ -25,48 +25,25 @@ namespace Client
         {
             var dataList = new Dictionary<int, SheetData>();
 
-            string filePath = $"Assets/Data/XLSXS/{this.GetType().Name}.xlsx";
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            TextAsset csvFile = Resources.Load<TextAsset>($"CSV/{this.GetType().Name}");
+            string csvContent = csvFile.text;
+            string[] lines = csvContent.Split('\n');
+            for (int i = 3; i < lines.Length; i++)
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    var result = reader.AsDataSet();
-                    DataTable table = result.Tables[0];
+                if (string.IsNullOrWhiteSpace(lines[i]))
+                    continue;
 
-                    for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
-                    {
-                        DataRow row = table.Rows[rowIndex];
-                        WeaponData data = new WeaponData();
+                string[] values = lines[i].Split(',');
+                
+                WeaponData data = new WeaponData();
 
+                data.index = Convert.ToInt32(values[0]);
+				data._WeaponName = (SystemEnum.WeaponName)Enum.Parse(typeof(SystemEnum.WeaponName), values[1]);
+				data._atkSpd = Convert.ToInt32(values[2]);
+				data._Att = Convert.ToInt32(values[3]);
+				
 
-						if (row[0] != DBNull.Value)
-						{
-						    data.index = Convert.ToInt32(row[0]);
-						}
-						
-						
-						if (row[1] != DBNull.Value)
-						{
-						    data._WeaponName = (SystemEnum.WeaponName)Enum.Parse(typeof(SystemEnum.WeaponName), row[1].ToString());
-						}
-						
-						
-						if (row[2] != DBNull.Value)
-						{
-						    data._atkSpd = Convert.ToInt32(row[2]);
-						}
-						
-						
-						if (row[3] != DBNull.Value)
-						{
-						    data._Att = Convert.ToInt32(row[3]);
-						}
-						
-						
-
-                        dataList[data.index] = data;
-                    }
-                }
+                dataList[data.index] = data;
             }
 
             return dataList;

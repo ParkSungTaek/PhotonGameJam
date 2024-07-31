@@ -17,12 +17,7 @@ public {0} {1}; // {2}";
         // {1} : 자료형 이름
         // {2} : 자료형 변환
         public static string dataParseFomat =
-@"
-if (row[{0}] != DBNull.Value)
-{{
-    data.{1} = Convert.{2}(row[{0}]);
-}}
-";
+@"data.{1} = Convert.{2}(values[{0}]);";
         public static string dataEnumRegisterFormat =
 @"
 public SystemEnum.{0} {1}; // {2}";
@@ -31,12 +26,7 @@ public SystemEnum.{0} {1}; // {2}";
         // {1} : 자료형 이름
         // {2} : Enum 자료형
         public static string dataEnumParseFomat =
-@"
-if (row[{0}] != DBNull.Value)
-{{
-    data.{1} = (SystemEnum.{2})Enum.Parse(typeof(SystemEnum.{2}), row[{0}].ToString());
-}}
-";
+@"data.{1} = (SystemEnum.{2})Enum.Parse(typeof(SystemEnum.{2}), values[{0}]);";
 
         // {0} : 엑셀 이름 (ex: TestData)
         // {1} : 자료형들 (ex: int a)
@@ -61,24 +51,21 @@ namespace Client
         {{
             var dataList = new Dictionary<int, SheetData>();
 
-            string filePath = $""Assets/Data/XLSXS/{{this.GetType().Name}}.xlsx"";
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            TextAsset csvFile = Resources.Load<TextAsset>($""CSV/{{this.GetType().Name}}"");
+            string csvContent = csvFile.text;
+            string[] lines = csvContent.Split('\n');
+            for (int i = 3; i < lines.Length; i++)
             {{
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {{
-                    var result = reader.AsDataSet();
-                    DataTable table = result.Tables[0];
+                if (string.IsNullOrWhiteSpace(lines[i]))
+                    continue;
 
-                    for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
-                    {{
-                        DataRow row = table.Rows[rowIndex];
-                        {0} data = new {0}();
+                string[] values = lines[i].Split(',');
+                
+                {0} data = new {0}();
 
-{2}
+                {2}
 
-                        dataList[data.index] = data;
-                    }}
-                }}
+                dataList[data.index] = data;
             }}
 
             return dataList;

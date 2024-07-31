@@ -1,0 +1,5 @@
+﻿인덱스,공격력,공격속도,공격력
+index,_WeaponName,_atkSpd,_Att
+int,WeaponName,int,int
+0,None,0,0
+1,Pistol,15000,150000

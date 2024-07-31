@@ -1,0 +1,10 @@
+﻿인덱스,이름,부위,설명,리소스 이름
+index,_name,_type,_desc,_resource
+int,string,DecoType,string,string
+0,아잉눈,Face,아잉조아,A_ing_Eye
+1,화난눈,Face,화가난눈입니다화가난눈입니다화가난눈입니다화가난눈입니다화가난눈입니다,Angry_Eye
+2,놀란눈,Face,헉,Surprize_Eye
+3,초록몸,Body,기본 초록색 몸,Green_Body
+4,곰돌몸,Body,곰돌이 귀가 생겼어요,Orange_Body
+5,탱글곰돌몸,Body,탱글탱글,Purple_Body
+

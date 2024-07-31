@@ -25,48 +25,25 @@ namespace Client
         {
             var dataList = new Dictionary<int, SheetData>();
 
-            string filePath = $"Assets/Data/XLSXS/{this.GetType().Name}.xlsx";
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            TextAsset csvFile = Resources.Load<TextAsset>($"CSV/{this.GetType().Name}");
+            string csvContent = csvFile.text;
+            string[] lines = csvContent.Split('\n');
+            for (int i = 3; i < lines.Length; i++)
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    var result = reader.AsDataSet();
-                    DataTable table = result.Tables[0];
+                if (string.IsNullOrWhiteSpace(lines[i]))
+                    continue;
 
-                    for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
-                    {
-                        DataRow row = table.Rows[rowIndex];
-                        ProjectileData data = new ProjectileData();
+                string[] values = lines[i].Split(',');
+                
+                ProjectileData data = new ProjectileData();
 
+                data.index = Convert.ToInt32(values[0]);
+				data._ProjectileName = (SystemEnum.ProjectileName)Enum.Parse(typeof(SystemEnum.ProjectileName), values[1]);
+				data._projectileSpd = Convert.ToInt32(values[2]);
+				data._lifeTime = Convert.ToInt32(values[3]);
+				
 
-						if (row[0] != DBNull.Value)
-						{
-						    data.index = Convert.ToInt32(row[0]);
-						}
-						
-						
-						if (row[1] != DBNull.Value)
-						{
-						    data._ProjectileName = (SystemEnum.ProjectileName)Enum.Parse(typeof(SystemEnum.ProjectileName), row[1].ToString());
-						}
-						
-						
-						if (row[2] != DBNull.Value)
-						{
-						    data._projectileSpd = Convert.ToInt32(row[2]);
-						}
-						
-						
-						if (row[3] != DBNull.Value)
-						{
-						    data._lifeTime = Convert.ToInt32(row[3]);
-						}
-						
-						
-
-                        dataList[data.index] = data;
-                    }
-                }
+                dataList[data.index] = data;
             }
 
             return dataList;

@@ -27,54 +27,26 @@ namespace Client
         {
             var dataList = new Dictionary<int, SheetData>();
 
-            string filePath = $"Assets/Data/XLSXS/{this.GetType().Name}.xlsx";
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            TextAsset csvFile = Resources.Load<TextAsset>($"CSV/{this.GetType().Name}");
+            string csvContent = csvFile.text;
+            string[] lines = csvContent.Split('\n');
+            for (int i = 3; i < lines.Length; i++)
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    var result = reader.AsDataSet();
-                    DataTable table = result.Tables[0];
+                if (string.IsNullOrWhiteSpace(lines[i]))
+                    continue;
 
-                    for (int rowIndex = 3; rowIndex <= table.Rows.Count - 1; rowIndex++)
-                    {
-                        DataRow row = table.Rows[rowIndex];
-                        DecoData data = new DecoData();
+                string[] values = lines[i].Trim().Split(',');
+                
+                DecoData data = new DecoData();
 
+                data.index = Convert.ToInt32(values[0]);
+				data._name = Convert.ToString(values[1]);
+				data._type = (SystemEnum.DecoType)Enum.Parse(typeof(SystemEnum.DecoType), values[2]);
+				data._desc = Convert.ToString(values[3]);
+				data._resource = Convert.ToString(values[4]);
+				
 
-						if (row[0] != DBNull.Value)
-						{
-						    data.index = Convert.ToInt32(row[0]);
-						}
-						
-						
-						if (row[1] != DBNull.Value)
-						{
-						    data._name = Convert.ToString(row[1]);
-						}
-						
-						
-						if (row[2] != DBNull.Value)
-						{
-						    data._type = (SystemEnum.DecoType)Enum.Parse(typeof(SystemEnum.DecoType), row[2].ToString());
-						}
-						
-						
-						if (row[3] != DBNull.Value)
-						{
-						    data._desc = Convert.ToString(row[3]);
-						}
-						
-						
-						if (row[4] != DBNull.Value)
-						{
-						    data._resource = Convert.ToString(row[4]);
-						}
-						
-						
-
-                        dataList[data.index] = data;
-                    }
-                }
+                dataList[data.index] = data;
             }
 
             return dataList;

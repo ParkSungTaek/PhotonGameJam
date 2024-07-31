@@ -1,0 +1,12 @@
+﻿인덱스,이름,공격력,방어력,이동속도,버프
+index,name,attack,defence,speed,buff
+int,string,int,int,int,BuffType
+1,abc,10,100,1000,None
+2,abd,11,101,1001,Buff
+3,abe,12,102,1002,Buff
+4,abf,13,103,1003,Buff
+5,abg,14,104,1004,Debuff
+6,abh,15,105,1005,Debuff
+7,abi,16,106,1006,Debuff
+8,abj,17,107,1007,State
+9,abk,18,108,1008,State

@@ -1,0 +1,12 @@
+﻿인덱스,공격력,이름
+index,attack,name
+int,int,string
+1,10,abc
+2,11,abd
+3,12,abe
+4,13,abf
+5,14,abg
+6,15,abh
+7,16,abi
+8,17,abj
+9,18,abk
