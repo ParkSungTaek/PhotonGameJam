@@ -8,16 +8,15 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    public class PlayerFace : UI_Base
+    public class PlayerFace : MonoBehaviour
     {
-        [SerializeField] private Image body = null; // ¸ö UI
-        [SerializeField] private Image face = null; // ¾ó±¼ UI
+        [SerializeField] private SpriteRenderer body = null; // ¸ö UI
+        [SerializeField] private SpriteRenderer face = null; // ¾ó±¼ UI
 
         private Dictionary<DecoType, DecoData> items = new(); // ²Ù¹Ì±â ¾ÆÀÌÅÛ Á¤º¸
 
         public void Awake()
         {
-            base.Init();
             items.Clear();
             for (int i = 0; i < (int)DecoType.MaxCount; ++i)
             {
