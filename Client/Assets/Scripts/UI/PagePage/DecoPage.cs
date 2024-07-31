@@ -15,7 +15,7 @@ namespace Client
         [SerializeField] private DecoSlot      decoPrepeb = null; // 꾸미기 슬롯 프리펩
         [SerializeField] private ScrollRect    scroll     = null; // 꾸미기 슬롯 스크롤
         [SerializeField] private TopPageBar    topBar     = null; // 상단바
-        [SerializeField] private PlayerFace    playerUI   = null; // 플레이어
+        [SerializeField] private PlayerFaceUI  playerUI   = null; // 플레이어
         [SerializeField] private DecoTabSlot[] tabBtns    = null; // 꾸미기 슬롯 탭 프리펩
 
         private List<DecoSlot>                       items      = new(); // 현재 꾸미기 아이템 슬롯 List
