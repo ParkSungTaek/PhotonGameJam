@@ -11,7 +11,7 @@ namespace Client
 
         private bool leftMouseButton; // 왼쪽 마우스 버튼
         private bool rightButton; // 오른쪽 마우스 버튼
-        
+
         // Start is called before the first frame update
         void Start()
         {

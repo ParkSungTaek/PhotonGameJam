@@ -95,6 +95,11 @@ namespace Client
         {
             if (GetInput(out NetworkInputData data))
             {
+                if (_playerInfo == null)
+                {
+                    return;
+                }
+
                 data.movementInput.Normalize();
                 _networkNetwork.Move(_playerInfo.GetStat(EntityStat.NMovSpd) * data.movementInput * Runner.DeltaTime);
 
