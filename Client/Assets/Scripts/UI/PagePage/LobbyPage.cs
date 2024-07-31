@@ -19,7 +19,6 @@ namespace Client
         [SerializeField] private TopPageBar topBar          = null; // 상단바
 
         [SerializeField] private Button     hostBtn         = null; // 호스트 입장 버튼(개발자용)
-        [SerializeField] private Button     guestBtn        = null; // 게스트 입장 버튼(개발자용)
         public override void Init()
         {
             base.Init();
@@ -29,7 +28,6 @@ namespace Client
             inGameBtn.onClick.AddListener(OnClickInGameBtn);
 
             hostBtn.onClick.AddListener(OnClickHostBtn);
-            guestBtn.onClick.AddListener(OnClickGuestBtn);
         }
 
         // 랜덤 매칭 버튼을 눌렀을 때 호출됩니다.
@@ -52,13 +50,7 @@ namespace Client
 
         private void OnClickHostBtn()
         {
-            NetworkManager.Instance.mode = GameMode.Host;
-            SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
-        }
-
-        private void OnClickGuestBtn()
-        {
-            NetworkManager.Instance.mode = GameMode.Client;
+            NetworkManager.Instance.mode = GameMode.AutoHostOrClient;
             SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
         }
 

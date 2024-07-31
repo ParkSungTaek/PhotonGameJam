@@ -6,8 +6,12 @@ namespace Client
 {
     public class CharacterInputHandler : MonoBehaviour
     {
-        Vector3 _moveInputVector = Vector3.zero;
-        bool isJumpButtonPressed = true;
+        Vector3 _moveInputVector = Vector3.zero; // 이동
+        bool isJumpButtonPressed = true; // 점프
+
+        private bool leftMouseButton; // 왼쪽 마우스 버튼
+        private bool rightButton; // 오른쪽 마우스 버튼
+
         // Start is called before the first frame update
         void Start()
         {
@@ -26,7 +30,8 @@ namespace Client
             if (Input.GetKey(KeyCode.Space))
                 isJumpButtonPressed = true;
 
-
+            leftMouseButton = leftMouseButton || Input.GetMouseButton(0);
+            rightButton = rightButton || Input.GetMouseButton(1);
         }
 
         public NetworkInputData GetNetworkInput()
@@ -35,6 +40,11 @@ namespace Client
 
             networkInputData.movementInput = _moveInputVector;
             networkInputData.isJumpPressed = isJumpButtonPressed;
+
+            networkInputData.buttons.Set(NetworkInputData.MOUSEBUTTON0, leftMouseButton);
+            leftMouseButton = false;
+            networkInputData.buttons.Set(NetworkInputData.MOUSEBUTTON1, rightButton);
+            rightButton = false;
 
             _moveInputVector = Vector3.zero;
             isJumpButtonPressed = false;

@@ -9,7 +9,8 @@ public struct NetworkInputData : INetworkInput
     public const byte MOUSEBUTTON1 = 2;
 
     public NetworkButtons buttons;
-    public Vector3 movementInput;
 
-    public NetworkBool isJumpPressed;
+    public Vector3 movementInput; // 이동
+    public NetworkBool isJumpPressed; // 점프
+    public NetworkBool isFirePressed; // 총 발사
 }
