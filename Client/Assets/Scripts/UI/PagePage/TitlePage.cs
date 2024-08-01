@@ -23,7 +23,7 @@ namespace Client
         // 게임 시작 버튼을 눌렀을 때 호출됩니다.
         private void OnClickStartBtn()
         {
-            UIManager.Instance.ShowSceneUI<LobbyPage>();
+            UIManager.Instance.ShowSceneUI<NickNamePage>();
         }
         // 옵션 버튼을 눌렀을 때 호출됩니다.
         private void OnClickOptionBtn()

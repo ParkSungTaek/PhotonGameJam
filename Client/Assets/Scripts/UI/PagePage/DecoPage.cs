@@ -116,6 +116,7 @@ namespace Client
             {
                 MyInfoManager.Instance.SetDecoData(decoInfo.Key, selectData[decoInfo.Key]);
             }
+            Back();
         }
 
         // 꾸미기 아이템 정보를 불러옵니다.
