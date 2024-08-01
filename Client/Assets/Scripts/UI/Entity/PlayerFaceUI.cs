@@ -48,7 +48,6 @@ namespace Client
                     body.sprite = bodySprite;
                 }
             }
-            
         }
 
         // 캐릭터 외형을 한번에 세팅합니다.

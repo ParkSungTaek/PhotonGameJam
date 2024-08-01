@@ -14,6 +14,7 @@ namespace Client
 
         private MyInfoManager()
         {
+
         }
 
         // 꾸미기 데이터를 세팅합니다.

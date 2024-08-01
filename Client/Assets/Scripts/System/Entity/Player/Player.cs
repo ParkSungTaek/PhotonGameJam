@@ -21,7 +21,9 @@ namespace Client
         private int            _weaponDataID = SystemConst.NoData;
         private Rigidbody2D    _rigidbody2D  = null;
         private WeaponBase     _weapon       = null;
-        
+        private Dictionary<DecoType, DecoData> decoData = new(); // 꾸미기 데이터
+
+
         private NetworkCharacterController _networkNetwork;
 
     protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.Player;
@@ -80,8 +82,9 @@ namespace Client
         // 꾸미기 데이터를 세팅합니다.
         public void SetDecoData(DecoType type, DecoData decoData)
         {
-            playerFaceUI.SetPlayerDeco(type, decoData);
+            this.decoData[type] = decoData;
         }
+
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out NetworkInputData data))
@@ -153,10 +156,9 @@ namespace Client
             }
             else Debug.Log("Spawned remote player");
 
-            Dictionary<DecoType, DecoData> decoData = MyInfoManager.Instance.GetDecoData();
             foreach (var data in decoData)
             {
-                SetDecoData(data.Key, data.Value);
+                playerFaceUI.SetPlayerDeco(data.Key, data.Value);
             }
         }
 

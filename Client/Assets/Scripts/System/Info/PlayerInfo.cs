@@ -121,7 +121,6 @@ namespace Client
                 }
                 _buffBases.Remove(buff);
             }
-            
         }
 
         #region 데이터 Get 영역 반드시 만분률에 주의해주세요!!!!!
