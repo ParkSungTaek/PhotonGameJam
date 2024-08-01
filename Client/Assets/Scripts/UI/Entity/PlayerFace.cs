@@ -5,15 +5,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using static Client.SystemEnum;
+using TMPro;
 
 namespace Client
 {
     public class PlayerFace : MonoBehaviour
     {
+        [SerializeField] private TMP_Text       name = null; // 닉네임 UI
         [SerializeField] private SpriteRenderer body = null; // 몸 UI
         [SerializeField] private SpriteRenderer face = null; // 얼굴 UI
 
         private Dictionary<DecoType, DecoData> items = new(); // 꾸미기 아이템 정보
+        private string nickName = string.Empty;
 
         public void Awake()
         {
@@ -25,7 +28,7 @@ namespace Client
         }
 
         // 캐릭터 외형을 갱신합니다.
-        private void RefreshDeco()
+        public void RefreshDeco()
         {
             if(items.ContainsKey(DecoType.Face))
             {
@@ -48,21 +51,21 @@ namespace Client
                     body.sprite = bodySprite;
                 }
             }
-            
+
+            if (name == null) return;
+            name.SetText(nickName);
         }
 
-        // 캐릭터 외형을 한번에 세팅합니다.
-        public void SetPlayerDeco(Dictionary<DecoType, DecoData> decos)
+        // 캐릭터 닉네임을 세팅합니다
+        public void SetNickName(string nickName)
         {
-            items = decos;
-            RefreshDeco();
+            this.nickName = nickName;
         }
 
         // 캐릭터 외형을 하나씩 세팅합니다.
         public void SetPlayerDeco(DecoType type, DecoData index)
         {
             items[type] = index;
-            RefreshDeco();
         }
     }
 }

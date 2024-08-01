@@ -10,7 +10,7 @@ namespace Client
     /// </summary>
     public class MyInfoManager : Singleton<MyInfoManager>
     {
-        private string                         _nickName = "NickName"; // 닉네임
+        private string                         _nickName = "MyNickName"; // 닉네임
         private Dictionary<DecoType, DecoData> _decoInfo = new(); // 꾸미기 정보
 
         private MyInfoManager()

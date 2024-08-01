@@ -7,18 +7,20 @@ namespace Client
 {
     public class PlayerInfo : EntityInfo
     {
-        private EntityPlayerData _playerData    = null; // Player 데이터
-        private WeaponData _weaponData    = null; // Player 데이터
-        private List<BuffBase> _buffBases = null; // 보유중인 버프
-        public string CharName { get; set; } = "DefaultName";
+        private string                         _charName   = "Default Name"; // 닉네임
+        private WeaponData                     _weaponData = null;           // Player 데이터
+        private List<BuffBase>                 _buffBases  = null;           // 보유중인 버프
+        private EntityPlayerData               _playerData = null;           // Player 데이터
+        private Dictionary<DecoType, DecoData> _decoData   = new();          // 꾸미기 데이터
         #region BuffData
 
         // 버프라는건 만분률 버프 더해서 하는 버프 그걸 마지막에 Get해서 계산 한번에 순회해서 계산 
         // enpum 
-        
+
         #endregion
 
-
+        public string                         CharName => _charName;
+        public Dictionary<DecoType, DecoData> DecoData => _decoData;
 
         public PlayerInfo() 
         {
@@ -101,6 +103,18 @@ namespace Client
             }
         }
 
+        // 꾸미기 데이터를 세팅합니다.
+        public void SetDecoData(DecoType type, DecoData decoData)
+        {
+            _decoData[type] = decoData;
+        }
+
+        // 닉네임을 세팅합니다.
+        public void SetNickName(string name)
+        {
+            _charName = name;
+        }
+
         // 단일 버프 활성화
         public void ExecuteBuff(BuffBase buff)
         {
@@ -132,7 +146,7 @@ namespace Client
         {
             if (!EntityStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{CharName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
                 return 0;
             }
             return EntityStatDic[entityStat] / SystemConst.Per;
@@ -148,7 +162,7 @@ namespace Client
         {
             if (!EntityStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{CharName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
             }
             return EntityStatDic[entityStat];
 
@@ -165,7 +179,7 @@ namespace Client
         {
             if (!EntityStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{CharName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
             }
             EntityStatDic[entityStat] = (int)(data * SystemConst.Per);
             return EntityStatDic[entityStat] / SystemConst.Per;
@@ -181,7 +195,7 @@ namespace Client
         {
             if (!EntityStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{CharName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
             }
             EntityStatDic[entityStat] = data;
             return EntityStatDic[entityStat];

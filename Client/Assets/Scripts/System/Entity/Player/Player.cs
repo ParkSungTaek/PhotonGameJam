@@ -17,13 +17,10 @@ namespace Client
         [Networked] private TickTimer _attackCoolTime { get; set; } // 공격 쿨타임
 
         private List<BuffBase> _buffBases    = new List<BuffBase>(); // 본인이 가지고있는 버프
-        private PlayerInfo     _playerInfo   = null;                    // Player 데이터
+        private PlayerInfo     _playerInfo   = new();                // Player 데이터
         private int            _weaponDataID = SystemConst.NoData;
         private Rigidbody2D    _rigidbody2D  = null;
         private WeaponBase     _weapon       = null;
-        private Dictionary<DecoType, DecoData> decoData = new(); // 꾸미기 데이터 (나중에 PlayerInfo로 넣을거임 아마)
-        private string nickName = string.Empty; // 닉네임 (나중에 PlayerInfo로 넣을거임 아마)
-
 
         private NetworkCharacterController _networkNetwork;
 
@@ -50,7 +47,7 @@ namespace Client
         {
             //_rigidbody2D = GetComponent<Rigidbody2D>();
             Debug.Log($"{playerDataIndex} 생성");
-            _playerInfo = new PlayerInfo((int)playerDataIndex, _weaponDataID, _buffBases);
+            
             if (_playerInfo == null)
             { 
                 Debug.LogWarning($"Player{transform.name} 의 Start 시점 PlayerInfo 가 없음. 해당 상황이 정상적 상황이라면 Waring 제거바람");
@@ -61,6 +58,13 @@ namespace Client
                 _playerInfo.MyEntity = this;
             }
             Debug.Log("Start");
+
+            foreach (var data in _playerInfo.DecoData)
+            {
+                playerFaceUI.SetPlayerDeco(data.Key, data.Value);
+            }
+            playerFaceUI.SetNickName(_playerInfo.CharName);
+            playerFaceUI.RefreshDeco();
 
             //if (EntityManager.Instance.MyPlayer == this)
             //{
@@ -83,13 +87,13 @@ namespace Client
         // 꾸미기 데이터를 세팅합니다.
         public void SetDecoData(DecoType type, DecoData decoData)
         {
-            this.decoData[type] = decoData;
+            _playerInfo.SetDecoData(type, decoData);
         }
 
         // 닉네임을 세팅합니다.
         public void SetNickName(string name)
         {
-            this.nickName = name;
+            _playerInfo.SetNickName(name);
         }
 
         public override void FixedUpdateNetwork()
@@ -163,10 +167,6 @@ namespace Client
             }
             else Debug.Log("Spawned remote player");
 
-            foreach (var data in decoData)
-            {
-                playerFaceUI.SetPlayerDeco(data.Key, data.Value);
-            }
         }
 
         public void PlayerLeft(PlayerRef player)
