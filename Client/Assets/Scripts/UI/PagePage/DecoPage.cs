@@ -117,6 +117,7 @@ namespace Client
                 MyInfoManager.Instance.SetDecoData(decoInfo.Key, selectData[decoInfo.Key]);
             }
             Back();
+            UIManager.Instance.ShowToastPopup("옷을 갈아입었다!");
         }
 
         // 꾸미기 아이템 정보를 불러옵니다.

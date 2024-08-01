@@ -156,6 +156,35 @@ namespace Client
             return popupUI;
         }
 
+        // 토스트 팝업을 띄웁니다
+        public void ShowToastPopup(string desc, float time = 1.0f )
+        {
+            GameObject popup;
+            ToastPopupPage popupUI;
+
+            //이전에 띄운 기록 없음 -> 생성
+            if (_popupInstances.TryGetValue(typeof(ToastPopupPage), out popup) == false)
+            {
+                popup = ObjectManager.Instance.Instantiate($"UI/PopupPage/ToastPopupPage");
+                _popupInstances.Add(typeof(ToastPopupPage), popup);
+                popupUI = Util.GetOrAddComponent<ToastPopupPage>(popup);
+
+            }
+            //이전에 띄운 기록 있음 -> 재활성화
+            else
+            {
+                popupUI = Util.GetOrAddComponent<ToastPopupPage>(popup);
+                popupUI.GetComponent<Canvas>().sortingOrder = _order++;
+                popupUI.ReOpenPopupUI();
+            }
+            popupUI.GetComponent<ToastPopupPage>().SetData(desc, time);
+
+            _popupStack.Push(popupUI);
+
+            popup.transform.SetParent(Root.transform);
+            popup.SetActive(true);
+        }
+
         /// <summary>
         /// 모든 pop up UI 닫기
         /// </summary>
