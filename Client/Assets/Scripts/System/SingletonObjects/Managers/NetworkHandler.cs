@@ -78,6 +78,7 @@ namespace Client
                     {
                         o.GetComponent<Player>().SetDecoData(data.Key, data.Value);
                     }
+                    o.GetComponent<Player>().SetNickName(MyInfoManager.Instance.GetNickName());
                 });
                 // Keep track of the player avatars for easy access
                 _spawnedCharacters.Add(player, networkPlayerObject);

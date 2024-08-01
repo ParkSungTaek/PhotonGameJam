@@ -21,7 +21,8 @@ namespace Client
         private int            _weaponDataID = SystemConst.NoData;
         private Rigidbody2D    _rigidbody2D  = null;
         private WeaponBase     _weapon       = null;
-        private Dictionary<DecoType, DecoData> decoData = new(); // 꾸미기 데이터
+        private Dictionary<DecoType, DecoData> decoData = new(); // 꾸미기 데이터 (나중에 PlayerInfo로 넣을거임 아마)
+        private string nickName = string.Empty; // 닉네임 (나중에 PlayerInfo로 넣을거임 아마)
 
 
         private NetworkCharacterController _networkNetwork;
@@ -83,6 +84,12 @@ namespace Client
         public void SetDecoData(DecoType type, DecoData decoData)
         {
             this.decoData[type] = decoData;
+        }
+
+        // 닉네임을 세팅합니다.
+        public void SetNickName(string name)
+        {
+            this.nickName = name;
         }
 
         public override void FixedUpdateNetwork()
