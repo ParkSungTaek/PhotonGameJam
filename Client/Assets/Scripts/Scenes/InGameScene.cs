@@ -7,6 +7,8 @@ namespace Client
 {
     public class InGameScene : MonoBehaviour
     {
+        private bool _chatEnable = false;
+        private ChatPage chatPage;
         private void Start()
         {
             GameObject targetObject = GameObject.Find("NetworkRunner");
@@ -28,5 +30,24 @@ namespace Client
             //charPlayer.SetWeaponBase(weapon);
             //UIManager.Instance.ShowSceneUI<InGamePage>();
         }
+
+        //private void Update() 
+        //{
+        //    if( EntityManager.Instance.MyPlayer )
+        //    {
+        //        if (Input.GetKey(KeyCode.T))
+        //        {
+        //            if (chatPage)
+        //            {
+        //                chatPage.Back();
+        //                chatPage = null;
+        //            } 
+        //            else
+        //            {
+        //                chatPage = UIManager.Instance.ShowSceneUI<ChatPage>();
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

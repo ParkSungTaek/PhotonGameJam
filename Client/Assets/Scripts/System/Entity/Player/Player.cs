@@ -107,7 +107,7 @@ namespace Client
 
                 data.movementInput.Normalize();
                 //_weapon.transform.localRotation = data.movementInput.Normalize();
-                _networkNetwork.Move(_playerInfo.GetStat(EntityStat.NMovSpd) * data.movementInput * Runner.DeltaTime);
+                _networkNetwork.Move(5 * data.movementInput * Runner.DeltaTime);
 
                 if (data.isJumpPressed)
                 {
@@ -164,6 +164,9 @@ namespace Client
             {
                 EntityManager.Instance.MyPlayer = this;
                 Debug.Log("Spawned local player");
+
+                // TODO: 임시로 넣음 뺄 예정
+                UIManager.Instance.ShowSceneUI<ChatPage>();
             }
             else Debug.Log("Spawned remote player");
 

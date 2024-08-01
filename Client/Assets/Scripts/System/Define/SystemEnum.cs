@@ -175,5 +175,17 @@ namespace Client
 
             MaxCount
         }
+
+        /// <summary>
+        /// 플레이어 온라인 상태
+        /// </summary>
+        public enum OnlineState
+        {
+            Offline,    // 오프라인
+            Lobby,      // 로비에 있음
+            Game,       // 게임중임
+
+            MaxCount
+        }
     }
 }
