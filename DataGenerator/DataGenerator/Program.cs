@@ -76,6 +76,11 @@ namespace DataGenerator
                         dataName = dataNameRow.ToString();
                         dataType = dataTypeRow.ToString();
 
+                        if (dataDesc[0] == '#' || dataName[0] == '#' || dataType[0] == '#')
+                        {
+                            continue;
+                        }
+
                         var toMemberType = ToMemberType(dataType);
                         if (toMemberType != string.Empty ) 
                         {
