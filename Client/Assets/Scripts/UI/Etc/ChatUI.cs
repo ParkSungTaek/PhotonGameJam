@@ -8,12 +8,13 @@ namespace Client
     public class ChatUI : UI_Base
     {
         [SerializeField] private Text           chatText   = null; // 입력란
+        [SerializeField] private ScrollRect     scroll     = null; // 스크롤
         [SerializeField] private TMP_InputField inputField = null; // 입력란
 
         public override void Init()
         {
             base.Init();
-            inputField.onEndEdit.AddListener(OnEndEdit);
+            inputField.onSubmit.AddListener(OnEndEdit);
         }
 
         // 채팅 보내기
@@ -26,6 +27,7 @@ namespace Client
         private void Update()
         {
             chatText.text = ChatManager.Instance.totalText;
+            scroll.verticalNormalizedPosition = 0f;
         }
     }
 }
