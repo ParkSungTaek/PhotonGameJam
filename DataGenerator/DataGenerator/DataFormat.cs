@@ -43,7 +43,7 @@ using System.Data;
 
 namespace Client
 {{
-    public class {0} : SheetData
+    public partial class {0} : SheetData
     {{
 {1}
 
