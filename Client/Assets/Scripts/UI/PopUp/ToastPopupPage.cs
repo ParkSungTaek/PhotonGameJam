@@ -12,15 +12,10 @@ namespace Client
     {
         [SerializeField] private TMP_Text descText = null; // 내용
 
-        private string desc = string.Empty;
-        private float time = 0.0f;
-
         // 토스트 팝업 내용을 설정해줍니다.
         public void SetData(string str, float time)
         {
-            this.time = time;
-            this.desc = str;
-            descText.SetText(desc);
+            descText.SetText(str);
             Invoke("DestroyToastPopup", time);
         }
 

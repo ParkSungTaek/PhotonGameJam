@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -174,8 +176,8 @@ namespace Client
             else
             {
                 popupUI = Util.GetOrAddComponent<ToastPopupPage>(popup);
-                popupUI.GetComponent<Canvas>().sortingOrder = _order++;
                 popupUI.ReOpenPopupUI();
+                popupUI.GetComponent<Canvas>().sortingOrder = _order++;
             }
             popupUI.GetComponent<ToastPopupPage>().SetData(desc, time);
 
@@ -185,6 +187,34 @@ namespace Client
             popup.SetActive(true);
         }
 
+        // 공용 팝업을 띄웁니다
+        public void ShowCommonPopup(string name, string desc, CommonPopuptype type, Action action)
+        {
+            GameObject popup;
+            CommonPopupPage popupUI;
+
+            //이전에 띄운 기록 없음 -> 생성
+            if (_popupInstances.TryGetValue(typeof(CommonPopupPage), out popup) == false)
+            {
+                popup = ObjectManager.Instance.Instantiate($"UI/PopupPage/CommonPopupPage");
+                _popupInstances.Add(typeof(CommonPopupPage), popup);
+                popupUI = Util.GetOrAddComponent<CommonPopupPage>(popup);
+
+            }
+            //이전에 띄운 기록 있음 -> 재활성화
+            else
+            {
+                popupUI = Util.GetOrAddComponent<CommonPopupPage>(popup);
+                popupUI.ReOpenPopupUI();
+                popupUI.GetComponent<Canvas>().sortingOrder = _order++;
+            }
+            popupUI.SetData(name, desc, type, action);
+
+            _popupStack.Push(popupUI);
+
+            popup.transform.SetParent(Root.transform);
+            popup.SetActive(true);
+        }
         /// <summary>
         /// 모든 pop up UI 닫기
         /// </summary>

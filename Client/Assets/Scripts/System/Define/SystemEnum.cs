@@ -37,6 +37,13 @@ namespace Client
             MaxCount
         }
 
+        public enum CommonPopuptype
+        {
+            OneBtn,
+            TwoBtn,
+            MaxVount
+        }
+
         /// <summary>
         /// UI Event 종류 지정
         /// </summary>
