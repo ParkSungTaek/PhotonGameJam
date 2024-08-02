@@ -14,13 +14,9 @@ namespace Client
 
         public override void Shot(Vector3 direction)
         {
-            life = TickTimer.CreateFromSeconds(Runner, 5.0f);
-
-            Vector3 v3 = direction * (_projectileData._projectileSpd / (SystemConst.Per));
-            GetComponent<Rigidbody>().AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode.Impulse);
-
-            //Vector3 v3 = direction * (_projectileData._projectileSpd / (SystemConst.Per));
-            //_rigidbody.AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode.Impulse);
+            float time = LifeTime();
+            life = TickTimer.CreateFromSeconds(Runner, time);
+            base.Shot(direction);
         }
 
         public override void FixedUpdateNetwork()
@@ -28,11 +24,5 @@ namespace Client
             if (life.Expired(Runner))
                 Runner.Despawn(Object);
         }
-
-        protected override void HitPlayer(Player player)
-        {
-            throw new System.NotImplementedException();
-        }
-
     }
 }

@@ -35,7 +35,10 @@ namespace Client
             Damage = damage;
         }
 
-        protected abstract void HitPlayer(Player player);
+        protected virtual void HitPlayer(Player player)
+        {
+            player.OnDamage(Damage);
+        }
         protected virtual void HitFloor() { }
         protected virtual void HitDefault() { }
         protected virtual void HitProjectile() { }
@@ -77,7 +80,11 @@ namespace Client
             }
 
             if (IsDestroyWhenHit)
-                Destroy(this.gameObject);
+                Runner.Despawn(Object);
+        }
+        protected float LifeTime()
+        {
+            return _projectileData._lifeTime / SystemConst.Per;
         }
     }
 }

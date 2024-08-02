@@ -15,8 +15,6 @@ namespace Client
         [SerializeField] 
         private PlayerCharName playerDataIndex;
         [SerializeField] 
-        private Bullet playerBullet;
-        [SerializeField] 
         protected ProjectileName ProjectileEnumName; // 기본 투사체
         
         [Networked]private TickTimer _attackCoolTime { get; set; } // 공격 쿨타임
@@ -162,7 +160,12 @@ namespace Client
                             // 플레이어 오브젝트와 마우스 위치 간의 차이를 계산합니다.
                             Vector3 rawDirection = mouseWorldPosition - transform.position;
 
-                            o.GetComponent<Bullet>().Shot(rawDirection.normalized);
+                            ProjectileBase projectileBase = o.GetComponent<ProjectileBase>();
+                            if (projectileBase != null)
+                            {
+                                projectileBase.SetDamage(_playerInfo.GetStat(EntityStat.Att));
+                                projectileBase.Shot(rawDirection.normalized);
+                            }
                         });
                     }
                 }
@@ -275,6 +278,7 @@ namespace Client
         private void Dead()
         {
             Debug.Log("죽음");
+            Runner.Despawn(Object);
         }
 
     }
