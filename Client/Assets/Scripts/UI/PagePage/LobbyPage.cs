@@ -53,6 +53,6 @@ namespace Client
             NetworkManager.Instance.mode = GameMode.AutoHostOrClient;
             SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
         }
-
+        
     }
 }

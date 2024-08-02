@@ -48,7 +48,7 @@ namespace Client
         /// <param name="audioClip"></param>
         public void PlayAudioOneShot(AudioClip audioClip)
         {
-            _audioSource.PlayOneShot(audioClip);
+            audioSource.PlayOneShot(audioClip);
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Client
         public void PlayAudio(AudioClip audioClip)
         {
             _audioClip = audioClip;
-            _audioSource.clip = audioClip;
-            _audioSource.Play();
+            audioSource.clip = audioClip;
+            audioSource.Play();
         }
 
         /// <summary>
@@ -67,9 +67,9 @@ namespace Client
         /// </summary>
         public void StopAudio()
         {
-            _audioSource.Stop();
+            audioSource.Stop();
             _audioClip = null;
-            _audioSource.clip = null;
+            audioSource.clip = null;
         }
 
         /// <summary>
@@ -77,17 +77,17 @@ namespace Client
         /// </summary>
         public void PauseAudio()
         {
-            _audioSource.Pause();
+            audioSource.Pause();
         }
 
         public void SetVolume(float volume)
         {
-            _audioSource.volume = volume;
+            audioSource.volume = volume;
         }
 
         public float GetVolume()
         {
-            return _audioSource.volume;
+            return audioSource.volume;
         }
 
     }

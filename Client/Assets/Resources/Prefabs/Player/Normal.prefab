@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4658846751594927370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.18067041, y: 0.688218, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52,6 +52,7 @@ MonoBehaviour:
   playerFaceUI: {fileID: 5523928044454055135}
   playerDataIndex: 1
   playerBullet: {fileID: 1661845365241214184, guid: c3925332fbe717b418a8eed7ae0b5ca3, type: 3}
+  ProjectileEnumName: 1
 --- !u!114 &4658846751594927363
 MonoBehaviour:
   m_ObjectHideFlags: 0

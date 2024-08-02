@@ -13,4 +13,6 @@ public struct NetworkInputData : INetworkInput
     public Vector3 movementInput; // 이동
     public NetworkBool isJumpPressed; // 점프
     public NetworkBool isFirePressed; // 총 발사
+    public Vector3 lookDirection; // 이동
+
 }

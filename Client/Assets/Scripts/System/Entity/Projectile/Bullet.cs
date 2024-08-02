@@ -17,10 +17,10 @@ namespace Client
             life = TickTimer.CreateFromSeconds(Runner, 5.0f);
 
             Vector3 v3 = direction * (_projectileData._projectileSpd / (SystemConst.Per));
-            GetComponent<Rigidbody2D>().AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode2D.Impulse);
+            GetComponent<Rigidbody>().AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode.Impulse);
 
             //Vector3 v3 = direction * (_projectileData._projectileSpd / (SystemConst.Per));
-            //_rigidbody2D.AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode2D.Impulse);
+            //_rigidbody.AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode.Impulse);
         }
 
         public override void FixedUpdateNetwork()

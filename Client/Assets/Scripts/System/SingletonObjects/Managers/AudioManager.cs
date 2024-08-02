@@ -69,7 +69,10 @@ namespace Client
             PlayerPrefs.SetFloat($"{sounds}Volume", _volume[(int)sounds] >= 1f ? 1f : _volume[(int)sounds]);
             
         }
+        public void PlayOneShot(string Sound, Sounds type = SystemEnum.Sounds.SFX) => Play(GetOrAddAudioClip(Sound, type), type, false, true);
+        public void PlayLoop(string Sound, Sounds type = SystemEnum.Sounds.BGM) => Play(GetOrAddAudioClip(Sound, type), type, true);
 
+        public void Play(string Sound, Sounds type, bool loop = false, bool OneShot = false) => Play(GetOrAddAudioClip(Sound, type), type, loop, OneShot);
         public void PlayOneShot(AudioClip audioClip, Sounds type) => Play(audioClip, type, false, true);
         public void PlayLoop(AudioClip audioClip, Sounds type) => Play(audioClip, type, true);
 

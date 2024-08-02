@@ -30,6 +30,7 @@ namespace Client
             if (Input.GetKey(KeyCode.Space))
                 isJumpButtonPressed = true;
 
+            
             leftMouseButton = leftMouseButton || Input.GetMouseButton(0);
             rightButton = rightButton || Input.GetMouseButton(1);
         }
@@ -46,6 +47,7 @@ namespace Client
             networkInputData.buttons.Set(NetworkInputData.MOUSEBUTTON1, rightButton);
             rightButton = false;
 
+            networkInputData.lookDirection = GameManager.Instance.LookDirection; 
             _moveInputVector = Vector3.zero;
             isJumpButtonPressed = false;
             return networkInputData;

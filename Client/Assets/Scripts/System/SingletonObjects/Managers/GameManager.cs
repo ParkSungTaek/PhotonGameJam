@@ -29,7 +29,8 @@ namespace Client
         private Action OnUpdate { get; set; }
         // Joystick 의 방향백터
         public Vector2 JoystickDirection { get; set; } = Vector2.zero;
-        
+        public Vector3 LookDirection { get; set; } = Vector3.right;
+
         private void Start()
         {
             Init();

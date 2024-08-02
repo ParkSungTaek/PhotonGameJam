@@ -13,7 +13,7 @@ namespace Client
 
         protected ProjectileData _projectileData = null;
 
-        protected Rigidbody2D _rigidbody2D = null;
+        protected Rigidbody _rigidbody = null;
 
         protected virtual bool IsDestroyWhenHit => true;
 
@@ -22,12 +22,12 @@ namespace Client
         private void Awake()
         {
             _projectileData = DataManager.Instance.GetData<ProjectileData>((int)Projectile);
-            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
         public virtual void Shot(Vector3 direction)
         {
             Vector3 v3 = direction * (_projectileData._projectileSpd / (SystemConst.Per));
-            _rigidbody2D.AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode2D.Impulse);
+            _rigidbody.AddForce(direction * (_projectileData._projectileSpd / SystemConst.Per), ForceMode.Impulse);
         }
 
         public virtual void SetDamage(float damage)
@@ -41,7 +41,7 @@ namespace Client
         protected virtual void HitProjectile() { }
 
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnCollisionEnter(Collision collision)
         {
             switch (collision.gameObject.layer)
             {
@@ -59,7 +59,7 @@ namespace Client
                 case SystemConst.PlayerLayer:
                     {
                         Player player = collision.gameObject.GetComponent<Player>();
-                        if(player == null)
+                        if (player == null)
                         {
                             Debug.LogError($"{collision.gameObject.name} 이 Layer Player 이나 Player 타입이 없음 확인바람 (ProjectileBase)");
                         }
@@ -79,6 +79,5 @@ namespace Client
             if (IsDestroyWhenHit)
                 Destroy(this.gameObject);
         }
-
     }
 }
