@@ -16,7 +16,7 @@ namespace Client
     {
         private ChatClient chatClient;
         private string userName;
-        private string name => EntityManager.Instance.MyPlayer.PlayerInfo.CharName;
+        private string name => MyInfoManager.Instance.GetNickName();
 
 
         public string currentChannelName;

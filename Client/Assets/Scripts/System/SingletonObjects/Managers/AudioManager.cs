@@ -124,6 +124,7 @@ namespace Client
         public void SetVolume(SystemEnum.Sounds type, float volume)
         {
             AudioSystem.Instance.GetAudioPlayer(type).SetVolume(volume);
+            SetValue(type, volume);
         }
 
         public float GetVolume(SystemEnum.Sounds type)

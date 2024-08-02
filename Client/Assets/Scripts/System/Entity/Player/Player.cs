@@ -191,9 +191,6 @@ namespace Client
             {
                 EntityManager.Instance.MyPlayer = this;
                 Debug.Log("Spawned local player");
-
-                // TODO: 임시로 넣음 뺄 예정
-                UIManager.Instance.ShowSceneUI<ChatPage>();
             }
             else Debug.Log("Spawned remote player");
 

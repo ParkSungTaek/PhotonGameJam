@@ -14,6 +14,7 @@ namespace Client
         {
             BGM,
             SFX,
+            Voice,
             MaxCount
         }
         public enum BGM

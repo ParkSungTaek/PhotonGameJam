@@ -2,6 +2,7 @@
 // 옵션 UI 팝업 페이지
 
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +12,13 @@ namespace Client
     {
         [SerializeField] private Slider     bgmBar     = null; // 배경음악 Slider
         [SerializeField] private Slider     sfxBar     = null; // 효과음 Slider
+        [SerializeField] private Slider     voiceBar   = null; // 음성 채팅 Slider
         [SerializeField] private Toggle     audioBtn   = null; // 오디오 설정 버튼
         [SerializeField] private Toggle     videoBtn   = null; // 화면 설정 버튼
         [SerializeField] private Toggle     fullBtn    = null; // 풀 스크린 버튼
+        [SerializeField] private TMP_Text   bgmText    = null; // 배경음악 Text
+        [SerializeField] private TMP_Text   sfxText    = null; // 효과음 Text
+        [SerializeField] private TMP_Text   voiceText  = null; // 음성 채팅 Text
         [SerializeField] private Dropdown   resolution = null; // 해상도 설정
         [SerializeField] private GameObject audioGroup = null; // 오디오 설정 그룹
         [SerializeField] private GameObject videoGroup = null; // 화면 설정 그룹
@@ -65,11 +70,17 @@ namespace Client
         // 슬라이더를 초기화합니다.
         public void InitSlider()
         {
-            //bgmBar.value = AudioManager.Instance.GetVolume(SystemEnum.Sounds.BGM);
-            //sfxBar.value = AudioManager.Instance.GetVolume(SystemEnum.Sounds.SFX);
+            bgmBar.value = AudioManager.Instance.GetVolume(SystemEnum.Sounds.BGM);
+            sfxBar.value = AudioManager.Instance.GetVolume(SystemEnum.Sounds.SFX);
+            voiceBar.value = AudioManager.Instance.GetVolume(SystemEnum.Sounds.Voice);
 
-            //bgmBar.onValueChanged.AddListener(volume => { AudioManager.Instance.SetVolume(SystemEnum.Sounds.BGM, volume); });
-            //sfxBar.onValueChanged.AddListener(volume => { AudioManager.Instance.SetVolume(SystemEnum.Sounds.SFX, volume); });
+            bgmText.SetText(((int)(bgmBar.value * 100)).ToString() + "%");
+            sfxText.SetText(((int)(sfxBar.value * 100)).ToString() + "%");
+            voiceText.SetText(((int)(voiceBar.value * 100)).ToString() + "%");
+
+            bgmBar.onValueChanged.AddListener(volume => { AudioManager.Instance.SetVolume(SystemEnum.Sounds.BGM, volume); bgmText.SetText(((int)(bgmBar.value * 100)).ToString() + "%"); });
+            sfxBar.onValueChanged.AddListener(volume => { AudioManager.Instance.SetVolume(SystemEnum.Sounds.SFX, volume); sfxText.SetText(((int)(sfxBar.value * 100)).ToString() + "%"); });
+            voiceBar.onValueChanged.AddListener(volume => { AudioManager.Instance.SetVolume(SystemEnum.Sounds.Voice, volume); voiceText.SetText(((int)(voiceBar.value * 100)).ToString() + "%"); });
         }
 
         // 버튼을 초기화합니다.

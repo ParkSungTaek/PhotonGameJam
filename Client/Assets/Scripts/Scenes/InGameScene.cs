@@ -7,12 +7,12 @@ namespace Client
 {
     public class InGameScene : MonoBehaviour
     {
-        private bool _chatEnable = false;
-        private ChatPage chatPage;
         private void Start()
         {
-            GameObject targetObject = GameObject.Find("NetworkRunner");
+            UIManager.Instance.ShowSceneUI<InGamePage>();
+            AudioManager.Instance.PlayLoop("BGM");
 
+            GameObject targetObject = GameObject.Find("NetworkRunner");
             if (targetObject != null)
             {
                 BasicSpawner basicSpawner = targetObject.GetComponent<BasicSpawner>();
@@ -22,8 +22,6 @@ namespace Client
                     basicSpawner.StartGameMode(NetworkManager.Instance.mode);
                 }
             }
-
-            //AudioManager.Instance.PlayLoop("BGM");
         }
 
         //private void Update() 

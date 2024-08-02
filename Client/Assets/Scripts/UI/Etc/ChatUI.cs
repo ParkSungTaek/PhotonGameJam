@@ -5,10 +5,10 @@ using UnityEngine.UIElements;
 
 namespace Client
 {
-    public class ChatPage : UI_Scene
+    public class ChatUI : UI_Base
     {
+        [SerializeField] private Text           chatText   = null; // 입력란
         [SerializeField] private TMP_InputField inputField = null; // 입력란
-        [SerializeField] private Text chatText = null; // 입력란
 
         public override void Init()
         {
