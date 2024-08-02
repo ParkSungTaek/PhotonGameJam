@@ -24,7 +24,7 @@ namespace Client
         private List<ProjectileBase> _projectileList = new List<ProjectileBase>(); // 발사용 투사체 
         private List<BuffBase> _buffBases            = new List<BuffBase>();       // 본인이 가지고있는 버프
         
-        private PlayerInfo     _playerInfo   = new();                // Player 데이터
+        private PlayerInfo     _playerInfo   = null;                // Player 데이터
         private int            _weaponDataID = SystemConst.NoData;
         private Rigidbody      _rigidbody    = null;
         private WeaponBase     _weapon       = null;
@@ -53,6 +53,7 @@ namespace Client
                 _projectileList.Add(projectileBase);
             }
             _networkNetwork = GetComponent<NetworkCharacterController>();
+            _playerInfo = new PlayerInfo((int)playerDataIndex);
         }
 
         // Start is called before the first frame update
@@ -79,10 +80,6 @@ namespace Client
             playerFaceUI.SetNickName(_playerInfo.CharName);
             playerFaceUI.RefreshDeco();
 
-            //if (EntityManager.Instance.MyPlayer == this)
-            //{
-            //    GameManager.Instance.AddOnUpdate(Move);
-            //}
         }
 
         private void Update()
@@ -125,12 +122,11 @@ namespace Client
                 }
 
                 data.movementInput.Normalize();
-                //_weapon.transform.localRotation = data.movementInput.Normalize();
-                _networkNetwork.Move(5 * data.movementInput * Runner.DeltaTime);
+                _networkNetwork.Move(_playerInfo.GetStat(EntityStat.MovSpd) * data.movementInput * Runner.DeltaTime);
 
                 if (data.isJumpPressed)
                 {
-                    _networkNetwork.Jump();
+                    _networkNetwork.Jump(false, _playerInfo.GetStat(EntityStat.JumpP));
                 }
 
                 if (HasStateAuthority && _attackCoolTime.ExpiredOrNotRunning(Runner))
@@ -138,7 +134,7 @@ namespace Client
                     //  마우스 왼쪽키
                     if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0))
                     {
-                        float attackSpeed = 0.1f;
+                        float attackSpeed = _playerInfo.GetStat(EntityStat.AtkSpd);
                         _attackCoolTime = TickTimer.CreateFromSeconds(Runner, attackSpeed);
                         ProjectileBase projectile = GetProjectileList();
                         if (projectile == null)
@@ -209,6 +205,20 @@ namespace Client
 
         public void OnDamage(float damage)
         {
+            float hp = _playerInfo.GetStat(EntityStat.HP);
+            hp -= damage;
+            if (hp >= 0)
+            {
+                _playerInfo.SetStat(EntityStat.HP, hp);
+            }
+            else 
+            {
+                _playerInfo.SetStat(EntityStat.HP, 0);
+                _playerInfo.IsLive = false;
+                Dead();
+            }
+
+
         }
 
         ProjectileBase GetProjectileList()
@@ -260,6 +270,11 @@ namespace Client
                 angle += 360;
             }
             return angle;
+        }
+
+        private void Dead()
+        {
+            Debug.Log("죽음");
         }
 
     }

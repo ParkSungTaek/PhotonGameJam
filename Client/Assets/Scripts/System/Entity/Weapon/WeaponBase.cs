@@ -34,8 +34,7 @@ namespace Client
                 Debug.Log($"{ProjectileName} 에서 ProjectileBase 를 Get 하지못함 ");
                 return null;
             }
-            projectile.SetDamage(_charPlayer.PlayerInfo.GetStat(EntityStat.NAtt));
-            Debug.Log($"해당 투사체 데미지는 {_charPlayer.PlayerInfo.GetStat(EntityStat.NAtt)}");
+            //projectile.SetDamage(_charPlayer.PlayerInfo.GetStat(EntityStat.NAtt));
             return projectile;
         }
 

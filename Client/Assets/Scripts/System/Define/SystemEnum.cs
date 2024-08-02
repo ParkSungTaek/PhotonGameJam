@@ -151,18 +151,12 @@ namespace Client
             None,
 
             HP,      // 기본 HP
-            NHP,     // 현재 HP
-            NMHP,    // 현재 최대 HP
             MovSpd,  // 기본 Speed
-            NMovSpd, // 현재 Speed
             Att,     // 기본 공격력
-            NAtt,    // 현재 공격력
             Def,     // 기본 방어력
-            NDef,    // 현재 방어력
             AtkSpd,  // 기본 공격속도
-            NAtkSpd, // 현재 공격속도
             JumpP,   // 기본 점프 힘
-            NJumpP,  // 현재 점프 힘
+            Reload,  // 장전 속도
 
             MaxCount
         }

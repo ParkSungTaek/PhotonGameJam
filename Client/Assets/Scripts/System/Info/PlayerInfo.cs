@@ -18,10 +18,12 @@ namespace Client
         // enpum 
 
         #endregion
-
+ 
         public string                         CharName => _charName;
         public Dictionary<DecoType, DecoData> DecoData => _decoData;
 
+        // 생존여부
+        public bool IsLive { get; set; } = true;
         public PlayerInfo() 
         {
             
@@ -45,35 +47,33 @@ namespace Client
                     _playerData = new EntityPlayerData();
                 }
 
-                EntityStatDic[EntityStat.JumpP] = _playerData._jumpPower;
-                EntityStatDic[EntityStat.NJumpP] = _playerData._jumpPower;
+                EntityStatDic[EntityStat.HP] = _playerData._HP;
+                NowStatDic[EntityStat.HP]    = _playerData._HP;
+                BuffStatDic[EntityStat.HP]   = 0;
 
-                EntityStatDic[EntityStat.HP] = _playerData._hp;
-                EntityStatDic[EntityStat.NHP] = _playerData._hp;
+                EntityStatDic[EntityStat.MovSpd] = _playerData._Speed;
+                NowStatDic[EntityStat.MovSpd]    = _playerData._Speed;
+                BuffStatDic[EntityStat.MovSpd]   = 0;
 
-                EntityStatDic[EntityStat.MovSpd] = _playerData._movSpd;
-                EntityStatDic[EntityStat.NMovSpd] = _playerData._movSpd;
+                EntityStatDic[EntityStat.Att] = _playerData._Attack;
+                NowStatDic[EntityStat.Att]    = _playerData._Attack;
+                BuffStatDic[EntityStat.Att]   = 0;
 
-            }
-            if (weaponDataID != SystemConst.NoData)
-            {
-                _weaponData = DataManager.Instance.GetData<WeaponData>(weaponDataID);
-                if (_weaponData == null)
-                {
-                    Debug.LogWarning($"PlayerInfo {weaponDataID} 에 해당하는 WeaponData 정보 찾지 못함");
-                    //무기는 안끼고 있을수도?
-                    // 지금은 데이터 테이블이 없다 나중에 반드시!! 제거 바람
+                EntityStatDic[EntityStat.Def] = _playerData._Def;
+                NowStatDic[EntityStat.Def]    = _playerData._Def;
+                BuffStatDic[EntityStat.Def]   = 0;
 
-                    _weaponData = new WeaponData();
-                }
-                else
-                {
-                    EntityStatDic[EntityStat.AtkSpd] = _weaponData._atkSpd;
-                    EntityStatDic[EntityStat.NAtkSpd] = _weaponData._atkSpd;
+                EntityStatDic[EntityStat.AtkSpd] = _playerData._AttackSpeed;
+                NowStatDic[EntityStat.AtkSpd]    = _playerData._AttackSpeed;
+                BuffStatDic[EntityStat.AtkSpd]   = 0;
 
-                    EntityStatDic[EntityStat.Att] = _weaponData._Att;
-                    EntityStatDic[EntityStat.NAtt] = _weaponData._Att;
-                }
+                EntityStatDic[EntityStat.JumpP] = _playerData._JumpPower;
+                NowStatDic[EntityStat.JumpP]    = _playerData._JumpPower;
+                BuffStatDic[EntityStat.JumpP]   = 0;
+
+                EntityStatDic[EntityStat.Reload] = _playerData._Reload;
+                NowStatDic[EntityStat.Reload]    = _playerData._Reload;
+                BuffStatDic[EntityStat.Reload]   = 0;
             }
             if (buffBases != null)
             {
@@ -92,14 +92,6 @@ namespace Client
             {
                 Debug.LogWarning($"SetDataWeaponData 정보 찾지 못함");
 
-            }
-            else
-            {
-                EntityStatDic[EntityStat.AtkSpd] = _weaponData._atkSpd;
-                EntityStatDic[EntityStat.NAtkSpd] = _weaponData._atkSpd;
-
-                EntityStatDic[EntityStat.Att] = _weaponData._Att;
-                EntityStatDic[EntityStat.NAtt] = _weaponData._Att;
             }
         }
 
@@ -144,12 +136,12 @@ namespace Client
         /// <returns></returns>
         public float GetStat(EntityStat entityStat)
         {
-            if (!EntityStatDic.ContainsKey(entityStat))
+            if (!NowStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 Now {entityStat.ToString()} 존재하지않음");
                 return 0;
             }
-            return EntityStatDic[entityStat] / SystemConst.Per;
+            return NowStatDic[entityStat] / SystemConst.Per;
                    
         }
 
@@ -160,14 +152,69 @@ namespace Client
         /// <returns></returns>
         public int GetRawStat(EntityStat entityStat)
         {
+            if (!NowStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Now {entityStat.ToString()} 존재하지않음");
+            }
+            return NowStatDic[entityStat];
+
+        }
+
+        /// <summary>
+        /// 만분률 이후 값을 Get하는 함수
+        /// </summary>
+        /// <returns></returns>
+        public float GetEntityStat(EntityStat entityStat)
+        {
             if (!EntityStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 Entity {entityStat.ToString()} 존재하지않음");
+                return 0;
+            }
+            return EntityStatDic[entityStat] / SystemConst.Per;
+
+        }
+
+        /// <summary>
+        /// 만분률 이전값을 Get하는 함수
+        /// </summary>
+        /// <param name="entityStat"></param>
+        /// <returns></returns>
+        public int GetEntityRawStat(EntityStat entityStat)
+        {
+            if (!EntityStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Entity {entityStat.ToString()} 존재하지않음");
             }
             return EntityStatDic[entityStat];
 
         }
 
+        public float GetBuffStat(EntityStat entityStat)
+        {
+            if (!BuffStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Buff {entityStat.ToString()} 존재하지않음");
+                return 0;
+            }
+            return BuffStatDic[entityStat] / SystemConst.Per;
+
+        }
+
+        /// <summary>
+        /// 만분률 이전값을 Get하는 함수
+        /// </summary>
+        /// <param name="entityStat"></param>
+        /// <returns></returns>
+        public int GetBuffRawStat(EntityStat entityStat)
+        {
+            if (!BuffStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Buff {entityStat.ToString()} 존재하지않음");
+            }
+            return BuffStatDic[entityStat];
+
+        }
 
         /// <summary>
         /// 일반값 (만분률 이후 값) 을 Set하는 함수 만분률값인지 반드시 확인바람
@@ -177,9 +224,41 @@ namespace Client
         /// <returns></returns>
         public float SetStat(EntityStat entityStat, float data)
         {
+            if (!NowStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Now {entityStat.ToString()} 존재하지않음");
+            }
+            NowStatDic[entityStat] = (int)(data * SystemConst.Per);
+            return NowStatDic[entityStat] / SystemConst.Per;
+        }
+
+        /// <summary>
+        /// Raw(만분률 이전값)값을 Set하는 함수 만분률값인지 반드시 확인바람
+        /// </summary>
+        /// <param name="entityStat"></param>
+        /// <param name="NonePer"></param>
+        /// <returns></returns>
+        public int SetRawStat(EntityStat entityStat, int data)
+        {
+            if (!NowStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Now {entityStat.ToString()} 존재하지않음");
+            }
+            NowStatDic[entityStat] = data;
+            return NowStatDic[entityStat];
+        }
+
+        /// <summary>
+        /// 일반값 (만분률 이후 값) 을 Set하는 함수 만분률값인지 반드시 확인바람
+        /// </summary>
+        /// <param name="entityStat"></param>
+        /// <param name="NonePer"></param>
+        /// <returns></returns>
+        public float SetEntityStat(EntityStat entityStat, float data)
+        {
             if (!EntityStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 Entity {entityStat.ToString()} 존재하지않음");
             }
             EntityStatDic[entityStat] = (int)(data * SystemConst.Per);
             return EntityStatDic[entityStat] / SystemConst.Per;
@@ -191,16 +270,47 @@ namespace Client
         /// <param name="entityStat"></param>
         /// <param name="NonePer"></param>
         /// <returns></returns>
-        public int SetRawStat(EntityStat entityStat, int data)
+        public int SetEntityRawStat(EntityStat entityStat, int data)
         {
             if (!EntityStatDic.ContainsKey(entityStat))
             {
-                Debug.LogWarning($"{_charName} 캐릭터의 {entityStat.ToString()} 존재하지않음");
+                Debug.LogWarning($"{_charName} 캐릭터의 Entity {entityStat.ToString()} 존재하지않음");
             }
             EntityStatDic[entityStat] = data;
             return EntityStatDic[entityStat];
         }
 
+        /// <summary>
+        /// 일반값 (만분률 이후 값) 을 Set하는 함수 만분률값인지 반드시 확인바람
+        /// </summary>
+        /// <param name="entityStat"></param>
+        /// <param name="NonePer"></param>
+        /// <returns></returns>
+        public float SetBuffStat(EntityStat entityStat, float data)
+        {
+            if (!BuffStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Buff {entityStat.ToString()} 존재하지않음");
+            }
+            BuffStatDic[entityStat] = (int)(data * SystemConst.Per);
+            return BuffStatDic[entityStat] / SystemConst.Per;
+        }
+
+        /// <summary>
+        /// Raw(만분률 이전값)값을 Set하는 함수 만분률값인지 반드시 확인바람
+        /// </summary>
+        /// <param name="entityStat"></param>
+        /// <param name="NonePer"></param>
+        /// <returns></returns>
+        public int SetBuffRawStat(EntityStat entityStat, int data)
+        {
+            if (!BuffStatDic.ContainsKey(entityStat))
+            {
+                Debug.LogWarning($"{_charName} 캐릭터의 Buff {entityStat.ToString()} 존재하지않음");
+            }
+            BuffStatDic[entityStat] = data;
+            return BuffStatDic[entityStat];
+        }
         #endregion
     }
 }

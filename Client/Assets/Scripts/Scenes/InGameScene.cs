@@ -23,7 +23,7 @@ namespace Client
                 }
             }
 
-            AudioManager.Instance.PlayLoop("BGM");
+            //AudioManager.Instance.PlayLoop("BGM");
         }
 
         //private void Update() 
