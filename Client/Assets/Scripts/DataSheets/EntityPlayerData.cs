@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Client
 {
-    public class EntityPlayerData : SheetData
+    public partial class EntityPlayerData : SheetData
     {
 
 		public int index; // 인덱스

@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Client
 {
-    public class DecoData : SheetData
+    public partial class DecoData : SheetData
     {
 
 		public int index; // 인덱스
