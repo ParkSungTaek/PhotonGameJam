@@ -45,7 +45,7 @@ namespace Client
                 if (string.IsNullOrWhiteSpace(lines[i]))
                     continue;
 
-                string[] values = lines[i].Split(',');
+                string[] values = lines[i].Trim().Split(',');
                 
                 Character_Stat data = new Character_Stat();
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using static Client.SystemEnum;
 using TMPro;
+using System.IO;
 
 namespace Client
 {
@@ -33,7 +34,7 @@ namespace Client
             if(items.ContainsKey(DecoType.Face))
             {
                 DecoData faceData = items[DecoType.Face];
-                Texture2D faceTexture = Resources.Load<Texture2D>($"Sprites/Characters/{faceData._type}/{faceData._resource}");
+                Texture2D faceTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{faceData._type}/{faceData._resource}");
                 if (faceTexture != null)
                 {
                     Sprite faceSprite = Sprite.Create(faceTexture, new Rect(0, 0, faceTexture.width, faceTexture.height), new Vector2(0.5f, 0.5f));
@@ -44,7 +45,7 @@ namespace Client
             if (items.ContainsKey(DecoType.Body))
             {
                 DecoData bodyData = items[DecoType.Body];
-                Texture2D bodyTexture = Resources.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
                 if (bodyTexture != null)
                 {
                     Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
