@@ -100,17 +100,7 @@ namespace Client
             {
                 // Create a unique position for the player
                 Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
-                Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player, (runner, o) =>
-                {
-                    //var naem = MyInfoManager.Instance.GetNickName();
-                    //ChatManager.Instance.SendPublicChat(ChatManager.Instance.currentChannelName, $"Join Character Name: {MyInfoManager.Instance.GetNickName()}");
-                    //Dictionary<DecoType, DecoData> decoData = MyInfoManager.Instance.GetDecoData();
-                    //foreach( var data in decoData )
-                    //{
-                    //    o.GetComponent<Player>().SetDecoData(data.Key, data.Value);
-                    //}
-                    //o.GetComponent<Player>().SetNickName(MyInfoManager.Instance.GetNickName());
-                });
+                Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
 
                 // Keep track of the player avatars for easy access
                 _spawnedCharacters.Add(player, networkPlayerObject);

@@ -235,8 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94794b8c3e6e5394f9c9fa7005ebb6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 0}
-  outputText: {fileID: 0}
 --- !u!4 &216946740
 Transform:
   m_ObjectHideFlags: 0
@@ -571,6 +569,7 @@ GameObject:
   - component: {fileID: 1215760510}
   - component: {fileID: 1215760509}
   - component: {fileID: 1215760511}
+  - component: {fileID: 1215760512}
   m_Layer: 0
   m_Name: Recorder
   m_TagString: Untagged
@@ -590,7 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voiceDetection: 0
+  voiceDetection: 1
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
   interestGroup: 0
@@ -646,6 +645,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eee3fe742ea75834f89c749aad762b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1215760512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215760508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f55066df7c5c34f9d93db1532284b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1757945169

@@ -37,6 +37,11 @@ namespace Client
         public PlayerInfo PlayerInfo => _playerInfo;
         protected string ProjectilePath(ProjectileName projectileEnumName) => $"Prefabs/Projectile/{projectileEnumName.ToString()}";
 
+        public Image SpeakingIndicator;
+
+        [Networked]
+        public bool isSpeaking { get; set; }
+
         [Networked]
         NetworkString<_16> nickName { get; set; }
 
@@ -120,7 +125,8 @@ namespace Client
                 RPC_CH_SendMessage(
                     MyInfoManager.Instance.GetNickName(),
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
-                    MyInfoManager.Instance.GetDecoData()[DecoType.Body].index);
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
+                    isSpeaking);
             }
 
             if (GetInput(out NetworkInputData data))
@@ -317,17 +323,28 @@ namespace Client
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_CH_SendMessage(string name, int face, int body, RpcInfo info = default)
+        public void RPC_CH_SendMessage(string name, int face, int body, bool speaking, RpcInfo info = default)
         {
             nickName = name;
             decoFace = face;
             decoBody = body;
+
+            isSpeaking = speaking;
 
             SetNickName(nickName.ToString());
             playerFaceUI.SetNickName(nickName.ToString());
             playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
             playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoBody));
             playerFaceUI.RefreshDeco();
+
+            if (isSpeaking)
+            {
+                SpeakingIndicator.enabled = true;
+            }
+            else
+            {
+                SpeakingIndicator.enabled = false;
+            }
         }
     }
 }
