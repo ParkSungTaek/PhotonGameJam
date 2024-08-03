@@ -40,6 +40,12 @@ namespace Client
         [Networked]
         NetworkString<_16> nickName { get; set; }
 
+        [Networked]
+        int decoFace { get; set; }
+
+        [Networked]
+        int decoBody { get; set; }
+
         private void Awake()
         {
             //Test ¿ë
@@ -119,7 +125,10 @@ namespace Client
         {
             if (HasInputAuthority)
             {
-                RPC_CH_SendMessage(MyInfoManager.Instance.GetNickName());
+                RPC_CH_SendMessage(
+                    MyInfoManager.Instance.GetNickName(),
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Body].index);
             }
 
             if (GetInput(out NetworkInputData data))
@@ -202,7 +211,16 @@ namespace Client
                 EntityManager.Instance.MyPlayer = this;
                 Debug.Log("Spawned local player");
 
-                RPC_CH_SendMessage(MyInfoManager.Instance.GetNickName());
+                if( MyInfoManager.Instance.GetDecoData().Count == 0 )
+                {
+                    MyInfoManager.Instance.SetDecoData(DecoType.Face, DataManager.Instance.GetData<DecoData>(0));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Body, DataManager.Instance.GetData<DecoData>(3));
+                }
+
+                RPC_CH_SendMessage(
+                    MyInfoManager.Instance.GetNickName(), 
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Body].index);
             }
             else
             {
@@ -222,6 +240,8 @@ namespace Client
         {
             SetNickName(nickName.ToString());
             playerFaceUI.SetNickName(nickName.ToString());
+            playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
+            playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoBody));
             playerFaceUI.RefreshDeco();
         }
 
@@ -301,9 +321,11 @@ namespace Client
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_CH_SendMessage(string name, RpcInfo info = default)
+        public void RPC_CH_SendMessage(string name, int face, int body, RpcInfo info = default)
         {
             nickName = name;
+            decoFace = face;
+            decoBody = body;
         }
     }
 }
