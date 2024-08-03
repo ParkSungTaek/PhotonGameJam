@@ -10,16 +10,16 @@ namespace Client
         private void Start()
         {
             UIManager.Instance.ShowSceneUI<InGamePage>();
-            AudioManager.Instance.PlayLoop("BGM");
+            //AudioManager.Instance.PlayLoop("BGM");
 
             GameObject targetObject = GameObject.Find("NetworkRunner");
             if (targetObject != null)
             {
-                BasicSpawner basicSpawner = targetObject.GetComponent<BasicSpawner>();
+                NetworkHandler networkHandler = targetObject.GetComponent<NetworkHandler>();
 
-                if (basicSpawner != null)
+                if (networkHandler != null)
                 {
-                    basicSpawner.StartGameMode(NetworkManager.Instance.mode);
+                    networkHandler.StartGame(NetworkManager.Instance.mode);
                 }
             }
         }

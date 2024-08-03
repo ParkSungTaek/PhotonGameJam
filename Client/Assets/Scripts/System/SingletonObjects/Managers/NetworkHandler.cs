@@ -5,6 +5,7 @@ using System;
 using UnityEngine;
 using static Client.SystemEnum;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 namespace Client
 {
@@ -16,6 +17,33 @@ namespace Client
         public Dictionary<PlayerRef, Player> _spawnedCharacters = new Dictionary<PlayerRef, Player>();
 
         CharacterInputHandler characterInputHandler;
+
+        public NetworkRunner _runner;
+
+        public async void StartGame(GameMode mode)
+        {
+            // Create the Fusion runner and let it know that we will be providing user input
+            _runner = gameObject.GetComponent<NetworkRunner>();
+            _runner.ProvideInput = true;
+
+            // Create the NetworkSceneInfo from the current scene
+            var scene = SceneRef.FromIndex(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+            var sceneInfo = new NetworkSceneInfo();
+            if (scene.IsValid)
+            {
+                sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
+            }
+
+            // Start or join (depends on gamemode) a session with a specific name
+            await _runner.StartGame(new StartGameArgs()
+            {
+                GameMode = mode,
+                SessionName = "TestRoom10",
+                Scene = scene,
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            });
+        }
+
         public void OnConnectedToServer(NetworkRunner runner)
         {
         }
