@@ -81,14 +81,6 @@ namespace Client
                 _playerInfo.MyEntity = this;
             }
             Debug.Log("Start");
-
-            foreach (var data in _playerInfo.DecoData)
-            {
-                playerFaceUI.SetPlayerDeco(data.Key, data.Value);
-            }
-            playerFaceUI.SetNickName(_playerInfo.CharName);
-            playerFaceUI.RefreshDeco();
-
         }
 
         private void Update()
@@ -217,7 +209,7 @@ namespace Client
                     MyInfoManager.Instance.SetDecoData(DecoType.Body, DataManager.Instance.GetData<DecoData>(3));
                 }
 
-                RPC_CH_SendMessage(
+                RPC_SetPlayerInfo(
                     MyInfoManager.Instance.GetNickName(), 
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index);
@@ -238,11 +230,7 @@ namespace Client
 
         public override void Render()
         {
-            SetNickName(nickName.ToString());
-            playerFaceUI.SetNickName(nickName.ToString());
-            playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
-            playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoBody));
-            playerFaceUI.RefreshDeco();
+            base.Render();
         }
 
         public void OnDamage(float damage)
@@ -321,11 +309,25 @@ namespace Client
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        public void RPC_SetPlayerInfo(string name, int face, int body, RpcInfo info = default)
+        {
+            nickName = name;
+            decoFace = face;
+            decoBody = body;
+        }
+
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
         public void RPC_CH_SendMessage(string name, int face, int body, RpcInfo info = default)
         {
             nickName = name;
             decoFace = face;
             decoBody = body;
+
+            SetNickName(nickName.ToString());
+            playerFaceUI.SetNickName(nickName.ToString());
+            playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
+            playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoBody));
+            playerFaceUI.RefreshDeco();
         }
     }
 }
