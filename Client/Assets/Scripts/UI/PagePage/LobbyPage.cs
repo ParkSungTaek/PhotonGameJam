@@ -14,8 +14,6 @@ namespace Client
         [SerializeField] private Button     inGameBtn       = null; // 인게임 바로가기 버튼 (개발자용)
         [SerializeField] private Button     matchingBtn     = null; // 랜덤 매칭 버튼
         [SerializeField] private Button     selectPlayerBtn = null; // 마법사 설정 버튼
-        [SerializeField] private Button     a = null; // 마법사 설정 버튼
-        [SerializeField] private Button     b = null; // 마법사 설정 버튼
         [SerializeField] private TopPageBar topBar          = null; // 상단바
 
         [SerializeField] private Button     hostBtn         = null; // 호스트 입장 버튼(개발자용)
@@ -26,7 +24,6 @@ namespace Client
             matchingBtn.onClick.AddListener(OnClickMatchingBtn);
             selectPlayerBtn.onClick.AddListener(OnClickSelectPlayerBtn);
             inGameBtn.onClick.AddListener(OnClickInGameBtn);
-
             hostBtn.onClick.AddListener(OnClickHostBtn);
         }
 

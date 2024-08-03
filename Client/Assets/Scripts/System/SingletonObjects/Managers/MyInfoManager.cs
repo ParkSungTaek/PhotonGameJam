@@ -5,15 +5,39 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    /// <summary>
-    /// UI매니저 
-    /// </summary>
+    public class FriendData
+    {
+        public long UID = 0; // 친구 UID
+        public string name = "FriendName"; // 친구 닉네임
+        public Dictionary<DecoType, DecoData> DecoInfo = new(); // 친구 꾸미기 정보
+        public bool isOnline = false; // 온라인인가?
+    }
+
     public class MyInfoManager : Singleton<MyInfoManager>
     {
         private string                         _nickName = "MyNickName"; // 닉네임
-        private Dictionary<DecoType, DecoData> _decoInfo = new(); // 꾸미기 정보
+        private Dictionary<DecoType, DecoData> _decoInfo = new();        // 꾸미기 정보
+        private Dictionary<long, FriendData> _friendList = new();        // 친구 정보
 
         private MyInfoManager()
+        {
+
+        }
+
+        // 친구정보를 갱신합니다. TODO[이서연] : 친구기능 정해지면 내용 추가할것
+        public void UpdateFriend()
+        {
+
+        }
+
+        // 친구정보를 추가합니다. TODO[이서연] : 친구기능 정해지면 내용 추가할것
+        public void AddFriend()
+        {
+         
+        }
+
+        // 친구정보를 삭제합니다. TODO[이서연] : 친구기능 정해지면 내용 추가할것
+        public void DeleteFriend()
         {
 
         }
@@ -28,6 +52,12 @@ namespace Client
         public string GetNickName()
         {
             return _nickName;
+        }
+
+        // 친구목록을 반환합니다.
+        public Dictionary<long, FriendData> GetFriends()
+        {
+            return _friendList;
         }
 
         // 꾸미기 데이터를 세팅합니다.

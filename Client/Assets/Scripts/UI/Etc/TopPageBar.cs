@@ -11,6 +11,7 @@ namespace Client
     {
         [SerializeField] private Button   backBtn   = null; // 뒤로 가기 버튼
         [SerializeField] private Button   optionBtn = null; // 옵션 버튼
+        [SerializeField] private Button   friendBtn = null; // 친구 관리 버튼
 
         private UI_Scene page = null; // 부모 페이지
 
@@ -20,6 +21,7 @@ namespace Client
             this.page = page;
             backBtn.onClick.AddListener(OnClickBackBtn);
             optionBtn.onClick.AddListener(OnClickOptionBtn);
+            friendBtn.onClick.AddListener(OnClickFriendBtn);
         }
 
         // 옵션 버튼을 눌렀을 때 호출됩니다.
@@ -28,6 +30,12 @@ namespace Client
             UIManager.Instance.ShowPopupUI<OptionPopupPage>();
         }
 
+        // 친구 관리 버튼을 눌렀을 때 호출됩니다.
+        private void OnClickFriendBtn()
+        {
+            UIManager.Instance.ShowPopupUI<FriendPopupPage>();
+
+        }
         // 뒤로 가기 버튼을 눌렀을 때 호출됩니다.
         private void OnClickBackBtn()
         {
