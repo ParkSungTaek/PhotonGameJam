@@ -29,7 +29,7 @@ namespace Photon.Voice.Fusion
         /// <summary> The Speaker component currently used by this VoiceNetworkObject </summary>
         public Speaker SpeakerInUse { get; private set; }
 
-        /// <summary> If true, this VoiceNetworkObject has a Speaker that is currently playing received audio frames from remote audio source </summary>
+        /// <summary> If true, this VoiceNetworkObject has a Speaker that is currently playing received audiource frames from remote audio source </summary>
         public bool IsSpeaking => this.SpeakerInUse != null && this.SpeakerInUse.IsPlaying;
 
         /// <summary> If true, this VoiceNetworkObject has a Recorder that is currently transmitting audio stream from local audio source </summary>
@@ -149,7 +149,19 @@ namespace Photon.Voice.Fusion
             this.voiceConnection.RemoveRecorder(this.RecorderInUse);
         }
 
-#endregion
+        public void SetSpeakerVolume(float volume)
+        {
+            if (this.SpeakerInUse != null)
+            {
+                AudioSource audioSource = this.SpeakerInUse.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.volume = volume;
+                }
+            }
+        }
+
+        #endregion
     }
 }
 #endif

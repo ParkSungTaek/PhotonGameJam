@@ -12,9 +12,11 @@ namespace Client
 {
     public class PlayerFace : MonoBehaviour
     {
-        [SerializeField] private TMP_Text       name = null; // 닉네임 UI
-        [SerializeField] private SpriteRenderer body = null; // 몸 UI
-        [SerializeField] private SpriteRenderer face = null; // 얼굴 UI
+        [SerializeField] private TMP_Text       name   = null; // 닉네임 UI
+        [SerializeField] private Animator       hpAnim = null; // 체력바 애니메이션
+        [SerializeField] private SpriteRenderer body   = null; // 몸 UI
+        [SerializeField] private SpriteRenderer face   = null; // 얼굴 UI
+        [SerializeField] private SpriteRenderer hpBar  = null; // HP 바
 
         private Dictionary<DecoType, DecoData> items = new(); // 꾸미기 아이템 정보
         private string nickName = string.Empty;
@@ -61,6 +63,18 @@ namespace Client
         public void SetNickName(string nickName)
         {
             this.nickName = nickName;
+        }
+
+        // 체력을 세팅합니다
+        public void SetHPBar(float value)
+        {
+            // TODO:이서연 애니메이션이 여유가 되면 하기.
+            //hpAnim.SetFloat("HPValue", value);
+
+            RectTransform hpRectTransform = hpBar.GetComponent<RectTransform>();
+            Vector3 currentScale = hpRectTransform.localScale;
+            currentScale.x = value;
+            hpRectTransform.localScale = currentScale;
         }
 
         // 캐릭터 외형을 하나씩 세팅합니다.

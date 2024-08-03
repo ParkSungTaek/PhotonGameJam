@@ -365,6 +365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerDeco
       objectReference: {fileID: 0}
+    - target: {fileID: 3547371459782033437, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6519325133179266794, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -408,6 +412,10 @@ PrefabInstance:
     - target: {fileID: 6519325133179266794, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067478183935030493, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}

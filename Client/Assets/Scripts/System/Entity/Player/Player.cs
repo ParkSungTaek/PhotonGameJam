@@ -37,6 +37,7 @@ namespace Client
         public PlayerInfo PlayerInfo => _playerInfo;
         protected string ProjectilePath(ProjectileName projectileEnumName) => $"Prefabs/Projectile/{projectileEnumName.ToString()}";
 
+        [SerializeField]
         public Image SpeakingIndicator;
 
         [Networked]
@@ -122,7 +123,7 @@ namespace Client
         {
             if (HasInputAuthority)
             {
-                RPC_CH_SendMessage(
+                RPC_SetPlayerInfo(
                     MyInfoManager.Instance.GetNickName(),
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
@@ -218,7 +219,8 @@ namespace Client
                 RPC_SetPlayerInfo(
                     MyInfoManager.Instance.GetNickName(), 
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
-                    MyInfoManager.Instance.GetDecoData()[DecoType.Body].index);
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
+                    isSpeaking);
             }
             else
             {
@@ -246,10 +248,13 @@ namespace Client
             if (hp >= 0)
             {
                 _playerInfo.SetStat(EntityStat.HP, hp);
+                // TODO 이서연 : 100이아니라 MaxHP넣어줘야함
+                RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP)/100);
             }
             else
             {
                 _playerInfo.SetStat(EntityStat.HP, 0);
+                RPC_SetPlayerHP(0);
                 _playerInfo.IsLive = false;
                 Dead();
             }
@@ -314,16 +319,10 @@ namespace Client
             Runner.Despawn(Object);
         }
 
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_SetPlayerInfo(string name, int face, int body, RpcInfo info = default)
-        {
-            nickName = name;
-            decoFace = face;
-            decoBody = body;
-        }
 
+        // 플레이어 정보 동기화
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_CH_SendMessage(string name, int face, int body, bool speaking, RpcInfo info = default)
+        public void RPC_SetPlayerInfo(string name, int face, int body, bool speaking, RpcInfo info = default)
         {
             nickName = name;
             decoFace = face;
@@ -345,6 +344,12 @@ namespace Client
             {
                 SpeakingIndicator.enabled = false;
             }
+        }
+
+        // 플레이어 체력 변화 동기화
+        public void RPC_SetPlayerHP(float value)
+        {
+            playerFaceUI.SetHPBar(value);
         }
     }
 }
