@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using static Client.SystemEnum;
+using Unity.VisualScripting;
 
 namespace Client
 {
@@ -73,13 +74,16 @@ namespace Client
                 Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
                 Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player, (runner, o) =>
                 {
-                    Dictionary<DecoType, DecoData> decoData = MyInfoManager.Instance.GetDecoData();
-                    foreach( var data in decoData )
-                    {
-                        o.GetComponent<Player>().SetDecoData(data.Key, data.Value);
-                    }
-                    o.GetComponent<Player>().SetNickName(MyInfoManager.Instance.GetNickName());
+                    //var naem = MyInfoManager.Instance.GetNickName();
+                    //ChatManager.Instance.SendPublicChat(ChatManager.Instance.currentChannelName, $"Join Character Name: {MyInfoManager.Instance.GetNickName()}");
+                    //Dictionary<DecoType, DecoData> decoData = MyInfoManager.Instance.GetDecoData();
+                    //foreach( var data in decoData )
+                    //{
+                    //    o.GetComponent<Player>().SetDecoData(data.Key, data.Value);
+                    //}
+                    //o.GetComponent<Player>().SetNickName(MyInfoManager.Instance.GetNickName());
                 });
+
                 // Keep track of the player avatars for easy access
                 _spawnedCharacters.Add(player, networkPlayerObject);
             }

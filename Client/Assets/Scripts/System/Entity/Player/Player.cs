@@ -1,6 +1,9 @@
 using Fusion;
+using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
@@ -10,22 +13,22 @@ namespace Client
 {
     public class Player : EntityBase, IPlayerLeft
     {
-        [SerializeField] 
+        [SerializeField]
         private PlayerFace playerFaceUI;
-        [SerializeField] 
+        [SerializeField]
         private PlayerCharName playerDataIndex;
-        [SerializeField] 
+        [SerializeField]
         protected ProjectileName ProjectileEnumName; // 기본 투사체
-        
-        [Networked]private TickTimer _attackCoolTime { get; set; } // 공격 쿨타임
+
+        [Networked] private TickTimer _attackCoolTime { get; set; } // 공격 쿨타임
 
         private List<ProjectileBase> _projectileList = new List<ProjectileBase>(); // 발사용 투사체 
-        private List<BuffBase> _buffBases            = new List<BuffBase>();       // 본인이 가지고있는 버프
-        
-        private PlayerInfo     _playerInfo   = null;                // Player 데이터
-        private int            _weaponDataID = SystemConst.NoData;
-        private Rigidbody      _rigidbody    = null;
-        private WeaponBase     _weapon       = null;
+        private List<BuffBase> _buffBases = new List<BuffBase>();       // 본인이 가지고있는 버프
+
+        private PlayerInfo _playerInfo = null;                // Player 데이터
+        private int _weaponDataID = SystemConst.NoData;
+        private Rigidbody _rigidbody = null;
+        private WeaponBase _weapon = null;
 
         private NetworkCharacterController _networkNetwork;
 
@@ -34,6 +37,8 @@ namespace Client
         public PlayerInfo PlayerInfo => _playerInfo;
         protected string ProjectilePath(ProjectileName projectileEnumName) => $"Prefabs/Projectile/{projectileEnumName.ToString()}";
 
+        [Networked]
+        NetworkString<_16> nickName { get; set; }
 
         private void Awake()
         {
@@ -59,9 +64,9 @@ namespace Client
         {
             _rigidbody = GetComponent<Rigidbody>();
             Debug.Log($"{playerDataIndex} 생성");
-            
+
             if (_playerInfo == null)
-            { 
+            {
                 Debug.LogWarning($"Player{transform.name} 의 Start 시점 PlayerInfo 가 없음. 해당 상황이 정상적 상황이라면 Waring 제거바람");
                 _playerInfo = new PlayerInfo();
             }
@@ -112,6 +117,11 @@ namespace Client
 
         public override void FixedUpdateNetwork()
         {
+            if (HasInputAuthority)
+            {
+                RPC_CH_SendMessage(MyInfoManager.Instance.GetNickName());
+            }
+
             if (GetInput(out NetworkInputData data))
             {
                 if (_playerInfo == null)
@@ -179,7 +189,7 @@ namespace Client
             {
                 _weapon = weapon;
                 _weapon.SetCharPlayer(this);
-                _weapon.transform.parent = transform; 
+                _weapon.transform.parent = transform;
                 _playerInfo.SetDataWeaponData(_weapon.GetWeaponData());
             }
 
@@ -187,12 +197,17 @@ namespace Client
 
         public override void Spawned()
         {
-            if (Object.HasInputAuthority)
+            if (HasInputAuthority)
             {
                 EntityManager.Instance.MyPlayer = this;
                 Debug.Log("Spawned local player");
+
+                RPC_CH_SendMessage(MyInfoManager.Instance.GetNickName());
             }
-            else Debug.Log("Spawned remote player");
+            else
+            {
+                Debug.Log("Spawned remote player");
+            }
 
         }
 
@@ -203,6 +218,13 @@ namespace Client
 
         }
 
+        public override void Render()
+        {
+            SetNickName(nickName.ToString());
+            playerFaceUI.SetNickName(nickName.ToString());
+            playerFaceUI.RefreshDeco();
+        }
+
         public void OnDamage(float damage)
         {
             float hp = _playerInfo.GetStat(EntityStat.HP);
@@ -211,7 +233,7 @@ namespace Client
             {
                 _playerInfo.SetStat(EntityStat.HP, hp);
             }
-            else 
+            else
             {
                 _playerInfo.SetStat(EntityStat.HP, 0);
                 _playerInfo.IsLive = false;
@@ -278,5 +300,10 @@ namespace Client
             Runner.Despawn(Object);
         }
 
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        public void RPC_CH_SendMessage(string name, RpcInfo info = default)
+        {
+            nickName = name;
+        }
     }
 }
