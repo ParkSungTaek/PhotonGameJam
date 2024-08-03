@@ -221,6 +221,7 @@ namespace Client
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
                     isSpeaking);
+                RPC_SetPlayerHP(1);
             }
             else
             {
