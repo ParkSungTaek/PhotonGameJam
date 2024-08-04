@@ -114,6 +114,20 @@ namespace Client
         }
 
         /// <summary>
+        /// 마법 스크롤 타입(속성)
+        /// </summary>
+        public enum MagicElement
+        {
+            None,
+            Normal,
+            Fire,
+            Water,
+            Nature,
+
+            MaxCount
+        }
+
+        /// <summary>
         /// 플레이어 데이터테이블 인덱스와 대응용 enumm
         /// </summary>
         public enum PlayerCharName
