@@ -98,7 +98,7 @@ namespace Client
             // 다른 페이지들 모두 비활성화
             foreach( var p in _pageInstances)
             {
-                p.Value.SetActive(false);
+                p.Value?.SetActive(false);
             }
 
             //이전에 띄운 기록 없음 -> 생성
@@ -264,6 +264,8 @@ namespace Client
             CloseAllPopUpUI();
             _popupInstances.Clear();
             _pageInstances.Clear();
+            _pageStack.Clear();
+            _popupStack.Clear();
         }
     }
 }

@@ -62,13 +62,13 @@ namespace Client
             //int randomInt = UnityEngine.Random.Range(1000, 9999);
             //string randomSessionName = "Room-" + randomInt.ToString();
             string randomSessionName = "TestRoom";
-
+            SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
             _runner.StartGame(new StartGameArgs()
             {
                 Scene = SceneRef.FromIndex((int)SystemEnum.Scenes.InGame),
                 SessionName = randomSessionName,
                 GameMode = GameMode.Shared,
-            });
+            }) ;
         }
 
         public int GetSceneIndex(string sceneName)
