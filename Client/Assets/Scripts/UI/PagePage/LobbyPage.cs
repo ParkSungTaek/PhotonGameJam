@@ -47,8 +47,19 @@ namespace Client
 
         private void OnClickHostBtn()
         {
-            NetworkManager.Instance.mode = GameMode.AutoHostOrClient;
-            SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
+            //NetworkManager.Instance.mode = GameMode.AutoHostOrClient;
+            //SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
+
+            GameObject targetObject = GameObject.Find("NetworkRunner");
+            if (targetObject != null)
+            {
+                NetworkHandler networkHandler = targetObject.GetComponent<NetworkHandler>();
+
+                if (networkHandler != null)
+                {
+                    networkHandler.CreateRandomSession();
+                }
+            }
         }
         
     }

@@ -12,16 +12,16 @@ namespace Client
             UIManager.Instance.ShowSceneUI<InGamePage>();
             //AudioManager.Instance.PlayLoop("BGM");
 
-            GameObject targetObject = GameObject.Find("NetworkRunner");
-            if (targetObject != null)
-            {
-                NetworkHandler networkHandler = targetObject.GetComponent<NetworkHandler>();
+            //GameObject targetObject = GameObject.Find("NetworkRunner");
+            //if (targetObject != null)
+            //{
+            //    NetworkHandler networkHandler = targetObject.GetComponent<NetworkHandler>();
 
-                if (networkHandler != null)
-                {
-                    networkHandler.StartGame(NetworkManager.Instance.mode);
-                }
-            }
+            //    if (networkHandler != null)
+            //    {
+            //        networkHandler.StartGame(NetworkManager.Instance.mode);
+            //    }
+            //}
         }
 
         //private void Update() 

@@ -16,6 +16,7 @@ namespace Client
             {
                 recorder = GetComponent<Recorder>();
             }
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Update()
