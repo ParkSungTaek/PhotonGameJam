@@ -32,23 +32,6 @@ namespace Client
 
 
             _runner.JoinSessionLobby(SessionLobby.Shared, lobbyName);
-
-            //// Create the NetworkSceneInfo from the current scene
-            //var scene = SceneRef.FromIndex(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-            //var sceneInfo = new NetworkSceneInfo();
-            //if (scene.IsValid)
-            //{
-            //    sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
-            //}
-
-            //// Start or join (depends on gamemode) a session with a specific name
-            //await _runner.StartGame(new StartGameArgs()
-            //{
-            //    GameMode = mode,
-            //    SessionName = "TestRoom10",
-            //    Scene = scene,
-            //    SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
-            //});
         }
 
         public void RetrunLobby()
@@ -200,27 +183,11 @@ namespace Client
             Debug.Log("Player Join");
             if (player == _runner.LocalPlayer)
             {
-                // Create a unique position for the player
                 Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
                 Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
 
-                // Keep track of the player avatars for easy access
                 _spawnedCharacters.Add(player, networkPlayerObject);
             }
-
-            //if (runner.IsServer)
-            //{
-            //    if(player == _runner.LocalPlayer)
-            //    {
-            //        SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
-            //        // Create a unique position for the player
-            //        Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
-            //        Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-
-            //        // Keep track of the player avatars for easy access
-            //        _spawnedCharacters.Add(player, networkPlayerObject);
-            //    }
-            //}
         }
 
         public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)

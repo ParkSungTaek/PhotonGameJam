@@ -1008,6 +1008,10 @@ PrefabInstance:
       propertyPath: m_CullTransparentMesh
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8733696371324750768, guid: a4a12162fda2a4a4d9b430b2fed33dcb, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8987289575334715900, guid: a4a12162fda2a4a4d9b430b2fed33dcb, type: 3}
       propertyPath: m_SizeDelta.x
       value: -20

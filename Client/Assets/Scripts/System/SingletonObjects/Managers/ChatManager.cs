@@ -9,6 +9,7 @@ using Client;
 using static Client.SystemEnum;
 using UnityEngine.SocialPlatforms;
 using System;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace Client
 {
@@ -39,6 +40,8 @@ namespace Client
             AddLine(string.Format("연결시도", userName));
 
             GameManager.Instance.AddOnUpdate(UpdateChat);
+
+            SetState(SystemEnum.OnlineState.Lobby);
         }
 
         public void TestPushMessage(string msg)
@@ -82,9 +85,9 @@ namespace Client
         }
 
         // 본인 현재 상태 설정
-        public void SetState(SystemEnum.OnlineState state)
+        public void SetState(OnlineState state)
         {
-            chatClient.SetOnlineStatus(Convert.ToInt32(state), name);
+            chatClient.SetOnlineStatus((int)state, "changeChange");
         }
 
         // 친구 추가
@@ -105,7 +108,7 @@ namespace Client
         {
             if (chatClient != null)
             {
-                SetState(SystemEnum.OnlineState.Offline);
+                SetState(OnlineState.Offline);
                 chatClient.Disconnect();
             }
         }
@@ -136,6 +139,7 @@ namespace Client
         public void OnDisconnected()
         {
             AddLine("서버에 연결이 끊어졌습니다.");
+            SetState(OnlineState.Offline);
         }
 
         public void OnChatStateChange(ChatState state)
@@ -168,6 +172,15 @@ namespace Client
 
         public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
         {
+            foreach (var data in MyInfoManager.Instance.GetFriends())
+            {
+                if (data.Value.name == user) 
+                {
+                    data.Value.onlineState = (OnlineState)status;
+                    break;
+                }
+            }
+
             Debug.Log("status : " + string.Format("{0} is {1}, Msg : {2} ", user, status, message));
         }
 

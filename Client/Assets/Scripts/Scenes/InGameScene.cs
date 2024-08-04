@@ -10,37 +10,9 @@ namespace Client
         private void Start()
         {
             UIManager.Instance.ShowSceneUI<InGamePage>();
+
+            ChatManager.Instance.SetState(SystemEnum.OnlineState.Game);
             //AudioManager.Instance.PlayLoop("BGM");
-
-            //GameObject targetObject = GameObject.Find("NetworkRunner");
-            //if (targetObject != null)
-            //{
-            //    NetworkHandler networkHandler = targetObject.GetComponent<NetworkHandler>();
-
-            //    if (networkHandler != null)
-            //    {
-            //        networkHandler.StartGame(NetworkManager.Instance.mode);
-            //    }
-            //}
         }
-
-        //private void Update() 
-        //{
-        //    if( EntityManager.Instance.MyPlayer )
-        //    {
-        //        if (Input.GetKey(KeyCode.T))
-        //        {
-        //            if (chatPage)
-        //            {
-        //                chatPage.Back();
-        //                chatPage = null;
-        //            } 
-        //            else
-        //            {
-        //                chatPage = UIManager.Instance.ShowSceneUI<ChatPage>();
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

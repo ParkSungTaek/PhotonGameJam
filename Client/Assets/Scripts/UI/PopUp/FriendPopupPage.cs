@@ -19,6 +19,26 @@ namespace Client
         {
             base.Init();
             SetFriendDatas();
+            nameInput.onSubmit.AddListener(OnEndEdit);
+            addFriendBtn.onClick.AddListener(OnClickButton);
+        }
+
+        private void OnEndEdit(string text)
+        {
+            MyInfoManager.Instance.AddFriend(text);
+            ChatManager.Instance.AddFriends(text);
+            nameInput.text = "";
+
+            SetFriendDatas();
+        }
+
+        private void OnClickButton()
+        {
+            MyInfoManager.Instance.AddFriend(nameInput.text);
+            ChatManager.Instance.AddFriends(nameInput.text);
+            nameInput.text = "";
+
+            SetFriendDatas();
         }
 
         public override void ReOpenPopupUI()
@@ -38,14 +58,14 @@ namespace Client
             {
                 FriendData friend = data.Value;
                 FriendSlot newSlot = Instantiate(friendPrepeb, content);
-                newSlot.SetData(friend.name, friend.isOnline, friend.DecoInfo);
+                newSlot.SetData(friend.name, friend.onlineState, friend.DecoInfo);
             }
             // (일단 친구 미구현이라서 임시 두명만 넣음)
-            FriendSlot anewSlot = Instantiate(friendPrepeb, content);
-            anewSlot.SetData("테스트 친구 1", true, MyInfoManager.Instance.GetDecoData());
+            //FriendSlot anewSlot = Instantiate(friendPrepeb, content);
+            //anewSlot.SetData("테스트 친구 1", true, MyInfoManager.Instance.GetDecoData());
 
-            FriendSlot bnewSlot = Instantiate(friendPrepeb, content);
-            bnewSlot.SetData("테스트 친구 2", false, MyInfoManager.Instance.GetDecoData());
+            //FriendSlot bnewSlot = Instantiate(friendPrepeb, content);
+            //bnewSlot.SetData("테스트 친구 2", false, MyInfoManager.Instance.GetDecoData());
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using static Client.SystemEnum;
 
@@ -10,7 +11,7 @@ namespace Client
         public long UID = 0; // 친구 UID
         public string name = "FriendName"; // 친구 닉네임
         public Dictionary<DecoType, DecoData> DecoInfo = new(); // 친구 꾸미기 정보
-        public bool isOnline = false; // 온라인인가?
+        public OnlineState onlineState = OnlineState.Offline; // 온라인 상태
     }
 
     public class MyInfoManager : Singleton<MyInfoManager>
@@ -18,6 +19,9 @@ namespace Client
         private string                         _nickName = "MyNickName"; // 닉네임
         private Dictionary<DecoType, DecoData> _decoInfo = new();        // 꾸미기 정보
         private Dictionary<long, FriendData> _friendList = new();        // 친구 정보
+
+        // 임시로 넣음(친구 인덱스)
+        private int friendIndex = 0;
 
         private MyInfoManager()
         {
@@ -31,9 +35,17 @@ namespace Client
         }
 
         // 친구정보를 추가합니다. TODO[이서연] : 친구기능 정해지면 내용 추가할것
-        public void AddFriend()
+        public void AddFriend(string _name)
         {
-         
+            var friend = new FriendData()
+            {
+                UID = friendIndex,
+                name = _name,
+                DecoInfo = MyInfoManager.Instance.GetDecoData(),
+                onlineState = OnlineState.Offline,
+            };
+
+            _friendList[friendIndex++] = friend;
         }
 
         // 친구정보를 삭제합니다. TODO[이서연] : 친구기능 정해지면 내용 추가할것
