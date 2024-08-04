@@ -10,8 +10,6 @@ namespace Client
         private void Start()
         {
             UIManager.Instance.ShowSceneUI<TitlePage>();
-
-            var a = ChatManager.Instance;
         }
     }
 }

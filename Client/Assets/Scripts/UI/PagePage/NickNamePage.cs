@@ -26,6 +26,8 @@ namespace Client
         {
             MyInfoManager.Instance.SetNickName(nickName);
             UIManager.Instance.ShowCommonPopup("이름 확인", nickName + "이 정말 너의 이름이 맞아?", SystemEnum.CommonPopuptype.TwoBtn, OnGameStart);
+            // 채팅 서버 접속
+            var a = ChatManager.Instance;
         }
 
         // 이름 설정 완료시 호출됩니다.
