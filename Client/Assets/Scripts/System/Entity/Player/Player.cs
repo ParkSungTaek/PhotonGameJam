@@ -53,9 +53,6 @@ namespace Client
         [Networked]
         int decoBody { get; set; }
 
-        [Networked]
-        float networkHP { get; set; }
-
         private void Awake()
         {
             //Test 용
@@ -132,6 +129,14 @@ namespace Client
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
                     isSpeaking);
+
+                if (_playerInfo.GetStat(EntityStat.HP) <= 0.0f)
+                {
+                    _playerInfo.SetStat(EntityStat.HP, 0);
+                    RPC_SetPlayerDead();
+                    _playerInfo.IsLive = false;
+                    Dead();
+                }
             }
 
             if (GetInput(out NetworkInputData data))
@@ -258,13 +263,6 @@ namespace Client
                     // TODO 이서연 : 100이아니라 MaxHP넣어줘야함
                     RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / 100);
                 }
-                else
-                {
-                    _playerInfo.SetStat(EntityStat.HP, 0);
-                    RPC_SetPlayerHP(0);
-                    _playerInfo.IsLive = false;
-                    Dead();
-                }
             }
         }
 
@@ -356,9 +354,16 @@ namespace Client
         // 플레이어 체력 변화 동기화
         public void RPC_SetPlayerHP(float value)
         {
-            networkHP = value;
             _playerInfo.SetStat(EntityStat.HP, value * 100f);
             playerFaceUI.SetHPBar(value);
+        }
+
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+        // 플레이어 죽음 동기화
+        public void RPC_SetPlayerDead()
+        {
+            _playerInfo.SetStat(EntityStat.HP, 0f);
+            _playerInfo.IsLive = false;
         }
     }
 }
