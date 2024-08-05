@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using static Client.SystemEnum;
@@ -51,6 +52,9 @@ namespace Client
 
         [Networked]
         int decoBody { get; set; }
+
+        [Networked]
+        float networkHP { get; set; }
 
         private void Awake()
         {
@@ -244,23 +248,24 @@ namespace Client
 
         public void OnDamage(float damage)
         {
-            float hp = _playerInfo.GetStat(EntityStat.HP);
-            hp -= damage;
-            if (hp >= 0)
+            if (!HasInputAuthority)
             {
-                _playerInfo.SetStat(EntityStat.HP, hp);
-                // TODO 이서연 : 100이아니라 MaxHP넣어줘야함
-                RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP)/100);
+                float hp = _playerInfo.GetStat(EntityStat.HP);
+                hp -= damage;
+                if (hp >= 0)
+                {
+                    _playerInfo.SetStat(EntityStat.HP, hp);
+                    // TODO 이서연 : 100이아니라 MaxHP넣어줘야함
+                    RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / 100);
+                }
+                else
+                {
+                    _playerInfo.SetStat(EntityStat.HP, 0);
+                    RPC_SetPlayerHP(0);
+                    _playerInfo.IsLive = false;
+                    Dead();
+                }
             }
-            else
-            {
-                _playerInfo.SetStat(EntityStat.HP, 0);
-                RPC_SetPlayerHP(0);
-                _playerInfo.IsLive = false;
-                Dead();
-            }
-
-
         }
 
         ProjectileBase GetProjectileList()
@@ -347,9 +352,12 @@ namespace Client
             }
         }
 
+        [Rpc(RpcSources.All, RpcTargets.All)]
         // 플레이어 체력 변화 동기화
         public void RPC_SetPlayerHP(float value)
         {
+            networkHP = value;
+            _playerInfo.SetStat(EntityStat.HP, value * 100f);
             playerFaceUI.SetHPBar(value);
         }
     }

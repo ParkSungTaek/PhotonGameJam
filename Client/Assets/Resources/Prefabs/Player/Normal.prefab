@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4364271435903248406}
   - component: {fileID: 43725960815347117}
   - component: {fileID: 3275510903700511600}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpeakerIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 5494898196869410366}
   - component: {fileID: 6820175536736513439}
   - component: {fileID: 6088504688512030524}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556352883690724859}
   - component: {fileID: 7670473403617440833}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VoiceObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 1842289417842850009}
   - component: {fileID: 7861611398662107797}
   - component: {fileID: 858132671115149194}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,6 +353,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4658846751594927361}
     m_Modifications:
+    - target: {fileID: 666206838189730349, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063729373113285541, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1927452627022307703, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
       propertyPath: body
       value: 
@@ -365,9 +373,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerDeco
       objectReference: {fileID: 0}
+    - target: {fileID: 2271957074739393437, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998359223607561243, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3547371459782033437, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
       propertyPath: m_SpriteSortPoint
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4415445977178949103, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810150791469024915, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6519325133179266794, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
       propertyPath: m_RootOrder
@@ -412,6 +436,10 @@ PrefabInstance:
     - target: {fileID: 6519325133179266794, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033105167714754242, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8067478183935030493, guid: 2fa74082e6b82404fa6385da0e9ac9a9, type: 3}
       propertyPath: m_SpriteSortPoint
