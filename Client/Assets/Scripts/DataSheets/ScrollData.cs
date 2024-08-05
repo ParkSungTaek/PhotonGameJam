@@ -9,24 +9,24 @@ using System.Data;
 
 namespace Client
 {
-    public partial class MagicBookData : SheetData
+    public partial class ScrollData : SheetData
     {
 
 		public int index; // 인덱스
 		
-		public string name; // 마법서 명
+		public SystemEnum.ScrollName Scroll; // 스크롤Enum
 		
-		public SystemEnum.MagicElement element; // 속성
+		public string ScrollNameInGame; // 스크롤명(인게임 확인용)
 		
-		public bool isActive; // 타입
+		public SystemEnum.ElementType Element; // 속성 타입
 		
-		public string desc; // 효과 설명
+		public int Value1; // Value1
 		
-		public string iconResource; // 아이콘 리소스
+		public int Value2; // Value2
 		
-		public string typeResource; // 속성 리소스
+		public int Value3; // Value3
 		
-		public string colorcode; // 속성 컬러코드
+		public int Value4; // Value4
 		
 
         public override Dictionary<int, SheetData> LoadData()
@@ -43,16 +43,16 @@ namespace Client
 
                 string[] values = lines[i].Trim().Split(',');
                 
-                MagicBookData data = new MagicBookData();
+                ScrollData data = new ScrollData();
 
                 data.index = Convert.ToInt32(values[0]);
-				data.name = Convert.ToString(values[1]);
-				data.element = (SystemEnum.MagicElement)Enum.Parse(typeof(SystemEnum.MagicElement), values[2]);
-				data.isActive = Convert.ToBoolean(values[3]);
-				data.desc = Convert.ToString(values[4]);
-				data.iconResource = Convert.ToString(values[5]);
-				data.typeResource = Convert.ToString(values[6]);
-				data.colorcode = Convert.ToString(values[7]);
+				data.Scroll = (SystemEnum.ScrollName)Enum.Parse(typeof(SystemEnum.ScrollName), values[1]);
+				data.ScrollNameInGame = Convert.ToString(values[2]);
+				data.Element = (SystemEnum.ElementType)Enum.Parse(typeof(SystemEnum.ElementType), values[3]);
+				data.Value1 = Convert.ToInt32(values[4]);
+				data.Value2 = Convert.ToInt32(values[5]);
+				data.Value3 = Convert.ToInt32(values[6]);
+				data.Value4 = Convert.ToInt32(values[7]);
 				
 
                 dataList[data.index] = data;

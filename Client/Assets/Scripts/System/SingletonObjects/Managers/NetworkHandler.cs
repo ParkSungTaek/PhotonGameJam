@@ -32,6 +32,7 @@ namespace Client
 
 
             _runner.JoinSessionLobby(SessionLobby.Shared, lobbyName);
+            
         }
 
         public void RetrunLobby()

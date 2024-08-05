@@ -19,6 +19,8 @@ namespace Client
         [SerializeField] private NetworkPrefabRef _playerPrefab;
         public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
+
+        public NetworkHandler NetworkHandler { get; set; }
         private NetworkManager()
         {
         }

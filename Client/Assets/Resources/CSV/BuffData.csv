@@ -1,0 +1,7 @@
+﻿인덱스,#버프,버프 그룹 (같으면 중첩불가),우선순위(같은 그룹 내 우선순위),버프 타입,버프 타입,스텟,Value1,Value2,Value3,Value4,Time
+index,#,_GroupType ,_GroupOrder,_BuffName,_BuffType,Stat,Value1,Value2,Value3,Value4,Time
+int,#,int,int,BuffName,BuffType,EntityStat,int,int,int,int,int
+0,None,0,0,None,None,HP,0,0,0,0,0
+1,체력 20 증가 (5초 지속),1,0,AddFixedValue,Passive,HP,200000,0,0,0,50000
+2,스피드 40 증가,2,0,AddFixedValue,Passive,MovSpd,400000,0,0,0,-1
+3,공격력 20%증가버프,3,0,AddPerValue,Passive,Att,2000,0,0,0,-1

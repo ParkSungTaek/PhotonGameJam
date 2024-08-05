@@ -58,6 +58,7 @@ namespace Client
                 if (networkHandler != null)
                 {
                     networkHandler.CreateRandomSession();
+                    NetworkManager.Instance.NetworkHandler = networkHandler;
                 }
             }
         }

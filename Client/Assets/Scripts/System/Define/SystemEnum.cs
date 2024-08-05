@@ -10,6 +10,8 @@ namespace Client
     /// </summary>
     public class SystemEnum
     {
+        #region Sound
+
         public enum Sounds
         {
             BGM,
@@ -26,6 +28,9 @@ namespace Client
         {
             MaxCount
         }
+
+        #endregion Sound
+
         public enum Condition
         {
             None,
@@ -38,6 +43,7 @@ namespace Client
             MaxCount
         }
 
+        #region UI
         public enum CommonPopuptype
         {
             OneBtn,
@@ -64,6 +70,9 @@ namespace Client
             InGame,
             MaxCount
         }
+        #endregion UI
+
+
         public enum EntityType
         {
             None,
@@ -74,35 +83,41 @@ namespace Client
             MaxCount
         }
 
+        #region Buff
         /// <summary>
         /// 버프 대분류
         /// </summary>
         public enum BuffType
         {
             None,
-            Buff,       // 긍정적 버프
-            Debuff,     // 부정정 버프
+            Passive,       // 긍정적 버프
+            Active,     // 부정정 버프
             State,      // 이동속도 감소, 스턴 등
 
             MaxCount
+        }
+        public enum BuffName
+        {
+            None,
+            AddFixedValue,
+            AddPerValue,
+
+            MaxCount
 
         }
 
-        /// <summary>
-        /// 버프 소분류
-        /// </summary>
-        public enum Buffs
+        public enum ScrollName
         {
             None,
-
+            FireMidLv,
 
             MaxCount
         }
-
+        #endregion Buff
         /// <summary>
         /// 유 불리 보정용 데이터
         /// </summary>
-        public enum ValidityType
+        public enum ElementType
         {
             None,
             Normal,

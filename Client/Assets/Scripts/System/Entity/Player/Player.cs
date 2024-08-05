@@ -58,13 +58,6 @@ namespace Client
 
         private void Awake()
         {
-            //Test 용
-            #region 테스트코드
-            {
-                Debug.Log("EntityPlayer 스크립트의 테스트 코드가 지워지지 않았습니다");
-                EntityManager.Instance.MyPlayer = this;
-            }
-            #endregion
             // 기본 투사체
             ProjectileBase projectileBase = SetProjectile(ProjectileEnumName);
             if (projectileBase != null)
@@ -114,7 +107,11 @@ namespace Client
         // 꾸미기 데이터를 세팅합니다.
         public void SetDecoData(DecoType type, DecoData decoData)
         {
-            _playerInfo.SetDecoData(type, decoData);
+            if (_playerInfo != null && decoData != null)
+            {
+                _playerInfo.SetDecoData(type, decoData);
+            }
+            
         }
 
         // 닉네임을 세팅합니다.

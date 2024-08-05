@@ -12,6 +12,7 @@ namespace Client
             UIManager.Instance.ShowSceneUI<InGamePage>();
 
             ChatManager.Instance.SetState(SystemEnum.OnlineState.Game);
+            //NetworkManager.Instance.NetworkHandler._runner.AddCallbacks()
             //AudioManager.Instance.PlayLoop("BGM");
         }
     }

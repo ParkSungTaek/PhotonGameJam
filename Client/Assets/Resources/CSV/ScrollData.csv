@@ -1,0 +1,5 @@
+﻿인덱스,스크롤Enum,스크롤명(인게임 확인용),속성 타입,Value1,Value2,Value3,Value4
+index,Scroll,ScrollNameInGame,Element,Value1,Value2,Value3,Value4
+int,ScrollName,string,ElementType,int,int,int,int
+0,None,None,Fire,0,0,0,0
+1,FireMidLv,화염 마법 중급,Fire,1,2,0,0

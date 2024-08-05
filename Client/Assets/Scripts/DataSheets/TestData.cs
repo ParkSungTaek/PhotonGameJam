@@ -14,6 +14,8 @@ namespace Client
 
 		public int index; // 인덱스
 		
+		public int attack; // 공격력
+		
 		public string name; // 이름
 		
 
@@ -34,6 +36,7 @@ namespace Client
                 TestData data = new TestData();
 
                 data.index = Convert.ToInt32(values[0]);
+				data.attack = Convert.ToInt32(values[1]);
 				data.name = Convert.ToString(values[2]);
 				
 
