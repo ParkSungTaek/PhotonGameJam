@@ -21,6 +21,7 @@ namespace Client
         [SerializeField]
         protected ProjectileName ProjectileEnumName; // 기본 투사체
 
+        private SpriteRenderer[] spriteRenderers;
         [Networked] private TickTimer _attackCoolTime { get; set; } // 공격 쿨타임
 
         private List<ProjectileBase> _projectileList = new List<ProjectileBase>(); // 발사용 투사체 
@@ -81,11 +82,29 @@ namespace Client
                 _playerInfo.MyEntity = this;
             }
             Debug.Log("Start");
+
+            spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         }
 
         private void Update()
         {
             LookAtMouse();
+        }
+
+        public void DisableAllRenderers()
+        {
+            foreach (SpriteRenderer renderer in spriteRenderers)
+            {
+                renderer.enabled = false;
+            }
+        }
+
+        public void EnableAllRenderers()
+        {
+            foreach (SpriteRenderer renderer in spriteRenderers)
+            {
+                renderer.enabled = true;
+            }
         }
 
         void SetDate(int weaponDataID = SystemConst.NoData, List<BuffBase> buffList = null)
@@ -127,11 +146,13 @@ namespace Client
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
                     isSpeaking);
 
-                if (_playerInfo.GetStat(EntityStat.HP) <= 0.0f)
+                if (_playerInfo.GetStat(EntityStat.HP) <= 0.0f && _playerInfo.IsLive)
                 {
                     _playerInfo.SetStat(EntityStat.HP, 0);
                     RPC_SetPlayerDead();
                     _playerInfo.IsLive = false;
+
+                    EntityManager.Instance.MyPlayer = this;
                     Dead();
                 }
             }
@@ -317,7 +338,22 @@ namespace Client
         private void Dead()
         {
             Debug.Log("죽음");
-            Runner.Despawn(Object);
+
+            DisableAllRenderers();
+
+            UIManager.Instance.ShowPopupUI<SelectSkillPage>();
+        }
+
+        public void ReSpawn()
+        {
+            Debug.Log("리스폰");
+
+            EnableAllRenderers();
+
+            transform.position = new Vector3(-0.1806704f, 0.688218f, 0.0f);
+            _playerInfo.SetStat(EntityStat.HP, 100f);
+            _playerInfo.IsLive = true;
+            RPC_SetPlayerResapwn();
         }
 
 
@@ -361,6 +397,20 @@ namespace Client
         {
             _playerInfo.SetStat(EntityStat.HP, 0f);
             _playerInfo.IsLive = false;
+
+            DisableAllRenderers();
+        }
+
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+        // 플레이어 리스폰 동기화
+        // TODO : 김선중 스텟에 맞게 최대체력 세팅
+        public void RPC_SetPlayerResapwn()
+        {
+            _playerInfo.SetStat(EntityStat.HP, 100f);
+            _playerInfo.IsLive = true;
+            playerFaceUI.SetHPBar(1);
+
+            EnableAllRenderers();
         }
     }
 }
