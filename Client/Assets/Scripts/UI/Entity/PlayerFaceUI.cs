@@ -8,7 +8,7 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    public class PlayerFaceUI : UI_Base
+    public class PlayerFaceUI : MonoBehaviour
     {
         [SerializeField] private Image body = null; // ¸ö UI
         [SerializeField] private Image face = null; // ¾ó±¼ UI

@@ -9,7 +9,7 @@ using System;
 
 namespace Client
 {
-    public class DecoTabSlot : UI_Base
+    public class DecoTabSlot : MonoBehaviour
     {
         [SerializeField] private Image      tabIcon     = null;    // 꾸미기 탭 아이콘
         [SerializeField] private Button     mainBtn     = null;    // 버튼
@@ -19,9 +19,8 @@ namespace Client
 
         private Action<DecoType> selectAction = null; // 선택되었을 때 Action
 
-        public override void Init()
+        public void Awake()
         {
-            base.Init();
             mainBtn.onClick.AddListener(OnClickBtn);
         }
 

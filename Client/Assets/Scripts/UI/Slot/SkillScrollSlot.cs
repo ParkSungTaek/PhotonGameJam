@@ -8,8 +8,9 @@ using System;
 
 namespace Client
 {
-    public class SkillScrollSlot : UI_Base
+    public class SkillScrollSlot : MonoBehaviour
     {
+        [SerializeField] private Image    bookImg   = null; // 책 이미지
         [SerializeField] private Image    skillIcon = null; // 스킬 아이콘
         [SerializeField] private Button   rerollBtn = null; // 리롤 버튼
         [SerializeField] private Button   selectBtn = null; // 선택 버튼
@@ -18,12 +19,10 @@ namespace Client
         [SerializeField] private TMP_Text skillDesc = null; // 스킬 설명
         private Action<SkillScrollSlot> rerollAction = null;
         private MagicBookData magicBookData = null; // 데이터 
-        public override void Init()
+        public void Awake()
         {
-            base.Init();
             rerollBtn.onClick.AddListener(OnClickReRollBtn);
             selectBtn.onClick.AddListener(OnClickSelectBtn);
-
         }
 
         // 스킬 데이터를 세팅합니다.
@@ -31,7 +30,13 @@ namespace Client
         {
             magicBookData = data;
             rerollAction = action;
-            Texture2D texture = ObjectManager.Instance.Load<Texture2D>($"Sprites/MagicBookIcon/{data.iconResource}");
+
+            Texture2D texture = null;
+            if (data.isActive)
+                texture = ObjectManager.Instance.Load<Texture2D>($"Sprites/MagicBookIcon/Active/{data.iconResource}");
+            else
+                texture = ObjectManager.Instance.Load<Texture2D>($"Sprites/MagicBookIcon/Passive/{data.iconResource}");
+
             if (texture != null)
             {
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
@@ -39,6 +44,10 @@ namespace Client
             }
             skillName.SetText(data.name);
             skillDesc.SetText(data.desc);
+            if (ColorUtility.TryParseHtmlString(data.colorcode, out Color color))
+            {
+                bookImg.color = color;
+            }
         }
 
         // 리롤 버튼을 눌렀을 때 호출됩니다.

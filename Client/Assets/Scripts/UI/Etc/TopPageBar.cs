@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Client
 {
-    public class TopPageBar : UI_Base
+    public class TopPageBar : MonoBehaviour
     {
         [SerializeField] private Button   backBtn   = null; // 뒤로 가기 버튼
         [SerializeField] private Button   optionBtn = null; // 옵션 버튼
@@ -17,7 +17,6 @@ namespace Client
 
         public void Init(UI_Scene page)
         {
-            base.Init();
             this.page = page;
             backBtn.onClick.AddListener(OnClickBackBtn);
             optionBtn.onClick.AddListener(OnClickOptionBtn);

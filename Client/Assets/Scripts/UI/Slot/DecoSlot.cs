@@ -9,7 +9,7 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    public class DecoSlot : UI_Base
+    public class DecoSlot : MonoBehaviour
     {
         [SerializeField] private Image      icon     = null; // 아이콘
         [SerializeField] private Button     mainBtn = null; // 선택 버튼
@@ -19,9 +19,8 @@ namespace Client
         private DecoData    decoData     = null; // 꾸미기 아이템 Data
         private Action<DecoType, DecoData> selectAction = null; // 선택되었을 때 Action
 
-        public override void Init()
+        public void Awake()
         {
-            base.Init();
             mainBtn.onClick.AddListener(OnClickBtn);
         }
 

@@ -5,15 +5,14 @@ using UnityEngine.UIElements;
 
 namespace Client
 {
-    public class ChatUI : UI_Base
+    public class ChatUI : MonoBehaviour
     {
         [SerializeField] private Text           chatText   = null; // 입력란
         [SerializeField] private ScrollRect     scroll     = null; // 스크롤
         [SerializeField] private TMP_InputField inputField = null; // 입력란
 
-        public override void Init()
+        public void Awake()
         {
-            base.Init();
             inputField.onSubmit.AddListener(OnEndEdit);
         }
 

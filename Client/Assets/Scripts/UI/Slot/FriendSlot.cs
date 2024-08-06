@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Client
 {
-    public class FriendSlot : UI_Base
+    public class FriendSlot : MonoBehaviour
     {
         [SerializeField] private TMP_Text     name         = null; // 닉네임
         [SerializeField] private GameObject   onlineGroup  = null; // 온라인 그룹
