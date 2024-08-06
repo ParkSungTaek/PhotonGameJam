@@ -60,6 +60,7 @@ namespace Client
         // 선택 버튼을 눌렀을 때 호출됩니다.
         private void OnClickSelectBtn()
         {
+            Debug.Log($"magicBookData {magicBookData.name}");
             BuffManager.Instance.ChooseMagicBook(magicBookData);
         }
 

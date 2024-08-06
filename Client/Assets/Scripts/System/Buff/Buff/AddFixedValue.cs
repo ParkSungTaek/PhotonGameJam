@@ -7,7 +7,11 @@ namespace Client
     // Value1 : EntityStat 을 만분율한만큼 더함 
     public class AddFixedValue : BuffBase
     {
-        
+        public AddFixedValue(BuffData buffData) : base(buffData)
+        {
+
+        }
+
         public override void Dispel()
         {
 

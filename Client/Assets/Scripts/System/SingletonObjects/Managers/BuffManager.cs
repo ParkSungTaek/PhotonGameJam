@@ -7,17 +7,36 @@ namespace Client
 {
     public class BuffManager : Singleton<BuffManager>
     {
-        private string magicBookName = SystemString.NoData;
         MagicBookData magicBook = null;
         private BuffManager()
         {
 
         }
 
-        public void SetScroll(Player player, ScrollName scrollName)
+        private BuffBase SetBuff(int i)
         {
+            BuffBase buffBase = null;
+            BuffData buffData = DataManager.Instance.GetData<BuffData>(i);
 
-            //NetworkManager.Instance.NetworkHandler._runner.SendCustomNetworkEvent(NetworkEventTarget.All, (byte)EventCodes.ButtonClicked);
+            buffBase = BuffFactory.InstanceBuff(buffData);
+
+            return buffBase;
+        }
+        public void SetBuffToPlayer(int buffIndex, Player buffTarget = null, Player buffUser = null)
+        {
+            BuffBase buffBase = SetBuff(buffIndex);
+            if (buffTarget != null)
+            {
+                buffBase.SetBuffUser(buffUser);
+                buffBase.SetBuffTarget(buffTarget);
+            }
+            else
+            {
+                buffBase.SetBuffUser(EntityManager.Instance.MyPlayer);
+                buffBase.SetBuffTarget(EntityManager.Instance.MyPlayer);
+            }
+
+            buffTarget.PlayerInfo.ExecuteBuff(buffBase);
         }
 
         //하나의 마법서 선택
@@ -44,9 +63,25 @@ namespace Client
         //선택한 마법서 적용
         public void SelectMagicBook()
         {
-
-            magicBookName = null;
-            //NetworkManager.Instance.NetworkHandler._runner.SendCustomNetworkEvent(NetworkEventTarget.All, (byte)EventCodes.ButtonClicked);
+            if (magicBook != null)
+            {
+                if (magicBook.Value1 != 0)
+                {
+                    SetBuffToPlayer(magicBook.Value1);
+                }
+                if (magicBook.Value2 != 0)
+                {
+                    SetBuffToPlayer(magicBook.Value2);
+                }
+                if (magicBook.Value3 != 0)
+                {
+                    SetBuffToPlayer(magicBook.Value3);
+                }
+                if (magicBook.Value4 != 0)
+                {
+                    SetBuffToPlayer(magicBook.Value4);
+                }
+            }
         }
 
     }

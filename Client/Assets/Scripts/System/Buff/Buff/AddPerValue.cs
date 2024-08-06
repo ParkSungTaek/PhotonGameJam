@@ -8,6 +8,11 @@ namespace Client
     public class AddPerValue : BuffBase
     {
         int deltaValue = 0;
+        public AddPerValue(BuffData buffData) : base(buffData)
+        {
+
+        }
+
         public override void Dispel()
         {
 
