@@ -10,15 +10,21 @@ namespace Client
 {
     public class SkillScrollSlot : MonoBehaviour
     {
-        [SerializeField] private Image    bookImg   = null; // 책 이미지
-        [SerializeField] private Image    skillIcon = null; // 스킬 아이콘
-        [SerializeField] private Button   rerollBtn = null; // 리롤 버튼
-        [SerializeField] private Button   selectBtn = null; // 선택 버튼
+        [SerializeField] private Image      bookImg     = null; // 책 이미지
+        [SerializeField] private Image      skillIcon   = null; // 스킬 아이콘
+        [SerializeField] private Button     rerollBtn   = null; // 리롤 버튼
+        [SerializeField] private Button     selectBtn   = null; // 선택 버튼
+        [SerializeField] private TMP_Text   skillName   = null; // 스킬 이름
+        [SerializeField] private TMP_Text   skillDesc   = null; // 스킬 설명
+        [SerializeField] private GameObject selectGroup = null; // 선택 그룹
 
-        [SerializeField] private TMP_Text skillName = null; // 스킬 이름
-        [SerializeField] private TMP_Text skillDesc = null; // 스킬 설명
-        private Action<SkillScrollSlot> rerollAction = null;
+        private Action<SkillScrollSlot> rerollAction = null; // 리롤 되었을 때 Action
+        private Action<SkillScrollSlot> selectAction = null; // 선택 되었을 때 Action
+
         private MagicBookData magicBookData = null; // 데이터 
+
+        public MagicBookData MagicBookData => magicBookData;
+
         public void Awake()
         {
             rerollBtn.onClick.AddListener(OnClickReRollBtn);
@@ -26,10 +32,11 @@ namespace Client
         }
 
         // 스킬 데이터를 세팅합니다.
-        public void SetData(MagicBookData data, Action<SkillScrollSlot> action)
+        public void SetData(MagicBookData data, Action<SkillScrollSlot> action, Action<SkillScrollSlot> selectAction)
         {
             magicBookData = data;
             rerollAction = action;
+            this.selectAction = selectAction;
 
             Texture2D texture = null;
             if (data.isActive)
@@ -51,6 +58,12 @@ namespace Client
         }
 
         // 리롤 버튼을 눌렀을 때 호출됩니다.
+        public void OnSelectMagic(SkillScrollSlot selectSlot)
+        {
+            selectGroup.SetActive(selectSlot == this);
+        }
+
+        // 리롤 버튼을 눌렀을 때 호출됩니다.
         private void OnClickReRollBtn()
         {
             if (rerollAction == null) return;
@@ -60,10 +73,8 @@ namespace Client
         // 선택 버튼을 눌렀을 때 호출됩니다.
         private void OnClickSelectBtn()
         {
-            Debug.Log($"magicBookData {magicBookData.name}");
-            BuffManager.Instance.ChooseMagicBook(magicBookData);
+            if (selectAction == null) return;
+            selectAction(this);
         }
-
-
     }
 }

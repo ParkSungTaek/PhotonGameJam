@@ -13,7 +13,8 @@ namespace Client
         [SerializeField] private Button            selectBtn = null; // 선택 버튼
         [SerializeField] private SkillScrollSlot[] skillSlot = null; // 스킬 스크롤
 
-        private List<MagicBookData> magicList = new();
+        private List<MagicBookData> magicList = new(); // 마법 데이터들
+        private SkillScrollSlot selectedMagic = new(); // 선택 된 마법
 
         public override void Init()
         {
@@ -33,14 +34,24 @@ namespace Client
         {
             foreach(SkillScrollSlot slot in skillSlot)
             {
-                slot.SetData(GetRandomMagicBook(), SetRandomMagic);
+                slot.SetData(GetRandomMagicBook(), SetRandomMagic, SelectMagic);
             }
         }
 
         // 리롤 요청이 왔을 때 호출 됩니다.
         public void SetRandomMagic(SkillScrollSlot slot)
         {
-            slot.SetData(GetRandomMagicBook(), SetRandomMagic);
+            slot.SetData(GetRandomMagicBook(), SetRandomMagic, SelectMagic);
+        }
+
+        // 어떤 마법을 선택했을 때 호출 됩니다.
+        public void SelectMagic(SkillScrollSlot slot)
+        {
+            selectedMagic = slot;
+            foreach ( var magic in skillSlot)
+            {
+                magic.OnSelectMagic(selectedMagic);
+            }
         }
 
         // 무작위 마법 스크롤을 뽑습니다.
@@ -53,20 +64,13 @@ namespace Client
         // 마법 선택 버튼을 눌렀을 때 호출됩니다.
         private void OnClickSelectBtn()
         {
-            Debug.Log("어떤 마법 선택함요");
-            if (!BuffManager.Instance.IsChooseOne())
-            {
-                Debug.Log("엥 선택 안했는데요?");
-                return;
-            }
-            Back();
-
             var myPlayer = EntityManager.Instance.MyPlayer;
             if (myPlayer == null)
             {
                 return;
             }
-            BuffManager.Instance.SelectMagicBook();
+            BuffManager.Instance.SelectMagicBook(selectedMagic.MagicBookData);
+
             // TODO : 김선중 플레이어 죽어서 스크롤 선택 시 부활
             if (myPlayer.PlayerInfo.IsLive == false )
             {

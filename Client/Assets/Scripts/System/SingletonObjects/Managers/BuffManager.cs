@@ -7,7 +7,6 @@ namespace Client
 {
     public class BuffManager : Singleton<BuffManager>
     {
-        MagicBookData magicBook = null;
         private BuffManager()
         {
 
@@ -36,52 +35,33 @@ namespace Client
                 buffBase.SetBuffTarget(EntityManager.Instance.MyPlayer);
             }
 
-            buffTarget.PlayerInfo.ExecuteBuff(buffBase);
-        }
-
-        //하나의 마법서 선택
-        public void ChooseMagicBook(MagicBookData MagicBookName)
-        {
-            Debug.Log($"{MagicBookName.name} 로 선택 MagicBook 갱신");
-            magicBook = MagicBookName;
-            
-        }
-
-        // 선택한 마법서 있음
-        public bool IsChooseOne()
-        {
-            if (magicBook != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if(buffTarget != null)
+                buffTarget.PlayerInfo.ExecuteBuff(buffBase);
         }
 
         //선택한 마법서 적용
-        public void SelectMagicBook()
+        public void SelectMagicBook(MagicBookData magicData)
         {
-            if (magicBook != null)
+            if (magicData != null)
             {
-                if (magicBook.Value1 != 0)
+                if (magicData.Value1 != 0)
                 {
-                    SetBuffToPlayer(magicBook.Value1);
+                    SetBuffToPlayer(magicData.Value1);
                 }
-                if (magicBook.Value2 != 0)
+                if (magicData.Value2 != 0)
                 {
-                    SetBuffToPlayer(magicBook.Value2);
+                    SetBuffToPlayer(magicData.Value2);
                 }
-                if (magicBook.Value3 != 0)
+                if (magicData.Value3 != 0)
                 {
-                    SetBuffToPlayer(magicBook.Value3);
+                    SetBuffToPlayer(magicData.Value3);
                 }
-                if (magicBook.Value4 != 0)
+                if (magicData.Value4 != 0)
                 {
-                    SetBuffToPlayer(magicBook.Value4);
+                    SetBuffToPlayer(magicData.Value4);
                 }
             }
+            //NetworkManager.Instance.NetworkHandler._runner.SendCustomNetworkEvent(NetworkEventTarget.All, (byte)EventCodes.ButtonClicked);
         }
 
     }
