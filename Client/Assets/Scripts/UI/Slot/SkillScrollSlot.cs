@@ -22,6 +22,8 @@ namespace Client
         {
             base.Init();
             rerollBtn.onClick.AddListener(OnClickReRollBtn);
+            selectBtn.onClick.AddListener(OnClickSelectBtn);
+
         }
 
         // 스킬 데이터를 세팅합니다.
@@ -49,7 +51,7 @@ namespace Client
         // 선택 버튼을 눌렀을 때 호출됩니다.
         private void OnClickSelectBtn()
         {
-            BuffManager.Instance.ChooseMagicBook(magicBookData.name);
+            BuffManager.Instance.ChooseMagicBook(MagicBookData magicBookData);
         }
 
 

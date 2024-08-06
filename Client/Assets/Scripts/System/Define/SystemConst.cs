@@ -16,7 +16,7 @@ namespace Client
         public const int FloorLayer      = 6;
         public const int PlayerLayer     = 7;
         public const int ProjectileLayer = 8;
-
+    
         public const float Per = 10000f;    //¸¸ºÐ·ü
 
     }
@@ -26,7 +26,8 @@ namespace Client
     /// </summary>
     public class SystemString
     {
+        public const string NoData      = "";
         public const string AudioSystem = "AudioSystem";
-
+        
     }
 }
