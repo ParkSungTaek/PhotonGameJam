@@ -9,15 +9,17 @@ namespace Client
 {
     public class TopPageBar : MonoBehaviour
     {
-        [SerializeField] private Button   backBtn   = null; // 뒤로 가기 버튼
-        [SerializeField] private Button   optionBtn = null; // 옵션 버튼
-        [SerializeField] private Button   friendBtn = null; // 친구 관리 버튼
+        [SerializeField] private Button   backBtn    = null; // 뒤로 가기 버튼
+        [SerializeField] private Button   optionBtn  = null; // 옵션 버튼
+        [SerializeField] private Button   friendBtn  = null; // 친구 관리 버튼
+        [SerializeField] private TMP_Text playerName = null; // 유저 이름
 
         private UI_Scene page = null; // 부모 페이지
 
         public void Init(UI_Scene page)
         {
             this.page = page;
+            playerName.SetText(MyInfoManager.Instance.GetNickName());
             backBtn.onClick.AddListener(OnClickBackBtn);
             optionBtn.onClick.AddListener(OnClickOptionBtn);
             friendBtn.onClick.AddListener(OnClickFriendBtn);
