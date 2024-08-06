@@ -368,6 +368,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5c2864d5d4e634e90ae9b8710132a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dim: {fileID: 0}
+  closeBtn: {fileID: 0}
   selectBtn: {fileID: 663100713389119915}
   skillSlot:
   - {fileID: 7729395209038381184}
@@ -733,6 +735,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkillScrollSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 8733696371324750768, guid: dda465fe524f939428bb83c7cf5b22c8, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda465fe524f939428bb83c7cf5b22c8, type: 3}
 --- !u!114 &1783562090300351533 stripped
@@ -854,6 +860,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkillScrollSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 8733696371324750768, guid: dda465fe524f939428bb83c7cf5b22c8, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda465fe524f939428bb83c7cf5b22c8, type: 3}
 --- !u!224 &5708843961066730998 stripped
@@ -974,6 +984,10 @@ PrefabInstance:
     - target: {fileID: 2271957074739393437, guid: dda465fe524f939428bb83c7cf5b22c8, type: 3}
       propertyPath: m_Name
       value: SkillScrollSlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 8733696371324750768, guid: dda465fe524f939428bb83c7cf5b22c8, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda465fe524f939428bb83c7cf5b22c8, type: 3}

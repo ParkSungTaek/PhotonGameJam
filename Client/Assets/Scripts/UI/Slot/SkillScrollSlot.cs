@@ -12,9 +12,12 @@ namespace Client
     {
         [SerializeField] private Image    skillIcon = null; // 스킬 아이콘
         [SerializeField] private Button   rerollBtn = null; // 리롤 버튼
+        [SerializeField] private Button   selectBtn = null; // 선택 버튼
+
         [SerializeField] private TMP_Text skillName = null; // 스킬 이름
         [SerializeField] private TMP_Text skillDesc = null; // 스킬 설명
         private Action<SkillScrollSlot> rerollAction = null;
+        private MagicBookData magicBookData = null; // 데이터 
         public override void Init()
         {
             base.Init();
@@ -24,6 +27,7 @@ namespace Client
         // 스킬 데이터를 세팅합니다.
         public void SetData(MagicBookData data, Action<SkillScrollSlot> action)
         {
+            magicBookData = data;
             rerollAction = action;
             Texture2D texture = ObjectManager.Instance.Load<Texture2D>($"Sprites/MagicBookIcon/{data.iconResource}");
             if (texture != null)
@@ -41,5 +45,13 @@ namespace Client
             if (rerollAction == null) return;
             rerollAction(this);
         }
+
+        // 선택 버튼을 눌렀을 때 호출됩니다.
+        private void OnClickSelectBtn()
+        {
+            BuffManager.Instance.ChooseMagicBook(magicBookData.name);
+        }
+
+
     }
 }

@@ -54,6 +54,11 @@ namespace Client
         private void OnClickSelectBtn()
         {
             Debug.Log("어떤 마법 선택함요");
+            if (!BuffManager.Instance.IsChooseOne())
+            {
+                Debug.Log("엥 선택 안했는데요?");
+                return;
+            }
             Back();
 
             var myPlayer = EntityManager.Instance.MyPlayer;
@@ -61,7 +66,7 @@ namespace Client
             {
                 return;
             }
-
+            BuffManager.Instance.SelectMagicBook();
             // TODO : 김선중 플레이어 죽어서 스크롤 선택 시 부활
             if (myPlayer.PlayerInfo.IsLive == false )
             {
