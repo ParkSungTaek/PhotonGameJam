@@ -1,10 +1,10 @@
-﻿인덱스,마법서 명,속성,타입,효과 설명,아이콘 리소스,속성 리소스,속성 컬러코드
-index,name,element,isActive,desc,iconResource,typeResource,colorcode
-int,string,MagicElement,bool,string,string,string,string
-0,호롱불,Fire,FALSE,게임 시작 시 상대의 1타를 대신 맞아주는 쉴드를 제공합니다 호롱불은 20초마다 갱신됩니다 (최대 2회까지 저장),horong,,#E5BBBB
-1,급진,Fire,FALSE,캐릭터의 공격력이 30% 증가합니다.,Attack_Up,,#E5BBBB
-2,물쿠션,Water,FALSE,방어력이 30% 증가합니다.,Def_Up,,#BBE5C2
-3,워터 슬라이드,Water,FALSE,이동속도가 20% 증가합니다.,Spd_Up,,#BBE5C2
-4,자연 회복,Nature,FALSE,전투 후 10초마다 자신의 전체 체력 20%를 회복합니다.,Heal_Up,,#BBE5C2
-5,펌핑,Nature,FALSE,점프력이 30% 증가합니다.,Jump_Up,,#BBE5C2
+﻿인덱스,마법서 명,속성,타입,효과 설명,아이콘 리소스,속성 리소스,속성 컬러코드,Value1,Value2,Value3,Value4
+index,name,element,isActive,desc,iconResource,typeResource,colorcode,Value1,Value2,Value3,Value4
+int,string,MagicElement,bool,string,string,string,string,int,int,int,int
+0,호롱불,Fire,FALSE,게임 시작 시 상대의 1타를 대신 맞아주는 쉴드를 제공합니다 호롱불은 20초마다 갱신됩니다 (최대 2회까지 저장),horong,,#E5BBBB,0,0,0,0
+1,급진,Fire,FALSE,캐릭터의 공격력이 30% 증가합니다.,Attack_Up,,#E5BBBB,3,0,0,0
+2,물쿠션,Water,FALSE,방어력이 30% 증가합니다.,Def_Up,,#BBE5C2,4,0,0,0
+3,워터 슬라이드,Water,FALSE,이동속도가 20% 증가합니다.,Spd_Up,,#BBE5C2,5,0,0,0
+4,자연 회복,Nature,FALSE,전투 후 10초마다 자신의 전체 체력 20%를 회복합니다.,Heal_Up,,#BBE5C2,0,0,0,0
+5,펌핑,Nature,FALSE,점프력이 30% 증가합니다.,Jump_Up,,#BBE5C2,6,0,0,0
 

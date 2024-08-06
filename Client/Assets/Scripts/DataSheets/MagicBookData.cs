@@ -28,6 +28,14 @@ namespace Client
 		
 		public string colorcode; // 속성 컬러코드
 		
+		public int Value1; // Value1
+		
+		public int Value2; // Value2
+		
+		public int Value3; // Value3
+		
+		public int Value4; // Value4
+		
 
         public override Dictionary<int, SheetData> LoadData()
         {
@@ -53,6 +61,10 @@ namespace Client
 				data.iconResource = Convert.ToString(values[5]);
 				data.typeResource = Convert.ToString(values[6]);
 				data.colorcode = Convert.ToString(values[7]);
+				data.Value1 = Convert.ToInt32(values[8]);
+				data.Value2 = Convert.ToInt32(values[9]);
+				data.Value3 = Convert.ToInt32(values[10]);
+				data.Value4 = Convert.ToInt32(values[11]);
 				
 
                 dataList[data.index] = data;
