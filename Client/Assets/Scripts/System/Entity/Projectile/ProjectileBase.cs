@@ -44,7 +44,7 @@ namespace Client
         protected virtual void HitProjectile() { }
 
 
-        private void OnCollisionEnter(Collision collision)
+        protected virtual void OnCollisionEnter(Collision collision)
         {
             switch (collision.gameObject.layer)
             {

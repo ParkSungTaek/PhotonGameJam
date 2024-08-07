@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerFaceUI: {fileID: 5523928044454055135}
   playerDataIndex: 1
-  ProjectileEnumName: 1
+  ProjectileEnumName: 2
   SpeakingIndicator: {fileID: 858132671115149194}
   _isSpeaking: 0
 --- !u!114 &4658846751594927363

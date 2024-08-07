@@ -12,6 +12,9 @@ namespace Client
         private bool leftMouseButton; // 왼쪽 마우스 버튼
         private bool rightButton; // 오른쪽 마우스 버튼
 
+        // TODO 김선중 임시로 만듦 테스트용
+        bool changeBullet = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -30,7 +33,11 @@ namespace Client
             if (Input.GetKey(KeyCode.Space))
                 isJumpButtonPressed = true;
 
-            
+            // TODO 김선중 임시용 나중에 삭제 예정
+            if (Input.GetKey(KeyCode.B))
+                changeBullet = true;
+
+
             leftMouseButton = leftMouseButton || Input.GetMouseButton(0);
             rightButton = rightButton || Input.GetMouseButton(1);
         }
@@ -41,6 +48,10 @@ namespace Client
 
             networkInputData.movementInput = _moveInputVector;
             networkInputData.isJumpPressed = isJumpButtonPressed;
+
+            // TODO 김선중 임시용 나중에 삭제 예정
+            networkInputData.isChangeBullet = changeBullet;
+            changeBullet = false;
 
             networkInputData.buttons.Set(NetworkInputData.MOUSEBUTTON0, leftMouseButton);
             leftMouseButton = false;

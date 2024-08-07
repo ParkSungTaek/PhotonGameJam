@@ -172,6 +172,22 @@ namespace Client
                     _networkNetwork.Jump(false, _playerInfo.GetStat(EntityStat.JumpP));
                 }
 
+                // TODO 김선중 임시용
+                if (data.isChangeBullet)
+                {
+                    ProjectileEnumName++;
+                    if(ProjectileEnumName >= ProjectileName.MaxCount)
+                    {
+                        ProjectileEnumName = ProjectileName.Projectile1;
+                    }
+
+                    ProjectileBase projectileBase = SetProjectile(ProjectileEnumName);
+                    if (projectileBase != null)
+                    {
+                        _projectileList[0] = projectileBase;
+                    }
+                }
+
                 if (HasStateAuthority && _attackCoolTime.ExpiredOrNotRunning(Runner))
                 {
                     //  마우스 왼쪽키

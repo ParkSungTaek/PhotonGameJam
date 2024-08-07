@@ -15,4 +15,7 @@ public struct NetworkInputData : INetworkInput
     public NetworkBool isFirePressed; // 총 발사
     public Vector3 lookDirection; // 이동
 
+    // TODO 임시용 나중에 삭제 예정
+    public bool isChangeBullet;
+
 }
