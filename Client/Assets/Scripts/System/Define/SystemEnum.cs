@@ -230,6 +230,8 @@ namespace Client
         {
             Face,
             Body,
+            Weapon,
+            Hair,
 
             MaxCount
         }

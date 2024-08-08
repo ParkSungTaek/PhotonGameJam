@@ -16,6 +16,8 @@ namespace Client
         [SerializeField] private Animator       hpAnim = null; // 체력바 애니메이션
         [SerializeField] private SpriteRenderer body   = null; // 몸 UI
         [SerializeField] private SpriteRenderer face   = null; // 얼굴 UI
+        [SerializeField] private SpriteRenderer hair   = null; // 얼굴 UI
+        [SerializeField] private SpriteRenderer weapon   = null; // 얼굴 UI
         [SerializeField] private SpriteRenderer hpBar  = null; // HP 바
 
         private Dictionary<DecoType, DecoData> items = new(); // 꾸미기 아이템 정보
@@ -52,6 +54,28 @@ namespace Client
                 {
                     Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
                     body.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Hair))
+            {
+                DecoData bodyData = items[DecoType.Hair];
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    hair.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Weapon))
+            {
+                DecoData bodyData = items[DecoType.Weapon];
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    weapon.sprite = bodySprite;
                 }
             }
 

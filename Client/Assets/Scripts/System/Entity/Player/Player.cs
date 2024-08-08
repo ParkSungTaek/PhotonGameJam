@@ -54,6 +54,12 @@ namespace Client
         [Networked]
         int decoBody { get; set; }
 
+        [Networked]
+        int decoHair { get; set; }
+
+        [Networked]
+        int decoWeapon { get; set; }
+
         private void Awake()
         {
             // 기본 투사체
@@ -144,6 +150,8 @@ namespace Client
                     MyInfoManager.Instance.GetNickName(),
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Hair].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Weapon].index,
                     isSpeaking);
 
                 if (_playerInfo.GetStat(EntityStat.HP) <= 0.0f && _playerInfo.IsLive)
@@ -257,12 +265,16 @@ namespace Client
                 {
                     MyInfoManager.Instance.SetDecoData(DecoType.Face, DataManager.Instance.GetData<DecoData>(0));
                     MyInfoManager.Instance.SetDecoData(DecoType.Body, DataManager.Instance.GetData<DecoData>(3));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Hair, DataManager.Instance.GetData<DecoData>(3));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Weapon, DataManager.Instance.GetData<DecoData>(3));
                 }
 
                 RPC_SetPlayerInfo(
                     MyInfoManager.Instance.GetNickName(), 
                     MyInfoManager.Instance.GetDecoData()[DecoType.Face].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Hair].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Weapon].index,
                     isSpeaking);
                 RPC_SetPlayerHP(1);
             }
@@ -375,11 +387,13 @@ namespace Client
 
         // 플레이어 정보 동기화
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_SetPlayerInfo(string name, int face, int body, bool speaking, RpcInfo info = default)
+        public void RPC_SetPlayerInfo(string name, int face, int body, int hair, int weapon, bool speaking, RpcInfo info = default)
         {
             nickName = name;
             decoFace = face;
             decoBody = body;
+            decoHair = hair;
+            decoWeapon = weapon;
 
             isSpeaking = speaking;
 
@@ -387,6 +401,8 @@ namespace Client
             playerFaceUI.SetNickName(nickName.ToString());
             playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
             playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoBody));
+            playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoHair));
+            playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoWeapon));
             playerFaceUI.RefreshDeco();
 
             if (isSpeaking)

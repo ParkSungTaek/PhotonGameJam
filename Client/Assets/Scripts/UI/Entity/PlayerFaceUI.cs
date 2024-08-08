@@ -12,6 +12,8 @@ namespace Client
     {
         [SerializeField] private Image body = null; // ¸ö UI
         [SerializeField] private Image face = null; // ¾ó±¼ UI
+        [SerializeField] private Image hair = null; // ¾ó±¼ UI
+        [SerializeField] private Image weapon = null; // ¾ó±¼ UI
 
         private Dictionary<DecoType, DecoData> items = new(); // ²Ù¹Ì±â ¾ÆÀÌÅÛ Á¤º¸
 
@@ -46,6 +48,28 @@ namespace Client
                 {
                     Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
                     body.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Hair))
+            {
+                DecoData data = items[DecoType.Hair];
+                Texture2D texture = Resources.Load<Texture2D>($"Sprites/Characters/{data._type}/{data._resource}");
+                if (texture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                    hair.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Weapon))
+            {
+                DecoData bodyData = items[DecoType.Weapon];
+                Texture2D bodyTexture = Resources.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    weapon.sprite = bodySprite;
                 }
             }
         }
