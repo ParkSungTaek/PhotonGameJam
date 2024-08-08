@@ -24,6 +24,13 @@ namespace Client
         // Update is called once per frame
         void Update()
         {
+            // TODO ±è¼±Áß Á×¾úÀ» ¶§ input ¸ø ¹Þ°Ô
+            var player = EntityManager.Instance.MyPlayer;
+            if (player != null ) 
+            {
+                if (player.PlayerInfo.IsLive == false) return;
+            }
+
             if (Input.GetKey(KeyCode.A))
                 _moveInputVector = Vector3.left;
 

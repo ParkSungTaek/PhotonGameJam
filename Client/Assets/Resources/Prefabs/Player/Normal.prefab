@@ -156,6 +156,8 @@ MonoBehaviour:
   playerFaceUI: {fileID: 5523928044454055135}
   playerDataIndex: 1
   ProjectileEnumName: 2
+  _deadEffect: {fileID: 3626259152316059793, guid: 8cb364e09697dcd43b410fe6ed742c66, type: 3}
+  _reviveEffect: {fileID: 5406767978647780191, guid: bafb0a0d524b6fe498747e88b79f98c4, type: 3}
   SpeakingIndicator: {fileID: 858132671115149194}
   _isSpeaking: 0
 --- !u!114 &4658846751594927363

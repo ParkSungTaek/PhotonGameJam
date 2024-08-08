@@ -4,6 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 using UnityEngine.SocialPlatforms;
@@ -38,6 +40,10 @@ namespace Client
 
         public PlayerInfo PlayerInfo => _playerInfo;
         protected string ProjectilePath(ProjectileName projectileEnumName) => $"Prefabs/Projectile/{projectileEnumName.ToString()}";
+
+        public GameObject _deadEffect; // 죽는 이펙트
+        public GameObject _reviveEffect; // 부활 이펙트
+
 
         [SerializeField]
         public Image SpeakingIndicator;
@@ -368,6 +374,7 @@ namespace Client
             Debug.Log("죽음");
 
             DisableAllRenderers();
+            DeadEffect();
 
             UIManager.Instance.ShowPopupUI<SelectSkillPage>();
         }
@@ -384,7 +391,48 @@ namespace Client
             RPC_SetPlayerResapwn();
         }
 
+        //========== 이펙트 관련 TODO 김선중 나중에 partial class로 분할 시키기
+        void DeadEffect()
+        {
+            if (_deadEffect != null)
+            {
+                var daedInstance = Instantiate(_deadEffect, transform);
 
+                //Destroy hit effects depending on particle Duration time
+                var deadPs = daedInstance.GetComponent<ParticleSystem>();
+                if (deadPs != null)
+                {
+                    Destroy(daedInstance, deadPs.main.duration);
+                }
+                else
+                {
+                    var hitPsParts = daedInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(daedInstance, hitPsParts.main.duration);
+                }
+            }
+        }
+
+        void ReviveEffect()
+        {
+            if (_reviveEffect != null)
+            {
+                var reviveInstance = Instantiate(_reviveEffect, transform);
+
+                //Destroy hit effects depending on particle Duration time
+                var revivePs = reviveInstance.GetComponent<ParticleSystem>();
+                if (revivePs != null)
+                {
+                    Destroy(reviveInstance, revivePs.main.duration);
+                }
+                else
+                {
+                    var revivePsParts = reviveInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(reviveInstance, revivePsParts.main.duration);
+                }
+            }
+        }
+
+        //========== 네트워크 관련 TODO 김선중 나중에 partial class로 분할 시키기
         // 플레이어 정보 동기화
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
         public void RPC_SetPlayerInfo(string name, int face, int body, int hair, int weapon, bool speaking, RpcInfo info = default)
@@ -431,6 +479,7 @@ namespace Client
             _playerInfo.IsLive = false;
 
             DisableAllRenderers();
+            DeadEffect();
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
@@ -443,6 +492,7 @@ namespace Client
             playerFaceUI.SetHPBar(1);
 
             EnableAllRenderers();
+            ReviveEffect();
         }
     }
 }
