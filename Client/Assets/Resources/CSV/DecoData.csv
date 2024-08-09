@@ -1,10 +1,43 @@
 ﻿인덱스,이름,부위,설명,리소스 이름
 index,_name,_type,_desc,_resource
 int,string,DecoType,string,string
-0,아잉눈,Face,아잉조아,A_ing_Eye
-1,화난눈,Face,화가난눈입니다화가난눈입니다화가난눈입니다화가난눈입니다화가난눈입니다,Angry_Eye
-2,놀란눈,Face,헉,Surprize_Eye
-3,초록몸,Body,기본 초록색 몸,Green_Body
-4,곰돌몸,Body,곰돌이 귀가 생겼어요,Orange_Body
-5,탱글곰돌몸,Body,탱글탱글,Purple_Body
-
+0,기본 눈 1,Face,,Face_Basic_Black
+1,기본 눈 2,Face,,Face_Basic_Brown
+2,기본 눈 3,Face,,Face_Basic_Blue
+3,기본 눈 4,Face,,Face_Basic_Green
+4,기본 눈 5,Face,,Face_Basic_Red
+5,귀여운 눈 1,Face,,Face_Cute_Black
+6,귀여운 눈 2,Face,,Face_Cute_Brown
+7,귀여운 눈 3,Face,,Face_Cute_Blue
+8,귀여운 눈 4,Face,,Face_Cute_Green
+9,귀여운 눈 5,Face,,Face_Cute_Red
+10,순진한 눈 1,Face,,Face_Pure_Black
+11,순진한 눈 2,Face,,Face_Pure_Brown
+12,순진한 눈 3,Face,,Face_Pure_Blue
+13,순진한 눈 4,Face,,Face_Pure_Green
+14,순진한 눈 5,Face,,Face_Pure_Red
+15,불만스러운 눈 1,Face,,Face_Bored_Black
+16,불만스러운 눈 2,Face,,Face_Bored_Brown
+17,불만스러운 눈 3,Face,,Face_Bored_Blue
+18,불만스러운 눈 4,Face,,Face_Bored_Green
+19,불만스러운 눈 5,Face,,Face_Bored_Red
+20,웃는 눈,Face,,Face_Smile
+21,기본 푸른색 몸,Body,,Body_Blue
+22,기본 초록색 몸,Body,,Body_Green
+23,기본 보라색 몸,Body,,Body_Purple
+24,기본 노란색 몸,Body,,Body_Yellow
+25,파란 망토,Cape,,Manteau_Blue
+26,초록 망토,Cape,,Manteau_Green
+27,빨간 망토,Cape,,Manteau_Red
+28,노란 망토,Cape,,Manteau_Yellow
+29,모자_초록색,Hat,,Hat_Green
+30,모자_핑크색,Hat,,Hat_Pink
+31,모자_파란색,Hat,,Hat_Blue
+32,단발머리,Hair,,Hair_Bob
+33,뽀글머리,Hair,,Hair_Perm
+34,댄디한 머리,Hair,,Hair_Short
+35,양갈래 머리,Hair,,Hair_Twin
+36,동그란 지팡이,Weapon,,Wand_Circle
+37,하트 지팡이,Weapon,,Wand_Heart
+38,달 지팡이,Weapon,,Wand_Moon
+39,별 지팡이,Weapon,,Wand_Star

@@ -232,6 +232,8 @@ namespace Client
             Body,
             Weapon,
             Hair,
+            Hat,
+            Cape,
 
             MaxCount
         }

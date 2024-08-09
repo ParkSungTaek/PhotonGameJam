@@ -10,10 +10,12 @@ namespace Client
 {
     public class PlayerFaceUI : MonoBehaviour
     {
-        [SerializeField] private Image body = null; // ¸ö UI
-        [SerializeField] private Image face = null; // ¾ó±¼ UI
-        [SerializeField] private Image hair = null; // ¾ó±¼ UI
-        [SerializeField] private Image weapon = null; // ¾ó±¼ UI
+        [SerializeField] private Image body   = null; // ¸ö UI
+        [SerializeField] private Image face   = null; // ¾ó±¼ UI
+        [SerializeField] private Image hair   = null; // ¸Ó¸®Ä«¶ô UI
+        [SerializeField] private Image weapon = null; // ¹«±â UI
+        [SerializeField] private Image cape   = null; // ¸ÁÅä UI
+        [SerializeField] private Image hat    = null; // ¸ðÀÚ UI
 
         private Dictionary<DecoType, DecoData> items = new(); // ²Ù¹Ì±â ¾ÆÀÌÅÛ Á¤º¸
 
@@ -65,11 +67,33 @@ namespace Client
             if (items.ContainsKey(DecoType.Weapon))
             {
                 DecoData bodyData = items[DecoType.Weapon];
-                Texture2D bodyTexture = Resources.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
                 if (bodyTexture != null)
                 {
                     Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
                     weapon.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Hat))
+            {
+                DecoData bodyData = items[DecoType.Hat];
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    hat.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Cape))
+            {
+                DecoData bodyData = items[DecoType.Cape];
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    cape.sprite = bodySprite;
                 }
             }
         }

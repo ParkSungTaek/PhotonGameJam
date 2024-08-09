@@ -66,6 +66,12 @@ namespace Client
         [Networked]
         int decoWeapon { get; set; }
 
+        [Networked]
+        int decoHat { get; set; }
+
+        [Networked]
+        int decoCape { get; set; }
+
         private void Awake()
         {
             // 기본 투사체
@@ -158,6 +164,8 @@ namespace Client
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Hair].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Weapon].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Hat].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Cape].index,
                     isSpeaking);
 
                 if (_playerInfo.GetStat(EntityStat.HP) <= 0.0f && _playerInfo.IsLive)
@@ -275,9 +283,11 @@ namespace Client
                 if( MyInfoManager.Instance.GetDecoData().Count == 0 )
                 {
                     MyInfoManager.Instance.SetDecoData(DecoType.Face, DataManager.Instance.GetData<DecoData>(0));
-                    MyInfoManager.Instance.SetDecoData(DecoType.Body, DataManager.Instance.GetData<DecoData>(3));
-                    MyInfoManager.Instance.SetDecoData(DecoType.Hair, DataManager.Instance.GetData<DecoData>(3));
-                    MyInfoManager.Instance.SetDecoData(DecoType.Weapon, DataManager.Instance.GetData<DecoData>(3));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Body, DataManager.Instance.GetData<DecoData>(21));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Hair, DataManager.Instance.GetData<DecoData>(32));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Weapon, DataManager.Instance.GetData<DecoData>(36));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Hat, DataManager.Instance.GetData<DecoData>(29));
+                    MyInfoManager.Instance.SetDecoData(DecoType.Cape, DataManager.Instance.GetData<DecoData>(25));
                 }
 
                 RPC_SetPlayerInfo(
@@ -286,6 +296,8 @@ namespace Client
                     MyInfoManager.Instance.GetDecoData()[DecoType.Body].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Hair].index,
                     MyInfoManager.Instance.GetDecoData()[DecoType.Weapon].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Hat].index,
+                    MyInfoManager.Instance.GetDecoData()[DecoType.Cape].index,
                     isSpeaking);
                 RPC_SetPlayerHP(1);
             }
@@ -440,13 +452,15 @@ namespace Client
         //========== 네트워크 관련 TODO 김선중 나중에 partial class로 분할 시키기
         // 플레이어 정보 동기화
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_SetPlayerInfo(string name, int face, int body, int hair, int weapon, bool speaking, RpcInfo info = default)
+        public void RPC_SetPlayerInfo(string name, int face, int body, int hair, int weapon, int hat, int cape, bool speaking, RpcInfo info = default)
         {
             nickName = name;
             decoFace = face;
             decoBody = body;
             decoHair = hair;
             decoWeapon = weapon;
+            decoHat = hat;
+            decoCape = cape;
 
             isSpeaking = speaking;
 
@@ -454,8 +468,10 @@ namespace Client
             playerFaceUI.SetNickName(nickName.ToString());
             playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
             playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoBody));
-            playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoHair));
-            playerFaceUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(decoWeapon));
+            playerFaceUI.SetPlayerDeco(DecoType.Hair, DataManager.Instance.GetData<DecoData>(decoHair));
+            playerFaceUI.SetPlayerDeco(DecoType.Weapon, DataManager.Instance.GetData<DecoData>(decoWeapon));
+            playerFaceUI.SetPlayerDeco(DecoType.Hat, DataManager.Instance.GetData<DecoData>(decoHat));
+            playerFaceUI.SetPlayerDeco(DecoType.Cape, DataManager.Instance.GetData<DecoData>(decoCape));
             playerFaceUI.RefreshDeco();
 
             if (isSpeaking)

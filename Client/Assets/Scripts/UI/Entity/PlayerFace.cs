@@ -16,8 +16,10 @@ namespace Client
         [SerializeField] private Animator       hpAnim = null; // 체력바 애니메이션
         [SerializeField] private SpriteRenderer body   = null; // 몸 UI
         [SerializeField] private SpriteRenderer face   = null; // 얼굴 UI
-        [SerializeField] private SpriteRenderer hair   = null; // 얼굴 UI
-        [SerializeField] private SpriteRenderer weapon   = null; // 얼굴 UI
+        [SerializeField] private SpriteRenderer hair   = null; // 머리카락 UI
+        [SerializeField] private SpriteRenderer weapon = null; // 무기 UI
+        [SerializeField] private SpriteRenderer cape   = null; // 망토 UI
+        [SerializeField] private SpriteRenderer hat    = null; // 모자 UI
         [SerializeField] private SpriteRenderer hpBar  = null; // HP 바
 
         private Dictionary<DecoType, DecoData> items = new(); // 꾸미기 아이템 정보
@@ -76,6 +78,28 @@ namespace Client
                 {
                     Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
                     weapon.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Hat))
+            {
+                DecoData bodyData = items[DecoType.Hat];
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    hat.sprite = bodySprite;
+                }
+            }
+
+            if (items.ContainsKey(DecoType.Cape))
+            {
+                DecoData bodyData = items[DecoType.Cape];
+                Texture2D bodyTexture = ObjectManager.Instance.Load<Texture2D>($"Sprites/Characters/{bodyData._type}/{bodyData._resource}");
+                if (bodyTexture != null)
+                {
+                    Sprite bodySprite = Sprite.Create(bodyTexture, new Rect(0, 0, bodyTexture.width, bodyTexture.height), new Vector2(0.5f, 0.5f));
+                    cape.sprite = bodySprite;
                 }
             }
 

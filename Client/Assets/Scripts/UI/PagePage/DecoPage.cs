@@ -14,6 +14,7 @@ namespace Client
         [SerializeField] private Button        saveBtn    = null; // 갈아 입기 버튼
         [SerializeField] private DecoSlot      decoPrepeb = null; // 꾸미기 슬롯 프리펩
         [SerializeField] private ScrollRect    scroll     = null; // 꾸미기 슬롯 스크롤
+        [SerializeField] private GameObject    content    = null; // 꾸미기 슬롯 스크롤 콘텐츠
         [SerializeField] private TopPageBar    topBar     = null; // 상단바
         [SerializeField] private PlayerFaceUI  playerUI   = null; // 플레이어
         [SerializeField] private DecoTabSlot[] tabBtns    = null; // 꾸미기 슬롯 탭 프리펩
@@ -59,6 +60,7 @@ namespace Client
             {
                 tab.OnTabSelected(type);
             }
+            scroll.verticalNormalizedPosition = 0.0f;
             RefreshItemList(type);
             OnClickItemBtn(type, selectData[type]);
         }
@@ -85,6 +87,38 @@ namespace Client
                     playerUI.SetPlayerDeco(DecoType.Body, data);
                     selectData[DecoType.Body] = data;
                     break;
+                case DecoType.Weapon:
+                    if (data == null)
+                    {
+                        data = itemData[DecoType.Weapon][0];
+                    }
+                    playerUI.SetPlayerDeco(DecoType.Weapon, data);
+                    selectData[DecoType.Weapon] = data;
+                    break;
+                case DecoType.Hair:
+                    if (data == null)
+                    {
+                        data = itemData[DecoType.Hair][0];
+                    }
+                    playerUI.SetPlayerDeco(DecoType.Hair, data);
+                    selectData[DecoType.Hair] = data;
+                    break;
+                case DecoType.Hat:
+                    if (data == null)
+                    {
+                        data = itemData[DecoType.Hat][0];
+                    }
+                    playerUI.SetPlayerDeco(DecoType.Hat, data);
+                    selectData[DecoType.Hat] = data;
+                    break;
+                case DecoType.Cape:
+                    if (data == null)
+                    {
+                        data = itemData[DecoType.Cape][0];
+                    }
+                    playerUI.SetPlayerDeco(DecoType.Cape, data);
+                    selectData[DecoType.Cape] = data;
+                    break;
             }
             foreach (DecoSlot slot in items)
             {
@@ -107,6 +141,8 @@ namespace Client
                 newSlot.SetData(OnClickItemBtn, data);
                 items.Add(newSlot);
             }
+            content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().sizeDelta.x, items.Count * 260 - 1010);
+            scroll.verticalNormalizedPosition = 0.0f;
         }
 
         // 갈아 입기 버튼을 눌렀을 때 호출됩니다.
