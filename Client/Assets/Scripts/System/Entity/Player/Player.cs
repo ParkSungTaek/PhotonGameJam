@@ -217,7 +217,7 @@ namespace Client
                         }
                         AudioManager.Instance.PlayOneShot("TmpShotSound");
                         Quaternion rotation = Quaternion.Euler(0, 0, CalculateAngle(data.lookDirection));
-                        Runner.Spawn(projectile,
+                        var bullet = Runner.Spawn(projectile,
                         transform.position + data.lookDirection * 1.3f,
                         rotation,
                         Object.InputAuthority,
@@ -240,8 +240,13 @@ namespace Client
                             {
                                 projectileBase.SetDamage(_playerInfo.GetStat(EntityStat.Att));
                                 projectileBase.Shot(rawDirection.normalized);
+                                projectileBase.SetOwner(this);
                             }
                         });
+
+                        CharacterController playerController = GetComponent<CharacterController>();
+                        Collider projectileCollider = bullet.GetComponent<Collider>();
+                        Physics.IgnoreCollision(playerController, projectileCollider);
                     }
                 }
 

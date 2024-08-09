@@ -15,6 +15,8 @@ namespace Client
 
         protected Rigidbody _rigidbody = null;
 
+        protected Player _owner { get; set; } = null;
+
         protected virtual bool IsDestroyWhenHit => true;
 
         public float Damage { get; set; } = 0;
@@ -24,6 +26,12 @@ namespace Client
             _projectileData = DataManager.Instance.GetData<ProjectileData>((int)Projectile);
             _rigidbody = GetComponent<Rigidbody>();
         }
+
+        public void SetOwner(Player owner)
+        {
+            _owner = owner;
+        }
+
         public virtual void Shot(Vector3 direction)
         {
             Vector3 v3 = direction * (_projectileData._projectileSpd / (SystemConst.Per));
@@ -37,6 +45,11 @@ namespace Client
 
         protected virtual void HitPlayer(Player player)
         {
+            if ( player == _owner )
+            {
+                return;
+            }
+
             player.OnDamage(Damage);
         }
         protected virtual void HitFloor() { }
