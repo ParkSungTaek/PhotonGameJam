@@ -40,6 +40,7 @@ namespace Client
 
         public virtual void SetDamage(float damage)
         {
+            Debug.Log($"Set Damage : {damage}");
             Damage = damage;
         }
 

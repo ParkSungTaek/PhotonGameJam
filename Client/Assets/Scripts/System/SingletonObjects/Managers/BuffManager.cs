@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,30 +22,14 @@ namespace Client
 
             return buffBase;
         }
-        public void SetBuffToPlayer(int buffIndex, Player buffTarget = null, Player buffUser = null)
+        public void SetBuffToPlayer(int buffIndex, PlayerRef buffTarget, PlayerRef buffUser, Player targetPlayer)
         {
-            BuffBase buffBase = SetBuff(buffIndex);
-            if (buffBase == null)
-            {
-                Debug.LogWarning("?? 버프왜 못잡음??");
+            if (buffIndex == 0)
                 return;
-            }
-            if (buffTarget != null)
-            {
-                buffBase.SetBuffUser(buffUser);
-                buffBase.SetBuffTarget(buffTarget);
-            }
-            else
-            {
-                buffBase.SetBuffUser(EntityManager.Instance.MyPlayer);
-                buffBase.SetBuffTarget(EntityManager.Instance.MyPlayer);
-            }
 
-            if (buffTarget != null)
+            if (targetPlayer != null)
             {
-                //buffTarget.PlayerInfo.ExecuteBuff(buffBase);
-                buffTarget.RPC_SetBuff(buffIndex);
-
+                targetPlayer.RPC_SetBuff(buffIndex, buffTarget, buffUser);
             }
         }
 
@@ -53,22 +38,27 @@ namespace Client
         {
             if (magicData != null)
             {
+                PlayerRef playerRef = default;
+                if (player != null)
+                {
+                    playerRef = player.Object.InputAuthority;
+                }
                 player.RPC_SetMagicElement((int)magicData.element);
                 if (magicData.Value1 != 0)
                 {
-                    SetBuffToPlayer(magicData.Value1);
+                    SetBuffToPlayer(magicData.Value1, playerRef, playerRef, player);
                 }
                 if (magicData.Value2 != 0)
                 {
-                    SetBuffToPlayer(magicData.Value2);
+                    SetBuffToPlayer(magicData.Value2, playerRef, playerRef, player);
                 }
                 if (magicData.Value3 != 0)
                 {
-                    SetBuffToPlayer(magicData.Value3);
+                    SetBuffToPlayer(magicData.Value3, playerRef, playerRef, player);
                 }
                 if (magicData.Value4 != 0)
                 {
-                    SetBuffToPlayer(magicData.Value4);
+                    SetBuffToPlayer(magicData.Value4, playerRef, playerRef, player);
                 }
             }
             //NetworkManager.Instance.NetworkHandler._runner.SendCustomNetworkEvent(NetworkEventTarget.All, (byte)EventCodes.ButtonClicked);

@@ -1,3 +1,4 @@
+using Fusion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Client
         // 고유 ID 생성 
         private long _nextID = 0;
 
-
+        public Dictionary<PlayerRef, Player> SpawnedCharacters { get; set; } = new Dictionary<PlayerRef, Player>();
         // 외부 엑세스
         public Player MyPlayer { get; set; } // 내 Player
         public int MyPlayerID { get; set; } = -1; //내 ID 

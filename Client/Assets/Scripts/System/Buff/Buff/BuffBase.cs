@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,13 +31,19 @@ namespace Client
         // 버프 헤제
         public abstract void Dispel();
 
-        public virtual void SetBuffUser(Player buffUser)
+        public virtual void SetBuffUser(PlayerRef buffUser)
         {
-            BuffUser = buffUser;
+            if (EntityManager.Instance.SpawnedCharacters == null)
+                return;
+            if(EntityManager.Instance.SpawnedCharacters.ContainsKey(buffUser))
+                BuffUser = EntityManager.Instance.SpawnedCharacters[buffUser];
         }
-        public virtual void SetBuffTarget(Player buffTarget)
+        public virtual void SetBuffTarget(PlayerRef buffTarget)
         {
-            BuffTarget = buffTarget;
+            if (EntityManager.Instance.SpawnedCharacters == null)
+                return;
+            if (EntityManager.Instance.SpawnedCharacters.ContainsKey(buffTarget))
+                BuffTarget = EntityManager.Instance.SpawnedCharacters[buffTarget];
         }
 
         protected void UpdateStat()

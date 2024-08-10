@@ -215,6 +215,7 @@ namespace Client
             None,
 
             HP,      // 기본 HP
+            MHP,     // MAX 기본 HP
             MovSpd,  // 기본 Speed
             Att,     // 기본 공격력
             Def,     // 기본 방어력

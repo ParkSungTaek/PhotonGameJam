@@ -9,7 +9,7 @@ namespace Client
     {
         private string                         _charName   = "Default Name"; // 닉네임
         private WeaponData                     _weaponData = null;           // Player 데이터
-        private List<BuffBase>                 _buffBases  = null;           // 보유중인 버프
+        private List<BuffBase>                 _buffBases  = new();          // 보유중인 버프
         private EntityPlayerData               _playerData = null;           // Player 데이터
         private Dictionary<DecoType, DecoData> _decoData   = new();          // 꾸미기 데이터
         public List<MagicElement> MagicElements { get; set; } = new List<MagicElement>();
@@ -28,7 +28,8 @@ namespace Client
         public bool IsLive { get; set; } = true;
         public PlayerInfo() 
         {
-            
+            _buffBases = new List<BuffBase>();
+            _decoData = new Dictionary<DecoType, DecoData>();
         }
         public PlayerInfo(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null, Dictionary<DecoType, DecoData>decoInfo = null)
         {
@@ -52,6 +53,10 @@ namespace Client
                 EntityStatDic[EntityStat.HP] = _playerData._HP;
                 NowStatDic[EntityStat.HP]    = _playerData._HP;
                 BuffStatDic[EntityStat.HP]   = 0;
+
+                EntityStatDic[EntityStat.MHP] = _playerData._HP;
+                NowStatDic[EntityStat.MHP]    = _playerData._HP;
+                BuffStatDic[EntityStat.MHP]   = 0;
 
                 EntityStatDic[EntityStat.MovSpd] = _playerData._Speed;
                 NowStatDic[EntityStat.MovSpd]    = _playerData._Speed;

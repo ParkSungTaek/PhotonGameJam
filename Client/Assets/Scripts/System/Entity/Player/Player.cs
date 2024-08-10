@@ -326,11 +326,18 @@ namespace Client
             {
                 float hp = _playerInfo.GetStat(EntityStat.HP);
                 hp -= damage;
+                Debug.Log($"{_playerInfo.CharName} Get Damage : {damage}");
                 if (hp >= 0)
                 {
                     _playerInfo.SetStat(EntityStat.HP, hp);
                     // TODO 이서연 : 100이아니라 MaxHP넣어줘야함
-                    RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / 100);
+                    RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / _playerInfo.GetStat(EntityStat.MHP));
+                }
+                else 
+                {
+                    _playerInfo.SetStat(EntityStat.HP, 0);
+                    // TODO 이서연 : 100이아니라 MaxHP넣어줘야함
+                    RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / _playerInfo.GetStat(EntityStat.MHP));
                 }
             }
         }
@@ -539,9 +546,12 @@ namespace Client
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
         // 버프 동기화
-        public void RPC_SetBuff(int buffIndex)
+        public void RPC_SetBuff(int buffIndex, PlayerRef buffTarget, PlayerRef buffUser)
         {
             BuffBase buffBase = BuffManager.Instance.SetBuff(buffIndex);
+            buffBase.SetBuffTarget(buffTarget);
+            buffBase.SetBuffUser(buffUser);
+
             PlayerInfo.ExecuteBuff(buffBase);
         }
 

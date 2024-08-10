@@ -32,7 +32,6 @@ namespace Client
 
 
             _runner.JoinSessionLobby(SessionLobby.Shared, lobbyName);
-            
         }
 
         public void RetrunLobby()
@@ -188,6 +187,7 @@ namespace Client
                 Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
 
                 _spawnedCharacters.Add(player, networkPlayerObject);
+                EntityManager.Instance.SpawnedCharacters.Add(player, networkPlayerObject);
             }
         }
 
