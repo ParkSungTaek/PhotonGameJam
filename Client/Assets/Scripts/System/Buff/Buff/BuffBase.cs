@@ -49,6 +49,7 @@ namespace Client
         protected void UpdateStat()
         {
             BuffTarget.PlayerInfo.NowStatDic[BuffData.Stat] = BuffTarget.PlayerInfo.EntityStatDic[BuffData.Stat] + BuffTarget.PlayerInfo.BuffStatDic[BuffData.Stat];
+            Debug.Log($"{this.GetType().ToString()} New {BuffTarget.PlayerInfo.NowStatDic[BuffData.Stat]}");
         }
     }
 }

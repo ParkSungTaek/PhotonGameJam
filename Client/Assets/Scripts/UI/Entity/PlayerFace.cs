@@ -33,7 +33,10 @@ namespace Client
                 items.Add((DecoType)i, new DecoData());
             }
         }
-
+        private void Start()
+        {
+            SetHPBar(1);
+        }
         // 캐릭터 외형을 갱신합니다.
         public void RefreshDeco()
         {
