@@ -40,6 +40,7 @@ namespace Client
         public void RetrunLobby()
         {
             //_runner.Despawn(_runner.GetPlayerObject(_runner.LocalPlayer));
+            ChatManager.Instance.SetState(OnlineState.Lobby);
             _runner.Shutdown(true, ShutdownReason.Ok);
         }
 

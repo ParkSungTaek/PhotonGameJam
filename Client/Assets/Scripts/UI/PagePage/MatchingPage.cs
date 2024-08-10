@@ -20,6 +20,7 @@ namespace Client
         private void OnClickBackBtn()
         {
             Back();
+            NetworkManager.Instance.NetworkHandler.RetrunLobby();
         }
     }
 }
