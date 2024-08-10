@@ -14,7 +14,7 @@ namespace Client
         [SerializeField] private SkillScrollSlot[] skillSlot = null; // 스킬 스크롤
 
         private List<MagicBookData> magicList = new(); // 마법 데이터들
-        private SkillScrollSlot selectedMagic = new(); // 선택 된 마법
+        private SkillScrollSlot selectedMagic = null ; // 선택 된 마법
 
         public override void Init()
         {
@@ -64,6 +64,11 @@ namespace Client
         // 마법 선택 버튼을 눌렀을 때 호출됩니다.
         private void OnClickSelectBtn()
         {
+            if (selectedMagic == null)
+            {
+                UIManager.Instance.ShowToastPopup("배울 마법을 아직 선택하지 않았어요!");
+                return;
+            }
             var myPlayer = EntityManager.Instance.MyPlayer;
             if (myPlayer == null)
             {

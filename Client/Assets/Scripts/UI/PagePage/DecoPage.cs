@@ -142,7 +142,6 @@ namespace Client
                 items.Add(newSlot);
             }
             content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().sizeDelta.x, items.Count * 260 - 1010);
-            scroll.verticalNormalizedPosition = 0.0f;
         }
 
         // 갈아 입기 버튼을 눌렀을 때 호출됩니다.
