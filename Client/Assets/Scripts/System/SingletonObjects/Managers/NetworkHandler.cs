@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using Fusion.Addons.Physics;
 using UnityEditor;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Client
 {
@@ -22,9 +23,11 @@ namespace Client
 
         public NetworkRunner _runner;
 
+        List<SessionInfo> _sessionList;
+
         public string lobbyName = "default";
 
-        public async void StartGame(GameMode mode)
+        public void StartGame()
         {
             // Create the Fusion runner and let it know that we will be providing user input
             _runner = gameObject.GetComponent<NetworkRunner>();
@@ -42,16 +45,65 @@ namespace Client
 
         public void CreateRandomSession()
         {
+            MyInfoManager.Instance.SetMatchData(true, 2);
+
+            if (MyInfoManager.Instance.GetMatchData().isMatch == false)
+            {
+                return;
+            }
+
+            foreach (SessionInfo sessionInfo in _sessionList)
+            {
+                if (sessionInfo.Name[0] != 'R')
+                {
+                    continue;
+                }
+
+                if (sessionInfo.IsOpen == false)
+                {
+                    continue;
+                }
+
+                if(sessionInfo.PlayerCount >= 2)
+                {
+                    continue;
+                }
+
+                JoinSession(sessionInfo.Name, GameMode.Shared);
+            }
+
+            string randomSessionName = CreadRandomSessionName(_sessionList);
+            JoinSession(randomSessionName, GameMode.Shared);
+        }
+
+        public void CreateTestSession()
+        {
             //int randomInt = UnityEngine.Random.Range(1000, 9999);
             //string randomSessionName = "Room-" + randomInt.ToString();
-            string randomSessionName = "TestRoom";
+            string randomSessionName = "Room";
+            JoinSession(randomSessionName, GameMode.Shared);
+        }
+
+        public void CreateSession(string sessionName, GameMode mode)
+        {
             SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
             _runner.StartGame(new StartGameArgs()
             {
                 Scene = SceneRef.FromIndex((int)SystemEnum.Scenes.InGame),
-                SessionName = randomSessionName,
-                GameMode = GameMode.Shared,
-            }) ;
+                SessionName = sessionName,
+                GameMode = mode,
+            });
+        }
+
+        public void JoinSession(string sessionName, GameMode mode)
+        {
+            SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
+            _runner.StartGame(new StartGameArgs()
+            {
+                Scene = SceneRef.FromIndex((int)SystemEnum.Scenes.InGame),
+                SessionName = sessionName,
+                GameMode = mode,
+            });
         }
 
         public int GetSceneIndex(string sceneName)
@@ -207,9 +259,34 @@ namespace Client
         {
         }
 
+        public string CreadRandomSessionName(List<SessionInfo> sessionList)
+        {
+            while(true) 
+            {
+                int randomInt = UnityEngine.Random.Range(1000, 9999);
+                string randomSessionName = "Room-" + randomInt.ToString();
+
+                if (sessionList.Count <= 0)
+                {
+                    return randomSessionName;
+                }
+
+                foreach (SessionInfo sessionInfo in sessionList)
+                {
+                    if (string.Equals(sessionInfo.Name, randomSessionName) == false)
+                    {
+                        return randomSessionName;
+                    }
+                }
+            }
+        }
+
         public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
         {
-            Debug.Log("Session List Update");
+            Debug.Log($"Session List Updated with {sessionList.Count} session(s)");
+
+            _sessionList = sessionList;
+            return;
         }
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
@@ -222,6 +299,7 @@ namespace Client
             else
             {
                 SceneManager.Instance.LoadScene(SystemEnum.Scenes.Lobby);
+
             }
         }
 

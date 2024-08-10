@@ -31,6 +31,18 @@ namespace Client
         private void OnClickMatchingBtn()
         {
             UIManager.Instance.ShowSceneUI<MatchingPage>();
+
+            GameObject targetObject = GameObject.Find("NetworkRunner");
+            if (targetObject != null)
+            {
+                NetworkHandler networkHandler = targetObject.GetComponent<NetworkHandler>();
+
+                if (networkHandler != null)
+                {
+                    networkHandler.CreateRandomSession();
+                    NetworkManager.Instance.NetworkHandler = networkHandler;
+                }
+            }
         }
 
         // 마법사 설정 버튼을 눌렀을 때 호출됩니다.
@@ -57,7 +69,7 @@ namespace Client
 
                 if (networkHandler != null)
                 {
-                    networkHandler.CreateRandomSession();
+                    networkHandler.CreateTestSession();
                     NetworkManager.Instance.NetworkHandler = networkHandler;
                 }
             }

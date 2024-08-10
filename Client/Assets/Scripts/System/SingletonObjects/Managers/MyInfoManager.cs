@@ -14,11 +14,19 @@ namespace Client
         public OnlineState onlineState = OnlineState.Offline; // 온라인 상태
     }
 
+    public class MatchData
+    {
+        public bool isMatch = false; // 매칭 여부
+        public int playerCount = 2; // 최대 명수
+    }
+
     public class MyInfoManager : Singleton<MyInfoManager>
     {
         private string                         _nickName = "MyNickName"; // 닉네임
         private Dictionary<DecoType, DecoData> _decoInfo = new();        // 꾸미기 정보
         private Dictionary<long, FriendData> _friendList = new();        // 친구 정보
+        private MatchData _matchData = new MatchData();
+        private bool _isTuto = false;
 
         // 임시로 넣음(친구 인덱스)
         private int friendIndex = 0;
@@ -86,6 +94,27 @@ namespace Client
         public Dictionary<DecoType, DecoData> GetDecoData()
         {
             return _decoInfo;
+        }
+
+        public void SetMatchData(bool match, int count)
+        {
+            _matchData.isMatch = match;
+            _matchData.playerCount = count;
+        }
+
+        public MatchData GetMatchData()
+        {
+            return _matchData;
+        }
+
+        public void SetTuto(bool tuto)
+        {
+            _isTuto = tuto;
+        }
+
+        public bool GetTuto()
+        {
+            return _isTuto;
         }
     }
 }
