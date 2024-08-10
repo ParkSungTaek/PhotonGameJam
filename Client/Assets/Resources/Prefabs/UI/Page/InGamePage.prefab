@@ -393,6 +393,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionBtn: {fileID: 663100713389119915}
   skillBtn: {fileID: 537203232203668074}
+  player1: {fileID: 8618279681446074075}
+  player2: {fileID: 3471353747756359883}
 --- !u!1 &2792222621796640168
 GameObject:
   m_ObjectHideFlags: 0

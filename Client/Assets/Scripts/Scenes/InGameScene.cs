@@ -13,7 +13,7 @@ namespace Client
         GameState _gameState = GameState.Wait;
         NetworkRunner _networkRunner;
         MatchingPage _matchingPage;
-        InGamePage _inGamePage;
+        public InGamePage _inGamePage { get; set; }
 
         private void Start()
         {

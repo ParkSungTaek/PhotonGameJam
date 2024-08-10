@@ -45,7 +45,8 @@ namespace Client
         public GameObject _reviveEffect; // 부활 이펙트
 
         public MatchingPage _matchingPage { get; set; }
-        public InGamePage _inGamePage { get; set; }
+
+        public InGameScene _gameScene;
 
         [SerializeField]
         public Image SpeakingIndicator;
@@ -104,6 +105,13 @@ namespace Client
             Debug.Log("Start");
             RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / _playerInfo.GetStat(EntityStat.MHP));
             spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+
+
+            GameObject gameScene = GameObject.Find("GameScene");
+            if (gameScene != null)
+            {
+                _gameScene = gameScene.GetComponent<InGameScene>();
+            }
         }
 
         private void Update()
@@ -288,7 +296,7 @@ namespace Client
                 }
                 else
                 {
-                    _inGamePage = UIManager.Instance.ShowSceneUI<InGamePage>();
+                    _gameScene._inGamePage = UIManager.Instance.ShowSceneUI<InGamePage>();
                 }
 
                 if ( MyInfoManager.Instance.GetDecoData().Count == 0 )
@@ -510,13 +518,16 @@ namespace Client
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
         // 플레이어 죽음 동기화
-        public void RPC_SetPlayerDead()
+        public void RPC_SetPlayerDead(RpcInfo info = default)
         {
             _playerInfo.SetStat(EntityStat.HP, 0f);
             _playerInfo.IsLive = false;
 
             DisableAllRenderers();
             DeadEffect();
+
+            var score = _gameScene._inGamePage.GetPlayerScore(info.Source) + 1;
+            _gameScene._inGamePage.SetPlayerScore(info.Source, score);
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]

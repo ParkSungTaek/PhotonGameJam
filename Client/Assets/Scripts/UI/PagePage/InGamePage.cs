@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
+using Fusion;
+using Unity.VisualScripting;
 
 namespace Client
 {
@@ -12,6 +15,9 @@ namespace Client
     {
         [SerializeField] private Button optionBtn = null; // 옵션 버튼
         [SerializeField] private Button skillBtn = null; // 스크롤 선택 버튼 (개발자)
+
+        [SerializeField] private TMP_Text player1 = null; // 플레이어1 스코어
+        [SerializeField] private TMP_Text player2 = null; // 플레이어2 스코어
         public override void Init()
         {
             base.Init();
@@ -29,6 +35,30 @@ namespace Client
         private void OnClickSkillBtn()
         {
             UIManager.Instance.ShowPopupUI<SelectSkillPage>();
+        }
+
+        public int GetPlayerScore(PlayerRef player)
+        {
+            if( player.PlayerId == 1)
+            {
+                return int.Parse(player2.text);
+            }
+            else
+            {
+                return int.Parse(player1.text);
+            }
+        }
+
+        public void SetPlayerScore(PlayerRef player, int score)
+        {
+            if (player.PlayerId == 1)
+            {
+                player2.text = score.ToString();
+            }
+            else
+            {
+                player1.text = score.ToString();
+            }
         }
     }
 }
