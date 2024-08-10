@@ -101,7 +101,7 @@ namespace Client
                 _playerInfo.MyEntity = this;
             }
             Debug.Log("Start");
-
+            RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / _playerInfo.GetStat(EntityStat.MHP));
             spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         }
 
