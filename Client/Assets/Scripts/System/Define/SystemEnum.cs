@@ -250,5 +250,16 @@ namespace Client
 
             MaxCount
         }
+
+        // 게임 진행 상태
+        public enum GameState
+        {
+            Wait,   // 매칭 대기
+            Ready,  // 게임 대기
+            Game,   // 게임 중
+            End,    // 게임 끝
+
+            MaxCount
+        }
     }
 }

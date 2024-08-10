@@ -34,6 +34,7 @@ namespace Client
         private void OnGameStart()
         {
             UIManager.Instance.ShowSceneUI<LobbyPage>();
+            MyInfoManager.Instance.SetTuto(true);
         }
 
         // 닉네임이 변경될 때 호출됩니다.

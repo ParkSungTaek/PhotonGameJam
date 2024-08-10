@@ -44,6 +44,7 @@ namespace Client
         public GameObject _deadEffect; // ¡◊¥¬ ¿Ã∆Â∆Æ
         public GameObject _reviveEffect; // ∫Œ»∞ ¿Ã∆Â∆Æ
 
+        public MatchingPage _matchingPage { get; set; }
 
         [SerializeField]
         public Image SpeakingIndicator;
@@ -280,7 +281,9 @@ namespace Client
                 EntityManager.Instance.MyPlayer = this;
                 Debug.Log("Spawned local player");
 
-                if( MyInfoManager.Instance.GetDecoData().Count == 0 )
+                _matchingPage = UIManager.Instance.ShowSceneUI<MatchingPage>();
+
+                if ( MyInfoManager.Instance.GetDecoData().Count == 0 )
                 {
                     MyInfoManager.Instance.SetDecoData(DecoType.Face, DataManager.Instance.GetData<DecoData>(0));
                     MyInfoManager.Instance.SetDecoData(DecoType.Body, DataManager.Instance.GetData<DecoData>(21));

@@ -30,7 +30,7 @@ namespace Client
         // 랜덤 매칭 버튼을 눌렀을 때 호출됩니다.
         private void OnClickMatchingBtn()
         {
-            UIManager.Instance.ShowSceneUI<MatchingPage>();
+            //UIManager.Instance.ShowSceneUI<MatchingPage>();
 
             GameObject targetObject = GameObject.Find("NetworkRunner");
             if (targetObject != null)
