@@ -12,7 +12,7 @@ namespace Client
 
         }
 
-        private BuffBase SetBuff(int i)
+        public BuffBase SetBuff(int i)
         {
             BuffBase buffBase = null;
             BuffData buffData = DataManager.Instance.GetData<BuffData>(i);
@@ -24,6 +24,11 @@ namespace Client
         public void SetBuffToPlayer(int buffIndex, Player buffTarget = null, Player buffUser = null)
         {
             BuffBase buffBase = SetBuff(buffIndex);
+            if (buffBase == null)
+            {
+                Debug.LogWarning("?? 버프왜 못잡음??");
+                return;
+            }
             if (buffTarget != null)
             {
                 buffBase.SetBuffUser(buffUser);
@@ -35,15 +40,20 @@ namespace Client
                 buffBase.SetBuffTarget(EntityManager.Instance.MyPlayer);
             }
 
-            if(buffTarget != null)
-                buffTarget.PlayerInfo.ExecuteBuff(buffBase);
+            if (buffTarget != null)
+            {
+                //buffTarget.PlayerInfo.ExecuteBuff(buffBase);
+                buffTarget.RPC_SetBuff(buffIndex);
+
+            }
         }
 
         //선택한 마법서 적용
-        public void SelectMagicBook(MagicBookData magicData)
+        public void SelectMagicBook(MagicBookData magicData, Player player)
         {
             if (magicData != null)
             {
+                player.RPC_SetMagicElement((int)magicData.element);
                 if (magicData.Value1 != 0)
                 {
                     SetBuffToPlayer(magicData.Value1);

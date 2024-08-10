@@ -69,13 +69,15 @@ namespace Client
             {
                 return;
             }
-            BuffManager.Instance.SelectMagicBook(selectedMagic.MagicBookData);
+            BuffManager.Instance.SelectMagicBook(selectedMagic.MagicBookData, myPlayer);
 
             // TODO : 김선중 플레이어 죽어서 스크롤 선택 시 부활
             if (myPlayer.PlayerInfo.IsLive == false )
             {
                 EntityManager.Instance.MyPlayer.ReSpawn();
+                Back();
             }
+
         }
       
     }

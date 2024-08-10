@@ -12,13 +12,15 @@ namespace Client
         private List<BuffBase>                 _buffBases  = null;           // 보유중인 버프
         private EntityPlayerData               _playerData = null;           // Player 데이터
         private Dictionary<DecoType, DecoData> _decoData   = new();          // 꾸미기 데이터
+        public List<MagicElement> MagicElements { get; set; } = new List<MagicElement>();
+
         #region BuffData
 
         // 버프라는건 만분률 버프 더해서 하는 버프 그걸 마지막에 Get해서 계산 한번에 순회해서 계산 
         // enpum 
 
         #endregion
- 
+
         public string                         CharName => _charName;
         public Dictionary<DecoType, DecoData> DecoData => _decoData;
 

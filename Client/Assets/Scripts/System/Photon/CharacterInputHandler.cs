@@ -28,6 +28,7 @@ namespace Client
             var player = EntityManager.Instance.MyPlayer;
             if (player != null ) 
             {
+                if (player.PlayerInfo == null) return;
                 if (player.PlayerInfo.IsLive == false) return;
             }
 

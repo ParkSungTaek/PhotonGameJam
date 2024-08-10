@@ -515,5 +515,41 @@ namespace Client
             EnableAllRenderers();
             ReviveEffect();
         }
+
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+        public void RPC_SendMessage(string message, RpcInfo info = default)
+        {
+            RPC_RelayMessage(message, info.Source);
+        }
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+        public void RPC_RelayMessage(string message, PlayerRef messageSource)
+        {
+
+            if (messageSource == Runner.LocalPlayer)
+            {
+                message = $"You said: {message}\n";
+            }
+            else
+            {
+                message = $"Some other player said: {message}\n";
+            }
+
+        }
+
+
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+        // 버프 동기화
+        public void RPC_SetBuff(int buffIndex)
+        {
+            BuffBase buffBase = BuffManager.Instance.SetBuff(buffIndex);
+            PlayerInfo.ExecuteBuff(buffBase);
+        }
+
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+        // 버프 동기화
+        public void RPC_SetMagicElement(int magicElement)
+        {
+            PlayerInfo.MagicElements.Add((SystemEnum.MagicElement)magicElement);
+        }
     }
 }
