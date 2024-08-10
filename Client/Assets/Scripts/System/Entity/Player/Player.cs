@@ -39,6 +39,10 @@ namespace Client
         protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.Player;
 
         public PlayerInfo PlayerInfo => _playerInfo;
+
+        // 죽은 횟수
+        public int deadCount { get; set; } = 0;
+
         protected string ProjectilePath(ProjectileName projectileEnumName) => $"Prefabs/Projectile/{projectileEnumName.ToString()}";
 
         public GameObject _deadEffect; // 죽는 이펙트
@@ -477,7 +481,7 @@ namespace Client
 
         //========== 네트워크 관련 TODO 김선중 나중에 partial class로 분할 시키기
         // 플레이어 정보 동기화
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
         public void RPC_SetPlayerInfo(string name, int face, int body, int hair, int weapon, int hat, int cape, bool speaking, RpcInfo info = default)
         {
             nickName = name;
@@ -498,6 +502,7 @@ namespace Client
             playerFaceUI.SetPlayerDeco(DecoType.Cape, DataManager.Instance.GetData<DecoData>(decoCape));
             playerFaceUI.RefreshDeco();
 
+            _gameScene._inGamePage.SetPlayerName(info.Source, nickName.ToString());
             if (speaking)
             {
                 SpeakingIndicator.enabled = true;
@@ -526,8 +531,13 @@ namespace Client
             DisableAllRenderers();
             DeadEffect();
 
-            var score = _gameScene._inGamePage.GetPlayerScore(info.Source) + 1;
-            _gameScene._inGamePage.SetPlayerScore(info.Source, score);
+            _gameScene._inGamePage.SetPlayerDeathScore(info.Source, deadCount);
+
+            deadCount++;
+            if (deadCount >= 5)
+            {
+                // 게임 끝
+            }
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]

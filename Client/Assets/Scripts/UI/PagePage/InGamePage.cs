@@ -16,8 +16,11 @@ namespace Client
         [SerializeField] private Button optionBtn = null; // 옵션 버튼
         [SerializeField] private Button skillBtn = null; // 스크롤 선택 버튼 (개발자)
 
-        [SerializeField] private TMP_Text player1 = null; // 플레이어1 스코어
-        [SerializeField] private TMP_Text player2 = null; // 플레이어2 스코어
+        [SerializeField] private TMP_Text player1Name = null; // 플레이어1 이름
+        [SerializeField] private TMP_Text player2Name = null; // 플레이어2 이름
+        [SerializeField] private Image[] player1Hearts = null; // 플레이어1 하트
+        [SerializeField] private Image[] player2Hearts = null; // 플레이어2 하트
+        [SerializeField] private Sprite emptyHeart = null; // 까진 하트
         public override void Init()
         {
             base.Init();
@@ -41,23 +44,35 @@ namespace Client
         {
             if( player.PlayerId == 1)
             {
-                return int.Parse(player2.text);
+                return int.Parse(player1Name.text);
             }
             else
             {
-                return int.Parse(player1.text);
+                return int.Parse(player2Name.text);
             }
         }
 
-        public void SetPlayerScore(PlayerRef player, int score)
+        public void SetPlayerDeathScore(PlayerRef player, int score)
         {
             if (player.PlayerId == 1)
             {
-                player2.text = score.ToString();
+                player1Hearts[score].sprite = emptyHeart;
             }
             else
             {
-                player1.text = score.ToString();
+                player2Hearts[score].sprite = emptyHeart;
+            }
+        }
+
+        public void SetPlayerName(PlayerRef player, string name)
+        {
+            if (player.PlayerId == 1)
+            {
+                player1Name.text = name;
+            }
+            else
+            {
+                player2Name.text = name;
             }
         }
     }
