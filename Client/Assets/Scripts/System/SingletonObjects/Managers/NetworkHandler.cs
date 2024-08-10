@@ -7,8 +7,7 @@ using static Client.SystemEnum;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using Fusion.Addons.Physics;
-using UnityEditor;
-using static System.Collections.Specialized.BitVector32;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 namespace Client
 {
@@ -55,7 +54,7 @@ namespace Client
 
             foreach (SessionInfo sessionInfo in _sessionList)
             {
-                if (sessionInfo.Name[0] != 'R')
+                if (sessionInfo.Name[0] != 'T')
                 {
                     continue;
                 }
@@ -70,11 +69,16 @@ namespace Client
                     continue;
                 }
 
-                JoinSession(sessionInfo.Name, GameMode.Shared);
+                var tmp = (int)sessionInfo.Properties["map"];
+                JoinSession(sessionInfo.Name, GameMode.Shared, (Scenes)tmp);
             }
 
             string randomSessionName = CreadRandomSessionName(_sessionList);
-            JoinSession(randomSessionName, GameMode.Shared);
+
+            // ¸Ê ·£´ý »Ì±â
+            var map = GetRandomEnumValueInRange(Scenes.GrassStage, Scenes.MaxCount);
+
+            CreateSession(randomSessionName, GameMode.Shared, map);
         }
 
         public void CreateTestSession()
@@ -82,26 +86,30 @@ namespace Client
             //int randomInt = UnityEngine.Random.Range(1000, 9999);
             //string randomSessionName = "Room-" + randomInt.ToString();
             string randomSessionName = "Room";
-            JoinSession(randomSessionName, GameMode.Shared);
+            JoinSession(randomSessionName, GameMode.Shared, Scenes.InGame);
         }
 
-        public void CreateSession(string sessionName, GameMode mode)
+        public void CreateSession(string sessionName, GameMode mode, Scenes map)
         {
-            SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
+            var customProps = new Dictionary<string, SessionProperty>();
+            customProps["map"] = (int)map;
+
+            SceneManager.Instance.LoadScene(map);
             _runner.StartGame(new StartGameArgs()
             {
-                Scene = SceneRef.FromIndex((int)SystemEnum.Scenes.InGame),
+                Scene = SceneRef.FromIndex((int)map),
                 SessionName = sessionName,
                 GameMode = mode,
+                SessionProperties = customProps,
             });
         }
 
-        public void JoinSession(string sessionName, GameMode mode)
+        public void JoinSession(string sessionName, GameMode mode, Scenes map)
         {
-            SceneManager.Instance.LoadScene(SystemEnum.Scenes.InGame);
+            SceneManager.Instance.LoadScene(map);
             _runner.StartGame(new StartGameArgs()
             {
-                Scene = SceneRef.FromIndex((int)SystemEnum.Scenes.InGame),
+                Scene = SceneRef.FromIndex((int)map),
                 SessionName = sessionName,
                 GameMode = mode,
             });
@@ -237,6 +245,36 @@ namespace Client
             if (player == _runner.LocalPlayer)
             {
                 Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
+                var map = (int)_runner.SessionInfo.Properties["map"];
+
+                switch ((Scenes)map)
+                {
+                    case Scenes.GrassStage:
+                        if(player.PlayerId == 1)
+                        {
+                            spawnPosition = new Vector3(-16.5f, 2.0f, 0.0f);
+                        }
+                        else
+                        {
+                            spawnPosition = new Vector3(16.5f, 2.0f, 0.0f);
+                        }
+                        break;
+
+                    case Scenes.GrassStage2:
+                        if (player.PlayerId == 1)
+                        {
+                            spawnPosition = new Vector3(-14.7f, -7.0f, 0.0f);
+                        }
+                        else
+                        {
+                            spawnPosition = new Vector3(14.7f, -7.0f, 0.0f);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                
                 Player networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
 
                 _spawnedCharacters.Add(player, networkPlayerObject);
@@ -265,7 +303,7 @@ namespace Client
             while(true) 
             {
                 int randomInt = UnityEngine.Random.Range(1000, 9999);
-                string randomSessionName = "Room-" + randomInt.ToString();
+                string randomSessionName = "Toom-" + randomInt.ToString();
 
                 if (sessionList.Count <= 0)
                 {

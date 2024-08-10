@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 
@@ -68,6 +71,8 @@ namespace Client
             Lobby,
             Loading,
             InGame,
+            GrassStage,
+            GrassStage2,
             MaxCount
         }
         #endregion UI
@@ -260,6 +265,24 @@ namespace Client
             End,    // 게임 끝
 
             MaxCount
+        }
+
+        static public T GetRandomEnumValueInRange<T>(T minValue, T maxValue) where T : Enum
+        {
+            // enum 값들을 배열로 가져오기
+            T[] values = (T[])Enum.GetValues(typeof(T));
+
+            // 특정 값 이상, 특정 값 미만인 값들만 필터링
+            T[] filteredValues = values
+                .Where(value => Convert.ToInt32(value) >= Convert.ToInt32(minValue) &&
+                                Convert.ToInt32(value) < Convert.ToInt32(maxValue))
+                .ToArray();
+
+            // 랜덤 인덱스 선택
+            int randomIndex = UnityEngine.Random.Range(0, filteredValues.Length);
+
+            // 랜덤으로 선택된 enum 값 반환
+            return filteredValues[randomIndex];
         }
     }
 }

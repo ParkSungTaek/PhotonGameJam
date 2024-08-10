@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGameScene.unity
     guid: 481ee46847dd2b84785b04fe8f217060
+  - enabled: 1
+    path: Assets/Scenes/GrassStageScene.unity
+    guid: 8fabf6f613c8ee6488eff469250aa769
+  - enabled: 1
+    path: Assets/Scenes/GrassStage2Scene.unity
+    guid: e6eeaa81cfaf3dd47a7eaacad75f5003
   m_configObjects: {}

@@ -9,12 +9,26 @@ namespace Client
     {
         private void Start()
         {
+            // 贸澜 立加捞 酒囱 版快
             if( MyInfoManager.Instance.GetTuto() )
             {
+                GameObject networkRunner = GameObject.Find("NetworkRunner");
+                if (networkRunner != null)
+                {
+                    NetworkHandler networkHandler = networkRunner.GetComponent<NetworkHandler>();
+
+                    if (networkHandler != null)
+                    {
+                        networkHandler.StartGame();
+                        NetworkManager.Instance.NetworkHandler = networkHandler;
+                    }
+                }
+
                 UIManager.Instance.ShowSceneUI<LobbyPage>();
                 return;
             }
 
+            // 贸澜 立加牢 版快
             UIManager.Instance.ShowSceneUI<TitlePage>();
 
             GameObject targetObject = GameObject.Find("NetworkRunner");
