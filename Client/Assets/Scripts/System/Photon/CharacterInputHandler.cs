@@ -29,7 +29,7 @@ namespace Client
             if (player != null ) 
             {
                 if (player.PlayerInfo == null) return;
-                if (player.PlayerInfo.IsLive == false) return;
+                if (player.PlayerInfo.IsInput == false) return;
             }
 
             if (Input.GetKey(KeyCode.A))

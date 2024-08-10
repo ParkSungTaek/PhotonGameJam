@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using TMPro;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
@@ -187,6 +188,7 @@ namespace Client
                     _playerInfo.SetStat(EntityStat.HP, 0);
                     RPC_SetPlayerDead();
                     _playerInfo.IsLive = false;
+                    _playerInfo.IsInput = false;
 
                     EntityManager.Instance.MyPlayer = this;
                     Dead();
@@ -297,6 +299,7 @@ namespace Client
                 if (NetworkManager.Instance.NetworkHandler._runner.SessionInfo.Properties.TryGetValue("map", out var map))
                 {
                     _matchingPage = UIManager.Instance.ShowSceneUI<MatchingPage>();
+                    _playerInfo.IsInput = false;
                 }
                 else
                 {
@@ -435,7 +438,13 @@ namespace Client
             transform.position = new Vector3(-0.1806704f, 0.688218f, 0.0f);
             _playerInfo.SetStat(EntityStat.HP, 100f);
             _playerInfo.IsLive = true;
+            _playerInfo.IsInput = true;
             RPC_SetPlayerResapwn();
+        }
+
+        public void EndGame(object sender, ElapsedEventArgs e)
+        {
+            NetworkManager.Instance.NetworkHandler.RetrunLobby();
         }
 
         //========== 이펙트 관련 TODO 김선중 나중에 partial class로 분할 시키기
@@ -527,6 +536,7 @@ namespace Client
         {
             _playerInfo.SetStat(EntityStat.HP, 0f);
             _playerInfo.IsLive = false;
+            _playerInfo.IsInput = false;
 
             DisableAllRenderers();
             DeadEffect();
@@ -537,6 +547,16 @@ namespace Client
             if (deadCount >= 5)
             {
                 // 게임 끝
+                _playerInfo.IsInput = false;
+                EntityManager.Instance.MyPlayer._playerInfo.IsInput = false;
+                var gameEndPage = UIManager.Instance.ShowSceneUI<GameEndPage>();
+                gameEndPage.SetPlayerName(_gameScene._inGamePage.GetRevusPlayerName(info.Source));
+
+                // 10초 뒤 로비로 보내버리기
+                var timer = new System.Timers.Timer(10000);
+                timer.Elapsed += EndGame;
+                timer.AutoReset = false;
+                timer.Start();
             }
         }
 
@@ -547,6 +567,8 @@ namespace Client
         {
             _playerInfo.SetStat(EntityStat.HP, 100f);
             _playerInfo.IsLive = true;
+            _playerInfo.IsInput = true;
+
             playerFaceUI.SetHPBar(1);
 
             EnableAllRenderers();

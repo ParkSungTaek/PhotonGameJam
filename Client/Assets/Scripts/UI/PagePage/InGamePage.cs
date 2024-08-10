@@ -75,5 +75,29 @@ namespace Client
                 player2Name.text = name;
             }
         }
+
+        public string GetPlayerName(PlayerRef player)
+        {
+            if (player.PlayerId == 1)
+            {
+                return player1Name.text;
+            }
+            else
+            {
+                return player2Name.text;
+            }
+        }
+
+        public string GetRevusPlayerName(PlayerRef player)
+        {
+            if (player.PlayerId == 1)
+            {
+                return player2Name.text;
+            }
+            else
+            {
+                return player1Name.text;
+            }
+        }
     }
 }

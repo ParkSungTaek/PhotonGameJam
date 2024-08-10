@@ -26,6 +26,10 @@ namespace Client
 
         // 생존여부
         public bool IsLive { get; set; } = true;
+
+        // 인풋 여부
+        public bool IsInput { get; set; } = true;
+
         public PlayerInfo() 
         {
             _buffBases = new List<BuffBase>();

@@ -56,7 +56,7 @@ namespace Client
                     }
 
                     EntityManager.Instance.MyPlayer._matchingPage.Back();
-
+                    EntityManager.Instance.MyPlayer.PlayerInfo.IsInput = true;
                     _inGamePage = UIManager.Instance.ShowSceneUI<InGamePage>();
                     _gameState = GameState.Ready;
                 }
