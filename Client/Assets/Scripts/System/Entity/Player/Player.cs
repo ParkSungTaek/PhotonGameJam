@@ -286,6 +286,10 @@ namespace Client
                 {
                     _matchingPage = UIManager.Instance.ShowSceneUI<MatchingPage>();
                 }
+                else
+                {
+                    _inGamePage = UIManager.Instance.ShowSceneUI<InGamePage>();
+                }
 
                 if ( MyInfoManager.Instance.GetDecoData().Count == 0 )
                 {
