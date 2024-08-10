@@ -45,6 +45,7 @@ namespace Client
         public GameObject _reviveEffect; // ∫Œ»∞ ¿Ã∆Â∆Æ
 
         public MatchingPage _matchingPage { get; set; }
+        public InGamePage _inGamePage { get; set; }
 
         [SerializeField]
         public Image SpeakingIndicator;
@@ -281,7 +282,10 @@ namespace Client
                 EntityManager.Instance.MyPlayer = this;
                 Debug.Log("Spawned local player");
 
-                _matchingPage = UIManager.Instance.ShowSceneUI<MatchingPage>();
+                if (NetworkManager.Instance.NetworkHandler._runner.SessionInfo.Properties.TryGetValue("map", out var map))
+                {
+                    _matchingPage = UIManager.Instance.ShowSceneUI<MatchingPage>();
+                }
 
                 if ( MyInfoManager.Instance.GetDecoData().Count == 0 )
                 {
@@ -472,8 +476,6 @@ namespace Client
             decoHat = hat;
             decoCape = cape;
 
-            isSpeaking = speaking;
-
             SetNickName(nickName.ToString());
             playerFaceUI.SetNickName(nickName.ToString());
             playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
@@ -484,7 +486,7 @@ namespace Client
             playerFaceUI.SetPlayerDeco(DecoType.Cape, DataManager.Instance.GetData<DecoData>(decoCape));
             playerFaceUI.RefreshDeco();
 
-            if (isSpeaking)
+            if (speaking)
             {
                 SpeakingIndicator.enabled = true;
             }

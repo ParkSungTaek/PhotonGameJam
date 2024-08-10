@@ -85,8 +85,8 @@ namespace Client
         {
             //int randomInt = UnityEngine.Random.Range(1000, 9999);
             //string randomSessionName = "Room-" + randomInt.ToString();
-            string randomSessionName = "Room";
-            JoinSession(randomSessionName, GameMode.Shared, Scenes.InGame);
+            string randomSessionName = "TestRoom";
+            JoinSession(randomSessionName, GameMode.Shared, Scenes.GrassStage);
         }
 
         public void CreateSession(string sessionName, GameMode mode, Scenes map)
@@ -244,8 +244,14 @@ namespace Client
             Debug.Log("Player Join");
             if (player == _runner.LocalPlayer)
             {
-                Vector3 spawnPosition = new Vector3(-0.1806704f, 0.688218f, 0.0f);
-                var map = (int)_runner.SessionInfo.Properties["map"];
+                Vector3 spawnPosition = new Vector3(0.0f, 20.0f, 0.0f);
+
+                var map = (int)Scenes.InGame;
+                SessionProperty tmpMap;
+                if( _runner.SessionInfo.Properties.TryGetValue("map", out tmpMap) )
+                {
+                    map = (int)tmpMap;
+                }
 
                 switch ((Scenes)map)
                 {
