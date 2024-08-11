@@ -41,7 +41,7 @@ namespace Client
 
             GameManager.Instance.AddOnUpdate(UpdateChat);
 
-            SetState(SystemEnum.OnlineState.Lobby);
+            //SetState(SystemEnum.OnlineState.Lobby);
         }
 
         public void TestPushMessage(string msg)
