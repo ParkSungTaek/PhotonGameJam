@@ -107,6 +107,7 @@ namespace Client
         public void OnClickFullScreenBtn(bool isFull)
         {
             screenMode = isFull ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+            Screen.SetResolution(resolutions[resolutionIdx].width, resolutions[resolutionIdx].height, screenMode);
         }
 
         // 해상도가 선택되었을 때 호출됩니다.
