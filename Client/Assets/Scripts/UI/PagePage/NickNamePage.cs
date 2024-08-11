@@ -24,6 +24,11 @@ namespace Client
         // 이름 설정 버튼을 누를 때 호출됩니다.
         private void OnClickCheckBtn()
         {
+            if( nickName == string.Empty )
+            {
+                UIManager.Instance.ShowToastPopup("뭐라고?? 이름은 못들은거같아!!");
+                return;
+            }
             MyInfoManager.Instance.SetNickName(nickName);
             UIManager.Instance.ShowCommonPopup("이름 확인", nickName + "이 정말 너의 이름이 맞아?", SystemEnum.CommonPopuptype.TwoBtn, OnGameStart);
             // 채팅 서버 접속
