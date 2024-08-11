@@ -19,6 +19,7 @@ namespace Client
             base.Init();
             checkBtn.onClick.AddListener(OnClickCheckBtn);
             inputField.onValueChanged.AddListener(OnClickCheckBtn);
+            inputField.characterLimit = 6;
         }
 
         // 이름 설정 버튼을 누를 때 호출됩니다.
@@ -26,7 +27,7 @@ namespace Client
         {
             if( nickName == string.Empty )
             {
-                UIManager.Instance.ShowToastPopup("뭐라고?? 이름은 못들은거같아!!");
+                UIManager.Instance.ShowToastPopup("뭐라고?? 잘 못들은거같아!!");
                 return;
             }
             MyInfoManager.Instance.SetNickName(nickName);
