@@ -237,8 +237,8 @@ MonoBehaviour:
   face: {fileID: 6274818525019538284}
   hair: {fileID: 5785810932645539167}
   weapon: {fileID: 5480528654141328131}
-  cape: {fileID: 5706746732458688175}
-  hat: {fileID: 1040165754243476070}
+  cape: {fileID: 1040165754243476070}
+  hat: {fileID: 5706746732458688175}
 --- !u!1 &4284086158484177090
 GameObject:
   m_ObjectHideFlags: 0

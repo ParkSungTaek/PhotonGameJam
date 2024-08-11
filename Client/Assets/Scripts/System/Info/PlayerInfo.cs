@@ -40,7 +40,7 @@ namespace Client
             SetData(playerDataID, weaponDataID, buffBases, decoInfo);
         }
         // 현재 캐릭터 정보, 무기 정보, 버프 리스트(전부 활성화) 정보 Set
-        public void SetData(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null, Dictionary<DecoType, DecoData> decoInfo = null)
+        public void SetData(int playerDataID = SystemConst.NoData, int weaponDataID = SystemConst.NoData, List<BuffBase> buffBases = null, Dictionary<DecoType, DecoData> decoInfo = null )
         {
             if (playerDataID != SystemConst.NoData)
             {
@@ -93,6 +93,15 @@ namespace Client
                 {
                     buff.Execute();
                 }
+            }
+
+            if (decoInfo == null)
+                decoInfo = new();
+            _decoData = decoInfo;
+            for (int i = 0; i < (int)DecoType.MaxCount; ++i)
+            {
+                if (_decoData.ContainsKey((DecoType)i) == false)
+                   _decoData.Add((DecoType)i, DataManager.Instance.GetAllData<DecoData>().Find(x => x._type == (DecoType)i));
             }
         }
 

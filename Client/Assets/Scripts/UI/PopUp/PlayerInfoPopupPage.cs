@@ -20,6 +20,10 @@ namespace Client
             optionBtn.onClick.AddListener(OnClickOptionBtn);
             players = new();
 
+            if(EntityManager.Instance.SpawnedCharacters.Count <= 0)
+            {
+                players.Add(EntityManager.Instance.MyPlayer.PlayerInfo);
+            }
             foreach( var player in EntityManager.Instance.SpawnedCharacters )
             {
                 players.Add(player.Value.PlayerInfo);
@@ -32,6 +36,10 @@ namespace Client
         {
             players = new();
 
+            if (EntityManager.Instance.SpawnedCharacters.Count <= 0)
+            {
+                players.Add(EntityManager.Instance.MyPlayer.PlayerInfo);
+            }
             foreach (var player in EntityManager.Instance.SpawnedCharacters)
             {
                 players.Add(player.Value.PlayerInfo);

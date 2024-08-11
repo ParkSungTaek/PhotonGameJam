@@ -60,12 +60,6 @@ namespace Client
                 FriendSlot newSlot = Instantiate(friendPrepeb, content);
                 newSlot.SetData(friend.name, friend.onlineState, friend.DecoInfo);
             }
-            // (일단 친구 미구현이라서 임시 두명만 넣음)
-            //FriendSlot anewSlot = Instantiate(friendPrepeb, content);
-            //anewSlot.SetData("테스트 친구 1", true, MyInfoManager.Instance.GetDecoData());
-
-            //FriendSlot bnewSlot = Instantiate(friendPrepeb, content);
-            //bnewSlot.SetData("테스트 친구 2", false, MyInfoManager.Instance.GetDecoData());
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Client
     public class InGamePage : UI_Scene
     {
         [SerializeField] private Button optionBtn = null; // 옵션 버튼
-        [SerializeField] private Button skillBtn = null; // 스크롤 선택 버튼 (개발자)
 
         [SerializeField] private TMP_Text player1Name = null; // 플레이어1 이름
         [SerializeField] private TMP_Text player2Name = null; // 플레이어2 이름
@@ -25,7 +24,6 @@ namespace Client
         {
             base.Init();
             optionBtn.onClick.AddListener(OnClickOptionBtn);
-            skillBtn.onClick.AddListener(OnClickSkillBtn);
         }
 
         // 옵션 버튼을 눌렀을 때 호출됩니다.
