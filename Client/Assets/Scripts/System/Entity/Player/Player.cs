@@ -502,6 +502,11 @@ namespace Client
             decoHat = hat;
             decoCape = cape;
 
+            int magic1 = PlayerInfo.MagicLists.Count > 0 ? PlayerInfo.MagicLists[0].index : 0;
+            int magic2 = PlayerInfo.MagicLists.Count > 1 ? PlayerInfo.MagicLists[1].index : 0;
+            int magic3 = PlayerInfo.MagicLists.Count > 2 ? PlayerInfo.MagicLists[2].index : 0;
+            int magic4 = PlayerInfo.MagicLists.Count > 3 ? PlayerInfo.MagicLists[3].index : 0;
+
             SetNickName(nickName.ToString());
             playerFaceUI.SetNickName(nickName.ToString());
             playerFaceUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(decoFace));
@@ -516,7 +521,7 @@ namespace Client
                 _gameScene._inGamePage.SetPlayerName(info.Source, nickName.ToString());
 
             if (_PlayerInfoPopupPage != null)
-                _PlayerInfoPopupPage.SetData(info.Source, name, face, body, hair, weapon, hat, cape);
+                _PlayerInfoPopupPage.SetData(info.Source, name, face, body, hair, weapon, hat, cape, magic1, magic2, magic3, magic4);
 
             if (speaking)
             {

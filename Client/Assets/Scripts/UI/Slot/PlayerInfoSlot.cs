@@ -16,7 +16,7 @@ namespace Client
         [SerializeField] private SkillScrollSlot[] skills       = null; // 스킬들
 
         // 플레이어 데이터를 세팅합니다.
-        public void SetData(string name, int face, int body, int hair, int weapon, int hat, int cape)
+        public void SetData(string name, int face, int body, int hair, int weapon, int hat, int cape, int magic1, int magic2, int magic3, int magic4)
         {
             this.name.SetText(name);
             playerUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(face));
@@ -31,15 +31,33 @@ namespace Client
                 slot.gameObject.SetActive(false);
             }
 
-            /*if( player.MagicLists.Count > 0)
+            if(magic1 != 0)
             {
-                for (int i = 0; i < player.MagicLists.Count; ++i)
-                {
-                    skills[i].gameObject.SetActive(true);
-                    skills[i].SetData(player.MagicLists[i], null, null);
-                }
-            }*/
+                skills[0].gameObject.SetActive(true);
+                MagicBookData data = DataManager.Instance.GetData<MagicBookData>(magic1);
+                skills[0].SetData(data , null, null);
+            }
 
+            if (magic2 != 0)
+            {
+                skills[1].gameObject.SetActive(true);
+                MagicBookData data = DataManager.Instance.GetData<MagicBookData>(magic2);
+                skills[1].SetData(data, null, null);
+            }
+
+            if (magic3 != 0)
+            {
+                skills[2].gameObject.SetActive(true);
+                MagicBookData data = DataManager.Instance.GetData<MagicBookData>(magic3);
+                skills[2].SetData(data, null, null);
+            }
+
+            if (magic4 != 0)
+            {
+                skills[3].gameObject.SetActive(true);
+                MagicBookData data = DataManager.Instance.GetData<MagicBookData>(magic4);
+                skills[3].SetData(data, null, null);
+            }
         }
     }
 }

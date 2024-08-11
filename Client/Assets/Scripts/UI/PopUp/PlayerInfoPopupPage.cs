@@ -26,16 +26,16 @@ namespace Client
         {
 
         }
-        public void SetData(PlayerRef player, string name, int face, int body, int hair, int weapon, int hat, int cape)
+        public void SetData(PlayerRef player, string name, int face, int body, int hair, int weapon, int hat, int cape, int magic1, int magic2, int magic3, int magic4)
         {
             if (player == null) return;
             if (player.PlayerId == 1)
             {
-                playerInfos1.SetData(name, face, body, hair, weapon, hat, cape);
+                playerInfos1.SetData(name, face, body, hair, weapon, hat, cape, magic1, magic2, magic3, magic4);
             }
             else
             {
-                playerInfos1.SetData(name, face, body, hair, weapon, hat, cape);
+                playerInfos1.SetData(name, face, body, hair, weapon, hat, cape, magic1, magic2, magic3, magic4);
             }
         }
 
