@@ -106,7 +106,7 @@ namespace Client
             None,
             AddFixedValue,
             AddPerValue,
-
+            DotHpPer,
             MaxCount
 
         }

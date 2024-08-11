@@ -195,6 +195,17 @@ namespace Client
                     EntityManager.Instance.MyPlayer = this;
                     Dead();
                 }
+                if (_playerInfo.DotAction != null)
+                {
+                    foreach (Action action in _playerInfo.DotAction)
+                    {
+                        if (action != null)
+                        {
+                            action.Invoke();
+                        }
+                    }
+
+                }
             }
 
             if (GetInput(out NetworkInputData data))
@@ -368,9 +379,33 @@ namespace Client
                     _playerInfo.SetStat(EntityStat.HP, 0);
                     // TODO 이서연 : 100이아니라 MaxHP넣어줘야함
                     RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / _playerInfo.GetStat(EntityStat.MHP));
+
                 }
             }
         }
+
+        public void HpRecover(float recover)
+        {
+            if (!HasInputAuthority)
+            {
+                float hp = _playerInfo.GetStat(EntityStat.HP);
+                hp += recover;
+                Debug.Log($"{_playerInfo.CharName} Hp Recover : {recover}");
+                if (hp < _playerInfo.GetStat(EntityStat.MHP))
+                {
+                    _playerInfo.SetStat(EntityStat.HP, hp);
+                    RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / _playerInfo.GetStat(EntityStat.MHP));
+                }
+                else
+                {
+                    hp = _playerInfo.GetStat(EntityStat.MHP);
+                    _playerInfo.SetStat(EntityStat.HP, hp);
+                    RPC_SetPlayerHP(_playerInfo.GetStat(EntityStat.HP) / _playerInfo.GetStat(EntityStat.MHP));
+
+                }
+            }
+        }
+
 
         ProjectileBase GetProjectileList()
         {

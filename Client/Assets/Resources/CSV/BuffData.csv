@@ -8,3 +8,4 @@ int,#,int,int,BuffName,BuffType,EntityStat,int,int,int,int,int
 4,방어력 30%증가 버프,4,0,AddPerValue,Passive,Def,3000,0,0,0,-1
 5,이속 20% 증가,5,0,AddPerValue,Passive,MovSpd,2000,0,0,0,-1
 6,점프력 30% 증가,6,0,AddPerValue,Passive,JumpP,3000,0,0,0,-1
+7,10초마다 전체 체력 20%,7,0,DotHpPer,Passive,HP,100000,2000,0,0,-1

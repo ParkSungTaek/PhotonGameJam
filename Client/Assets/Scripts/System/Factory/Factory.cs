@@ -13,6 +13,7 @@ namespace Client
             {
                 case BuffName.AddFixedValue: return new AddFixedValue(buffName);
                 case BuffName.AddPerValue: return new AddPerValue(buffName);
+                case BuffName.DotHpPer: return new DotHpPer(buffName);
 
             }
             return null;

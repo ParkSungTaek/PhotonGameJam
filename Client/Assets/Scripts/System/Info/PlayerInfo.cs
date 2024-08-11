@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Client
         private EntityPlayerData               _playerData = null;           // Player 데이터
         private Dictionary<DecoType, DecoData> _decoData   = new();          // 꾸미기 데이터
         public List<MagicBookData> MagicLists { get; set; } = new List<MagicBookData>();
+
+        public List<Action> DotAction = new List<Action>();
 
         #region BuffData
 

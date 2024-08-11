@@ -130,7 +130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   optionBtn: {fileID: 663100713389119915}
-  skillBtn: {fileID: 0}
   player1Name: {fileID: 8484394108799851895}
   player2Name: {fileID: 8096097082113936404}
   player1Hearts:
@@ -1601,6 +1600,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5682450051702343962, guid: a0124092e39ba554c994ca044e2e44cd, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5898633949194356352, guid: a0124092e39ba554c994ca044e2e44cd, type: 3}
+      propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6274828697011517690, guid: a0124092e39ba554c994ca044e2e44cd, type: 3}

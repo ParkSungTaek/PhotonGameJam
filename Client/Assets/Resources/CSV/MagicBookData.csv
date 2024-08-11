@@ -5,6 +5,6 @@ int,string,MagicElement,bool,string,string,string,string,int,int,int,int
 1,급진,Fire,FALSE,캐릭터의 공격력이 30% 증가합니다.,Attack_Up,,#E5BBBB,3,0,0,0
 2,물쿠션,Water,FALSE,방어력이 30% 증가합니다.,Def_Up,,#BBE5C2,4,0,0,0
 3,워터 슬라이드,Water,FALSE,이동속도가 20% 증가합니다.,Spd_Up,,#BBE5C2,5,0,0,0
-4,자연 회복,Nature,FALSE,전투 후 10초마다 자신의 전체 체력 20%를 회복합니다.,Heal_Up,,#BBE5C2,0,0,0,0
+4,자연 회복,Nature,FALSE,전투 후 10초마다 자신의 전체 체력 20%를 회복합니다.,Heal_Up,,#BBE5C2,7,0,0,0
 5,펌핑,Nature,FALSE,점프력이 30% 증가합니다.,Jump_Up,,#BBE5C2,6,0,0,0
 
