@@ -31,7 +31,7 @@ namespace Client
         // 옵션 버튼을 눌렀을 때 호출됩니다.
         private void OnClickOptionBtn()
         {
-            UIManager.Instance.ShowPopupUI<OptionPopupPage>();
+            UIManager.Instance.ShowPopupUI<PlayerInfoPopupPage>();
         }
 
         // 스크롤 선택 버튼을 눌렀을 때 호출됩니다.

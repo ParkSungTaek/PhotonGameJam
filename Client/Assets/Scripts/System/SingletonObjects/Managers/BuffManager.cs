@@ -43,7 +43,7 @@ namespace Client
                 {
                     playerRef = player.Object.InputAuthority;
                 }
-                player.RPC_SetMagicElement((int)magicData.element);
+                player.RPC_SetMagicElement(magicData.index);
                 if (magicData.Value1 != 0)
                 {
                     SetBuffToPlayer(magicData.Value1, playerRef, playerRef, player);

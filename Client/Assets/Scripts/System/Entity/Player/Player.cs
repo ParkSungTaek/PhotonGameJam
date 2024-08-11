@@ -511,7 +511,8 @@ namespace Client
             playerFaceUI.SetPlayerDeco(DecoType.Cape, DataManager.Instance.GetData<DecoData>(decoCape));
             playerFaceUI.RefreshDeco();
 
-            _gameScene._inGamePage.SetPlayerName(info.Source, nickName.ToString());
+            if(_gameScene._inGamePage != null)
+                _gameScene._inGamePage.SetPlayerName(info.Source, nickName.ToString());
             if (speaking)
             {
                 SpeakingIndicator.enabled = true;
@@ -609,9 +610,10 @@ namespace Client
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
         // 버프 동기화
-        public void RPC_SetMagicElement(int magicElement)
+        public void RPC_SetMagicElement(int magicID)
         {
-            PlayerInfo.MagicElements.Add((SystemEnum.MagicElement)magicElement);
+            MagicBookData magicData = DataManager.Instance.GetData<MagicBookData>(magicID);
+            PlayerInfo.MagicLists.Add(magicData);
         }
     }
 }

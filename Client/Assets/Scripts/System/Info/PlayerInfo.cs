@@ -12,7 +12,7 @@ namespace Client
         private List<BuffBase>                 _buffBases  = new();          // 보유중인 버프
         private EntityPlayerData               _playerData = null;           // Player 데이터
         private Dictionary<DecoType, DecoData> _decoData   = new();          // 꾸미기 데이터
-        public List<MagicElement> MagicElements { get; set; } = new List<MagicElement>();
+        public List<MagicBookData> MagicLists { get; set; } = new List<MagicBookData>();
 
         #region BuffData
 

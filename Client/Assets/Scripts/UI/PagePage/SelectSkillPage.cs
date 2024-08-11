@@ -82,8 +82,6 @@ namespace Client
                 EntityManager.Instance.MyPlayer.ReSpawn();
                 Back();
             }
-
         }
-      
     }
 }

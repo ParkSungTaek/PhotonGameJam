@@ -93,6 +93,11 @@ namespace Client
         // 꾸미기 데이터를 반환합니다.
         public Dictionary<DecoType, DecoData> GetDecoData()
         {
+            for( int i =0; i<(int)DecoType.MaxCount; ++i)
+            {
+                if (_decoInfo.ContainsKey((DecoType)i) == false)
+                    _decoInfo.Add((DecoType)i, DataManager.Instance.GetAllData<DecoData>().Find(x => x._type == (DecoType)i));
+            }
             return _decoInfo;
         }
 
