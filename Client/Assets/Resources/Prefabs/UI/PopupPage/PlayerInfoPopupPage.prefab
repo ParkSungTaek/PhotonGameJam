@@ -235,9 +235,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dim: {fileID: 846778864131041539}
   closeBtn: {fileID: 5216623472515253901}
-  playerInfos:
-  - {fileID: 8167744596128439918}
-  - {fileID: 9066771951844228753}
+  playerInfos1: {fileID: 8167744596128439918}
+  playerInfos2: {fileID: 9066771951844228753}
   optionBtn: {fileID: 5689503786069324292}
 --- !u!1 &5216623472515253903
 GameObject:

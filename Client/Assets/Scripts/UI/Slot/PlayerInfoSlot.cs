@@ -16,23 +16,29 @@ namespace Client
         [SerializeField] private SkillScrollSlot[] skills       = null; // 스킬들
 
         // 플레이어 데이터를 세팅합니다.
-        public void SetData(PlayerInfo player)
+        public void SetData(string name, int face, int body, int hair, int weapon, int hat, int cape)
         {
-            this.name.SetText(player.CharName);
-            playerUI.SetPlayerDeco(player.DecoData);
-            foreach( var slot in skills )
+            this.name.SetText(name);
+            playerUI.SetPlayerDeco(DecoType.Face, DataManager.Instance.GetData<DecoData>(face));
+            playerUI.SetPlayerDeco(DecoType.Body, DataManager.Instance.GetData<DecoData>(body));
+            playerUI.SetPlayerDeco(DecoType.Hair, DataManager.Instance.GetData<DecoData>(hair));
+            playerUI.SetPlayerDeco(DecoType.Weapon, DataManager.Instance.GetData<DecoData>(weapon));
+            playerUI.SetPlayerDeco(DecoType.Hat, DataManager.Instance.GetData<DecoData>(hat));
+            playerUI.SetPlayerDeco(DecoType.Cape, DataManager.Instance.GetData<DecoData>(cape));
+
+            foreach ( var slot in skills )
             {
                 slot.gameObject.SetActive(false);
             }
 
-            if( player.MagicLists.Count > 0)
+            /*if( player.MagicLists.Count > 0)
             {
                 for (int i = 0; i < player.MagicLists.Count; ++i)
                 {
                     skills[i].gameObject.SetActive(true);
                     skills[i].SetData(player.MagicLists[i], null, null);
                 }
-            }
+            }*/
 
         }
     }

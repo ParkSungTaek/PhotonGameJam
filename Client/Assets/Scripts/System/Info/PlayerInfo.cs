@@ -94,15 +94,6 @@ namespace Client
                     buff.Execute();
                 }
             }
-
-            if (decoInfo == null)
-                decoInfo = new();
-            _decoData = decoInfo;
-            for (int i = 0; i < (int)DecoType.MaxCount; ++i)
-            {
-                if (_decoData.ContainsKey((DecoType)i) == false)
-                   _decoData.Add((DecoType)i, DataManager.Instance.GetAllData<DecoData>().Find(x => x._type == (DecoType)i));
-            }
         }
 
         public void SetDataWeaponData(WeaponData weaponData)

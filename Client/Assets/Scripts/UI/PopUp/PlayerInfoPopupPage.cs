@@ -1,6 +1,7 @@
 // 2024/07/28 [이서연]
 // 옵션 UI 팝업 페이지
 
+using Fusion;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,7 +11,8 @@ namespace Client
 {
     public class PlayerInfoPopupPage : UI_Popup
     {
-        [SerializeField] private PlayerInfoSlot[] playerInfos = null; // 친구 추가
+        [SerializeField] private PlayerInfoSlot playerInfos1 = null; // 친구 추가
+        [SerializeField] private PlayerInfoSlot playerInfos2 = null; // 친구 추가
         [SerializeField] private Button optionBtn = null; // 옵션 버튼
 
         private List<PlayerInfo> players = null;
@@ -18,45 +20,22 @@ namespace Client
         {
             base.Init();
             optionBtn.onClick.AddListener(OnClickOptionBtn);
-            players = new();
-
-            if(EntityManager.Instance.SpawnedCharacters.Count <= 0)
-            {
-                players.Add(EntityManager.Instance.MyPlayer.PlayerInfo);
-            }
-            foreach( var player in EntityManager.Instance.SpawnedCharacters )
-            {
-                players.Add(player.Value.PlayerInfo);
-            }
-
-            SetData();
         }
 
         public override void ReOpenPopupUI()
         {
-            players = new();
 
-            if (EntityManager.Instance.SpawnedCharacters.Count <= 0)
-            {
-                players.Add(EntityManager.Instance.MyPlayer.PlayerInfo);
-            }
-            foreach (var player in EntityManager.Instance.SpawnedCharacters)
-            {
-                players.Add(player.Value.PlayerInfo);
-            }
-
-            SetData();
         }
-        public void SetData()
+        public void SetData(PlayerRef player, string name, int face, int body, int hair, int weapon, int hat, int cape)
         {
-            foreach (var slot in playerInfos)
+            if (player == null) return;
+            if (player.PlayerId == 1)
             {
-                slot.gameObject.SetActive(false);
+                playerInfos1.SetData(name, face, body, hair, weapon, hat, cape);
             }
-            for (int i=0; i< players.Count; ++i )
+            else
             {
-                playerInfos[i].gameObject.SetActive(true);
-                playerInfos[i].SetData(players[i]);
+                playerInfos1.SetData(name, face, body, hair, weapon, hat, cape);
             }
         }
 

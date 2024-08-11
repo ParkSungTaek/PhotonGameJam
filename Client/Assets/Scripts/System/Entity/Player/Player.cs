@@ -50,6 +50,7 @@ namespace Client
         public GameObject _reviveEffect; // ∫Œ»∞ ¿Ã∆Â∆Æ
 
         public MatchingPage _matchingPage { get; set; }
+        public PlayerInfoPopupPage _PlayerInfoPopupPage { get; set; }
 
         public InGameScene _gameScene;
 
@@ -511,8 +512,12 @@ namespace Client
             playerFaceUI.SetPlayerDeco(DecoType.Cape, DataManager.Instance.GetData<DecoData>(decoCape));
             playerFaceUI.RefreshDeco();
 
-            if(_gameScene._inGamePage != null)
+            if(_gameScene != null && _gameScene._inGamePage != null)
                 _gameScene._inGamePage.SetPlayerName(info.Source, nickName.ToString());
+
+            if (_PlayerInfoPopupPage != null)
+                _PlayerInfoPopupPage.SetData(info.Source, name, face, body, hair, weapon, hat, cape);
+
             if (speaking)
             {
                 SpeakingIndicator.enabled = true;
