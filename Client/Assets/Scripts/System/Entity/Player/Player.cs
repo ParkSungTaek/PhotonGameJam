@@ -35,12 +35,13 @@ namespace Client
         private Rigidbody _rigidbody = null;
         private WeaponBase _weapon = null;
 
-        private NetworkCharacterController _networkNetwork;
+        public NetworkCharacterController _networkNetwork;
 
         protected override SystemEnum.EntityType _EntityType => SystemEnum.EntityType.Player;
 
         public PlayerInfo PlayerInfo => _playerInfo;
 
+        public Vector3 _spawnPoint = Vector3.zero;
         // 죽은 횟수
         public int deadCount { get; set; } = 0;
 
@@ -327,6 +328,8 @@ namespace Client
                     MyInfoManager.Instance.GetDecoData()[DecoType.Cape].index,
                     isSpeaking);
                 RPC_SetPlayerHP(1);
+
+                _spawnPoint = transform.position;
             }
             else
             {
@@ -436,10 +439,10 @@ namespace Client
 
             EnableAllRenderers();
 
-            transform.position = new Vector3(-0.1806704f, 0.688218f, 0.0f);
             _playerInfo.SetStat(EntityStat.HP, 100f);
             _playerInfo.IsLive = true;
             _playerInfo.IsInput = true;
+            
             RPC_SetPlayerResapwn();
         }
 
@@ -549,6 +552,11 @@ namespace Client
             _playerInfo.IsLive = false;
             _playerInfo.IsInput = false;
 
+            if (info.Source != Runner.LocalPlayer)
+            {
+                EntityManager.Instance.MyPlayer.PlayerInfo.IsInput = false;
+            }
+
             DisableAllRenderers();
             DeadEffect();
 
@@ -558,8 +566,6 @@ namespace Client
             if (deadCount >= 5)
             {
                 // 게임 끝
-                _playerInfo.IsInput = false;
-                EntityManager.Instance.MyPlayer._playerInfo.IsInput = false;
                 var gameEndPage = UIManager.Instance.ShowSceneUI<GameEndPage>();
                 gameEndPage.SetPlayerName(_gameScene._inGamePage.GetRevusPlayerName(info.Source));
 
@@ -574,16 +580,23 @@ namespace Client
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
         // 플레이어 리스폰 동기화
         // TODO : 김선중 스텟에 맞게 최대체력 세팅
-        public void RPC_SetPlayerResapwn()
+        public void RPC_SetPlayerResapwn(RpcInfo info = default)
         {
+            _networkNetwork.Teleport(_spawnPoint);
             _playerInfo.SetStat(EntityStat.HP, 100f);
             _playerInfo.IsLive = true;
             _playerInfo.IsInput = true;
+            _networkNetwork.Teleport(_spawnPoint);
 
             playerFaceUI.SetHPBar(1);
 
             EnableAllRenderers();
             ReviveEffect();
+
+            EntityManager.Instance.MyPlayer.PlayerInfo.IsInput = true;
+            EntityManager.Instance.MyPlayer._networkNetwork.Teleport(EntityManager.Instance.MyPlayer._spawnPoint);
+            EntityManager.Instance.MyPlayer._playerInfo.SetStat(EntityStat.HP, 100f);
+            EntityManager.Instance.MyPlayer.playerFaceUI.SetHPBar(1);
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
